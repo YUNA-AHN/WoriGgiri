@@ -1,7 +1,16 @@
 <template>
-  <div></div>
+  <div>
+    <RouterLink :to="{ name: 'main' }">Main</RouterLink>
+    <span> | </span>
+    <RouterLink :to="{ name: 'map' }">Map</RouterLink>
+  </div>
+  <RouterView />
 </template>
 
-<script setup></script>
+<script setup>
+import { RouterLink, RouterView } from "vue-router";
+
+</script>
+
 
 <style scoped></style>
