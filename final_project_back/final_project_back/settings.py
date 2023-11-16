@@ -35,10 +35,20 @@ INSTALLED_APPS = [
     'accounts',
     'articles',
     'products',
+
+    # DRF
+    'rest_framework',
+    'rest_framework.authtoken',
+    
+    # REST_AUTH
+    'dj_rest_auth',
+    'allauth',
+    'allauth.account',
+
     # pip
     'corsheaders',
     'django_extensions',
-    'rest_framework',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -49,6 +59,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
+    "allauth.account.middleware.AccountMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -114,13 +125,13 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ko-kr'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Seoul'
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
@@ -139,3 +150,14 @@ CORS_ALLOWED_ORIGINS = [
     'http://127.0.0.1:5173',
     'http://localhost:5173'
 ]
+
+
+ACCOUNT_EMAIL_REQUIRED = False
+ACCOUNT_EMAIL_VERIFICATION = None
+
+AUTHENTICATION_BACKENDS = (
+# django 기본 인증 백엔드
+"django.contrib.auth.backends.ModelBackend",
+# django-allauth 패키지에서 제공하는 인증 백엔드 클래스.
+"allauth.account.auth_backends.AuthenticationBackend",
+)
