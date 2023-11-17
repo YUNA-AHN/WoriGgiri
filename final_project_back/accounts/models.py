@@ -8,7 +8,7 @@ class User(AbstractUser):
     financial_products = models.TextField(blank=True, null=True)
     age = models.IntegerField(blank=True, null=True)
     money = models.IntegerField(blank=True, null=True)
-    password = models.TextField(blank=True)
+    # password = models.TextField(blank=True)
     email = models.EmailField(max_length=254, blank=True, null=True)
     nickname = models.CharField(max_length=255, blank=True, null=True)
     salary = models.IntegerField(blank=True, null=True)
