@@ -16,7 +16,7 @@
     </h1>
 
     <p v-if="rate">
-      현재 {{ select2 }} {{ payment1 }} {{ currencyName }}은
+      현재 {{ select2 }} {{ payment1 }} {{ currencyName }}은(는)
       {{ payment2 }}원입니다.
     </p>
     <div>
@@ -24,7 +24,7 @@
       <input
         type="text"
         v-model.number="payment1"
-        @change="updatePayment2(Math.round((payment1 * rate) / currencyUnit))"
+        @input="updatePayment2(Math.round((payment1 * rate) / currencyUnit))"
       />
       {{ currencyName }}
     </div>
@@ -33,7 +33,7 @@
       <input
         type="text"
         v-model.number="payment2"
-        @change="updatePayment1(Math.round((payment2 / rate) * currencyUnit))"
+        @input="updatePayment1(Math.round((payment2 / rate) * currencyUnit))"
       />
       원
     </div>
