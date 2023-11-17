@@ -9,7 +9,10 @@
     <RouterLink :to="{ name: 'product' }">Product</RouterLink>
     <span> | </span>
     <RouterLink :to="{ name: 'signup' }">Signup</RouterLink>
+    <span> | </span>
+    <RouterLink :to="{ name: 'login' }">Login</RouterLink>
   </div>
+
   <RouterView />
 </template>
 

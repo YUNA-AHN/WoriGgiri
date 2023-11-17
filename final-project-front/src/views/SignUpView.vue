@@ -4,17 +4,17 @@
     <form @submit.prevent="signUp">
       <div>
         <label for="username">이름 : </label>
-        <input type="text" name="username" id="username" v-model="username" />
+        <input type="text" name="username" id="username" v-model.trim="username" />
       </div>
       <label for="email">e-mail : </label>
-      <input type="text" name="email" id="email" v-model="email" />
+      <input type="text" name="email" id="email" v-model.trim="email" />
       <div>
         <label for="password1">비밀번호 : </label>
         <input
           type="password"
           name="password1"
           id="password1"
-          v-model="password1"
+          v-model.trim="password1"
         />
       </div>
       <label for="password2">비밀번호 확인 : </label>
@@ -22,20 +22,20 @@
         type="password"
         name="password2"
         id="password2"
-        v-model="password2"
+        v-model.trim="password2"
       />
       <div>
         <label for="nickname">닉네임 : </label>
-        <input type="text" name="nickname" id="nickname" v-model="nickname" />
+        <input type="text" name="nickname" id="nickname" v-model.trim="nickname" />
       </div>
       <label for="age">나이 : </label>
-      <input type="text" name="age" id="age" v-model="age" />
+      <input type="text" name="age" id="age" v-model.trim="age" />
       <div>
         <label for="money">잔고 : </label>
-        <input type="text" name="money" id="money" v-model="money" />
+        <input type="text" name="money" id="money" v-model.trim="money" />
       </div>
       <label for="salary">연봉 : </label>
-      <input type="text" name="salary" id="salary" v-model="salary" />
+      <input type="text" name="salary" id="salary" v-model.trim="salary" />
       <div>
         <input type="submit" value="회원 가입" />
       </div>
