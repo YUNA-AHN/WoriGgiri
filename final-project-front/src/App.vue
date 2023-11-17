@@ -3,15 +3,18 @@ import { RouterLink, RouterView } from "vue-router";
 </script>
 
 <template>
-  <header>
-    <div>
-      <nav>
-        <RouterLink :to="{ name: 'home' }">Home</RouterLink> |
-        <RouterLink :to="{ name: 'exchange' }">Exchange</RouterLink>
-      </nav>
-    </div>
-  </header>
+  <div>
+    <RouterLink :to="{ name: 'main' }">Main</RouterLink>
+    <span> | </span>
+    <RouterLink :to="{ name: 'map' }">Map</RouterLink>
+    <span> | </span>
+    <RouterLink :to="{ name: 'exchange' }">Exchange</RouterLink>
+  </div>
   <RouterView />
 </template>
 
-<style scoped></style>
+<script setup>
+import { RouterLink, RouterView } from "vue-router";
+
+</script>
+

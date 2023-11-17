@@ -41,9 +41,12 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     
     # REST_AUTH
+    'django.contrib.sites',
     'dj_rest_auth',
     'allauth',
     'allauth.account',
+    'allauth.socialaccount',
+    'dj_rest_auth.registration',
 
     # pip
     'corsheaders',
@@ -56,6 +59,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -144,6 +149,12 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+REST_FRAMEWORK = {
+'DEFAULT_AUTHENTICATION_CLASSES': [
+'rest_framework.authentication.TokenAuthentication',
+]
+}
+
 AUTH_USER_MODEL = 'accounts.User'
 
 CORS_ALLOWED_ORIGINS = [
@@ -161,3 +172,9 @@ AUTHENTICATION_BACKENDS = (
 # django-allauth 패키지에서 제공하는 인증 백엔드 클래스.
 "allauth.account.auth_backends.AuthenticationBackend",
 )
+
+REST_AUTH = {
+'REGISTER_SERIALIZER': 'accounts.serializers.CustomRegisterSerializer',
+}
+
+ACCOUNT_ADAPTER = 'accounts.models.CustomAccountAdapter'
