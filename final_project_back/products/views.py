@@ -22,7 +22,7 @@ def save_data(request):
 
     deposit = 'depositProductsSearch.json'
 
-    
+
     deposit_response = requests.get(url + deposit, params=params).json()
     deposit_base_list = deposit_response.get('result').get('baseList')
     deposit_option_list = deposit_response.get('result').get('optionList')
@@ -91,3 +91,12 @@ def save_data(request):
 #             saving_product = SavingProducts.objects.get(fin_prdt_cd=saving_option['fin_prdt_cd'])
 #             saving_option_serializer.save(fin_prdt_cd=saving_product)
 #     return Response(saving_option_serializer.data)
+
+
+@api_view(['GET'])
+def deposit_products(request):
+    products = DepositProducts.objects.all()
+
+    # options = DepositOptions.objects.filter(fin_prdt_cd)
+    serializer = DepositProductsSerializer(products, many=True)
+    return Response(serializer.data)
