@@ -100,3 +100,13 @@ def deposit_products(request):
     # options = DepositOptions.objects.filter(fin_prdt_cd)
     serializer = DepositProductsSerializer(products, many=True)
     return Response(serializer.data)
+
+
+
+@api_view(['GET'])
+def deposit_options(request):
+    options = DepositOptions.objects.all()
+
+    # options = DepositOptions.objects.filter(fin_prdt_cd)
+    serializer = DepositOptionsSerializer(options, many=True)
+    return Response(serializer.data)
