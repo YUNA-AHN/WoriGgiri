@@ -1,7 +1,3 @@
-<script setup>
-import { RouterLink, RouterView } from "vue-router";
-</script>
-
 <template>
   <div>
     <RouterLink :to="{ name: 'main' }">Main</RouterLink>
@@ -15,6 +11,4 @@ import { RouterLink, RouterView } from "vue-router";
 
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
-
 </script>
-
