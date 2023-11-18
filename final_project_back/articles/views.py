@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
 from .models import Article, Comment
-from .serializers import ArticleListSerializer, ArticleSerializer, CommentSerializer
+from .serializers import ArticleSerializer, ArticleSerializer, CommentSerializer
 
 from django.conf import settings
 
@@ -14,7 +14,7 @@ from django.conf import settings
 def article_list(request):
     if request.method == "GET":
         articles = Article.objects.all()
-        serializer = ArticleListSerializer(articles, many=True)
+        serializer = ArticleSerializer(articles, many=True)
         return Response(serializer.data)
     elif request.method == "POST":
         serializer = ArticleSerializer(data=request.data)
@@ -70,6 +70,8 @@ def comment_create(request, article_pk):
     serializer = CommentSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
         serializer.save(article=article, user=request.user)
+        # serializer.save(article=article)
+
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     
 def likes(request, article_pk):
