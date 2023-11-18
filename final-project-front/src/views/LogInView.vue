@@ -38,38 +38,7 @@ const logIn = () => {
   // console.log(store.token.value);
   store.logIn(payload);
 };
-// const router = useRouter();
 
-// const logIn = () => {
-//   axios({
-//     method: "get",
-//     url: `http://127.0.0.1:8000/`,
-//     headers: {
-//       Authorization: `Token ${token.value}`,
-//     },
-//   }).then((response) => {});
-// };
-// const token = ref(null);
-
-// const logIn = () => {
-//   const data = {
-//     username: name.value,
-//     password: password.value,
-//   };
-//   axios({
-//     method: "post",
-//     url: `http://localhost:8000/dj-rest-auth/login/`,
-//     data: data,
-//   })
-//     .then((response) => {
-
-//       alert("로그인 성공");
-//       router.push({ name: "main" });
-//     })
-//     .catch((error) => {
-//       alert("잘못 된 접근 방식입니다.");
-//     });
-// };
 </script>
 
 <style scoped></style>

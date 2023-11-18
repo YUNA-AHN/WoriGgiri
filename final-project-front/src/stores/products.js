@@ -26,6 +26,7 @@ export const useProductsStore = defineStore("products", () => {
     .catch((error) => {
       console.log(error);
     });
+    
 
   return { deposit_products, deposit_options };
 });
