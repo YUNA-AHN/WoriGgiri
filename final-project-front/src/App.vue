@@ -37,6 +37,19 @@
 import { RouterLink, RouterView } from "vue-router";
 </script>
 
+<template>
+  <header>
+    <div>
+      <nav>
+        <RouterLink :to="{ name: 'home' }">Home</RouterLink> |
+        <RouterLink :to="{ name: 'exchange' }">Exchange</RouterLink> |
+        <RouterLink :to="{ name: 'article' }">Article</RouterLink>
+      </nav>
+    </div>
+  </header>
+  <RouterView />
+</template>
+
 <style scoped>
 .container-fluid {
   display: flex;
@@ -55,6 +68,7 @@ import { RouterLink, RouterView } from "vue-router";
   text-align: center;
   align-items: center;
 }
+
 
 .navbar-list {
   display: flex;

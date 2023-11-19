@@ -15,10 +15,12 @@
       </select>
     </h1>
 
-    <p v-if="rate">
+    <p v-if="rate == -1">현재 해당 정보가 제공되지 않습니다.</p>
+    <p v-else-if="rate">
       현재 {{ select2 }} {{ payment1 }} {{ currencyName }}은(는)
       {{ payment2 }}원입니다.
     </p>
+
     <div>
       {{ country }} ({{ currencyCode }}) :
       <input
@@ -60,7 +62,7 @@ const select2 = ref("매매기준율");
 
 // 환율 옵션이 선택되었을 때에 환율 금액 정보 가져오기
 watch([select1, select2], ([newOption1, newOption2]) => {
-  console.log(select2);
+  // console.log(select2);
   // 국가가 선택되었다면,
   if (newOption1 !== null && newOption2 !== null) {
     axios({
@@ -79,6 +81,9 @@ watch([select1, select2], ([newOption1, newOption2]) => {
         } else {
           rate.value = data[0]?.cashSellingPrice || -1;
         }
+        // 환율 기준이 변경된다면 0으로 초기화
+        payment1.value = 0;
+        payment2.value = 0;
       })
       .catch((err) => console.log(err));
   }
