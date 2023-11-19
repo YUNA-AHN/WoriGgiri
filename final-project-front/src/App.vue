@@ -17,6 +17,11 @@
             >Product</RouterLink
           >
           <span> | </span>
+
+          <RouterLink :to="{ name: 'article' }">Article</RouterLink>
+
+          <span> | </span>
+
           <RouterLink :to="{ name: 'signup' }" class="nav-link"
             >Signup</RouterLink
           >
@@ -74,6 +79,7 @@ import { RouterLink, RouterView } from "vue-router";
 
 .router-view {
   margin: 80px 100px;
+
   /* display: flex; */
   /* align-items: center; */
 }
