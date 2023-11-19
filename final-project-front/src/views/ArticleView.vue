@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>게시판</h1>
-    <RouterLink :to="{ name: 'articleCreate' }">[게시물 생성]</RouterLink>
+    <RouterLink :to="{ name: 'articlecreate' }">[게시물 생성]</RouterLink>
     <ArticleList />
   </div>
 </template>
