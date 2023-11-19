@@ -19,9 +19,9 @@ class DepositProducts(models.Model):
 class DepositOptions(models.Model):
     fin_prdt_cd = models.ForeignKey(DepositProducts, on_delete = models.CASCADE)
     intr_rate_type_nm = models.CharField(max_length=100)
-    save_trm = models.IntegerField(default=-1)
-    intr_rate = models.FloatField(default=-1)
-    intr_rate2 = models.FloatField(default=-1)
+    save_trm = models.IntegerField(null=True)
+    intr_rate = models.FloatField(null=True)
+    intr_rate2 = models.FloatField(null=True)
 
 
 # 적금 상품
@@ -42,6 +42,6 @@ class SavingProducts(models.Model):
 class SavingOptions(models.Model):
     fin_prdt_cd = models.ForeignKey(SavingProducts, on_delete = models.CASCADE)
     intr_rate_type_nm = models.CharField(max_length=100)
-    save_trm = models.IntegerField(default=-1)
-    intr_rate = models.FloatField(default=-1)
-    intr_rate2 = models.FloatField(default=-1)
+    save_trm = models.IntegerField(null=True)
+    intr_rate = models.FloatField(null=True)
+    intr_rate2 = models.FloatField(null=True)
