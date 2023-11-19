@@ -1,15 +1,59 @@
 <template>
   <div>
-    <h1>지도 페이지</h1>
-    <!-- <div id="map" style="width: 500px; height: 400px"></div> -->
-    <div id="map" style="width: 500px; height: 400px"></div>
-    <input type="text" name="" id="" v-model="keyword" />
-    {{ keyword }}
+    <div class="detail-title">
+      <h1>지도 페이지</h1>
+      <hr />
+    </div>
+
+    <div class="content-map">
+      <form @submit.prevent="search" class="search-form">
+        <select name="location1" id="location1" v-model="mainRegion">
+          <option disabled>시 / 도 를 선택해주세요</option>
+          <option v-for="locate1 in store.mainList">
+            {{ locate1 }}
+          </option>
+        </select>
+        <select name="location2" id="location2" v-model="subRegion">
+          <option v-for="locate2 in store.subList[mainRegion]">
+            {{ locate2 }}
+          </option>
+        </select>
+        <select name="bank" id="bank" v-model="bankKeyword">
+          <option v-for="bank in store.bankList">
+            {{ bank }}
+          </option>
+        </select>
+        <input type="submit" value="검색" />
+      </form>
+      <div id="map" style="width: 70%; height: 600px"></div>
+
+      <!-- <p>{{ mainRegion }}</p>
+      <p>{{ subRegion }}</p>
+      <p>{{ bankKeyword }}</p> -->
+    </div>
   </div>
 </template>
 
+<style scoped>
+.content-map {
+  display: flex;
+  justify-content: space-between;
+}
+
+.search-form {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+}
+
+.search-form * {
+  margin: 10px 0px;
+}
+</style>
+
 <script>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+
 const API_KEY = "8084269e80aa7bddaac7aae0b01aca02";
 
 export default {
@@ -32,14 +76,17 @@ export default {
         mapOption = {
           // center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
           center: new kakao.maps.LatLng(36.107071, 128.419289), // 지도의 중심좌표
-          level: 4, // 지도의 확대 레벨
+          level: 7, // 지도의 확대 레벨
         };
       var keyword = ref("은행");
+
       // 지도를 생성합니다
       var map = new kakao.maps.Map(mapContainer, mapOption);
       map.setMapTypeId(kakao.maps.MapTypeId.USE_DISTRICT);
       var ps = new kakao.maps.services.Places(map);
-      ps.keywordSearch(keyword.value, placesSearchCB, { useMapBounds: true });
+      ps.keywordSearch(keyword.value, placesSearchCB, {
+        useMapBounds: true,
+      });
 
       // 키워드 검색 완료 시 호출되는 콜백함수 입니다
       function placesSearchCB(data, status, pagination) {
@@ -76,5 +123,73 @@ export default {
   },
 };
 </script>
+<script setup>
+import { ref } from "vue";
+import { useLocationStore } from "@/stores/location";
 
-<style scoped></style>
+const store = useLocationStore();
+const mainRegion = ref(null);
+const subRegion = ref(null);
+const bankKeyword = ref(null);
+
+const searchKeyword = ref(null);
+
+const search = () => {
+  searchKeyword.value = `${mainRegion.value}+${subRegion.value}+${bankKeyword.value}`;
+
+  // var infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
+
+  var mapContainer = document.getElementById("map"), // 지도를 표시할 div
+    mapOption = {
+      center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
+      level: 7, // 지도의 확대 레벨
+    };
+
+  // 지도를 생성합니다
+  var map = new kakao.maps.Map(mapContainer, mapOption);
+
+  // 장소 검색 객체를 생성합니다
+  var ps = new kakao.maps.services.Places();
+
+  // 키워드로 장소를 검색합니다
+  ps.keywordSearch(searchKeyword.value, placesSearchCB);
+
+  // 키워드 검색 완료 시 호출되는 콜백함수 입니다
+  function placesSearchCB(data, status, pagination) {
+    if (status === kakao.maps.services.Status.OK) {
+      // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+      // LatLngBounds 객체에 좌표를 추가합니다
+      var bounds = new kakao.maps.LatLngBounds();
+
+      for (var i = 0; i < data.length; i++) {
+        displayMarker(data[i]);
+        bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+      }
+
+      // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+      map.setBounds(bounds);
+    }
+  }
+
+  // 지도에 마커를 표시하는 함수입니다
+  function displayMarker(place) {
+    // 마커를 생성하고 지도에 표시합니다
+    var marker = new kakao.maps.Marker({
+      map: map,
+      position: new kakao.maps.LatLng(place.y, place.x),
+    });
+
+    // 마커에 클릭이벤트를 등록합니다
+    kakao.maps.event.addListener(marker, "click", function () {
+      // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
+      infowindow.setContent(
+        '<div style="padding:5px;font-size:12px;">' +
+          place.place_name +
+          "</div>"
+      );
+      infowindow.open(map, marker);
+    });
+  }
+  console.log(searchKeyword.value);
+};
+</script>

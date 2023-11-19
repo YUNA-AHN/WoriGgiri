@@ -12,6 +12,7 @@ class CustomRegisterSerializer(RegisterSerializer):
     allow_blank=True,
     max_length=255
     )
+    email = serializers.EmailField(required=False)
     age = serializers.IntegerField(required=False)
     money = serializers.IntegerField(required=False)
     salary = serializers.IntegerField(required=False)

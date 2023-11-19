@@ -33,7 +33,7 @@ class CustomAccountAdapter(DefaultAccountAdapter):
         print(data)
         first_name = data.get("first_name")
         last_name = data.get("last_name")
-        email = data.get("email")
+        email = form.data.get("email")
         username = data.get("username")
         nickname = data.get("nickname")
         age = data.get("age")
