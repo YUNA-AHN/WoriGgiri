@@ -1,8 +1,8 @@
 <template>
   <div>
-    <p>작성자 : {{ comment.user }}</p>
-    <p>{{ comment.content }}</p>
-    <button @click="deleteComment">X</button>
+    <p @click="goprofile">작성자 : {{ comment.username }}</p>
+    <p>{{ comment.content }} <button @click="deleteComment">X</button></p>
+
     <hr />
   </div>
 </template>
@@ -26,9 +26,14 @@ const deleteComment = function () {
     url: `${store.API_URL}/articles/comments/${props.comment.id}/`,
   })
     .then(() => {
-      router.push(`/articledetail/${article.id}`);
+      router.push(`/article/detail/${props.comment.article}`);
     })
     .catch((err) => console.log(err));
+};
+
+// 댓글 작성자 프로필로 가기
+const goprofile = function () {
+  router.push(`/profile/${props.comment.user}`);
 };
 </script>
 
