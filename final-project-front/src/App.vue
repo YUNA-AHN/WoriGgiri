@@ -18,7 +18,9 @@
           >
           <span> | </span>
 
-          <RouterLink :to="{ name: 'article' }">Article</RouterLink>
+          <RouterLink :to="{ name: 'article' }" class="nav-link"
+            >Article</RouterLink
+          >
 
           <span> | </span>
 

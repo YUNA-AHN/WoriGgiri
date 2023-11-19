@@ -25,6 +25,8 @@ const store = useArticleStore();
 const router = useRouter();
 
 const createArticle = function () {
+  console.log(title.value);
+  console.log(content.value);
   axios({
     method: "post",
     url: `${store.API_URL}/articles/`,

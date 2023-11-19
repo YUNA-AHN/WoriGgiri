@@ -48,6 +48,10 @@
 </template>
 
 <style scoped>
+* {
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-family: "Orbit", sans-serif;
+}
 h1 {
   padding-bottom: 20px;
   margin-bottom: 30px;
@@ -66,10 +70,20 @@ h1 {
 
 .search-form * {
   margin: 10px 0px;
+  font-weight: bolder;
 }
 
 .select-box {
   height: 35px;
+}
+.btn {
+  padding: 0px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  /* font-weight: bolder; */
+  color: whitesmoke;
 }
 </style>
 

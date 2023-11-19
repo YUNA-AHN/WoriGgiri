@@ -1,14 +1,43 @@
 <template>
   <h1>회원 가입 페이지</h1>
+
   <div>
-    <form @submit.prevent="signUp">
-      <div>
+    <form @submit.prevent="signUp" class="signup-form">
+      <div class="info-list">
         <label for="username">이름 : </label>
-        <input type="text" name="username" id="username" v-model.trim="username" />
+        <input
+          type="text"
+          name="username"
+          id="username"
+          v-model.trim="username"
+        />
       </div>
-      <label for="email">e-mail : </label>
-      <input type="text" name="email" id="email" v-model.trim="email" />
-      <div>
+      <p
+        style="
+          font-size: smaller;
+          color: gray;
+          font-weight: lighter;
+          margin: 0px 0px;
+        "
+      >
+        (필수)
+      </p>
+
+      <div class="info-list">
+        <label for="email">e-mail : </label>
+        <input type="text" name="email" id="email" v-model.trim="email" />
+      </div>
+      <p
+        style="
+          font-size: smaller;
+          color: gray;
+          font-weight: lighter;
+          margin: 0px 0px;
+        "
+      >
+        (선택)
+      </p>
+      <div class="info-list">
         <label for="password1">비밀번호 : </label>
         <input
           type="password"
@@ -17,31 +46,145 @@
           v-model.trim="password1"
         />
       </div>
-      <label for="password2">비밀번호 확인 : </label>
-      <input
-        type="password"
-        name="password2"
-        id="password2"
-        v-model.trim="password2"
-      />
-      <div>
-        <label for="nickname">닉네임 : </label>
-        <input type="text" name="nickname" id="nickname" v-model.trim="nickname" />
+      <p
+        style="
+          font-size: smaller;
+          color: gray;
+          font-weight: lighter;
+          margin: 0px 0px;
+        "
+      >
+        (필수) 비밀번호는 최소 8자 이상 입력해주세요.
+      </p>
+      <div class="info-list">
+        <label for="password2">비밀번호 확인 : </label>
+        <input
+          type="password"
+          name="password2"
+          id="password2"
+          v-model.trim="password2"
+        />
       </div>
-      <label for="age">나이 : </label>
-      <input type="text" name="age" id="age" v-model.trim="age" />
-      <div>
+      <p
+        style="
+          font-size: smaller;
+          color: gray;
+          font-weight: lighter;
+          margin: 0px 0px;
+        "
+      >
+        (필수) 비밀번호를 한 번 더 입력해주세요.
+      </p>
+      <div class="info-list">
+        <label for="nickname">닉네임 : </label>
+        <input
+          type="text"
+          name="nickname"
+          id="nickname"
+          v-model.trim="nickname"
+        />
+      </div>
+      <p
+        style="
+          font-size: smaller;
+          color: gray;
+          font-weight: lighter;
+          margin: 0px 0px;
+        "
+      >
+        (선택)
+      </p>
+      <div class="info-list">
+        <label for="age">나이 : </label>
+        <input type="text" name="age" id="age" v-model.trim="age" />
+      </div>
+      <p
+        style="
+          font-size: smaller;
+          color: gray;
+          font-weight: lighter;
+          margin: 0px 0px;
+        "
+      >
+        (선택)
+      </p>
+      <div class="info-list">
         <label for="money">잔고 : </label>
         <input type="text" name="money" id="money" v-model.trim="money" />
       </div>
-      <label for="salary">연봉 : </label>
-      <input type="text" name="salary" id="salary" v-model.trim="salary" />
-      <div>
-        <input type="submit" value="회원 가입" />
+      <p
+        style="
+          font-size: smaller;
+          color: gray;
+          font-weight: lighter;
+          margin: 0px 0px;
+        "
+      >
+        (선택)
+      </p>
+      <div class="info-list">
+        <label for="salary">연봉 : </label>
+        <input type="text" name="salary" id="salary" v-model.trim="salary" />
+      </div>
+      <p
+        style="
+          font-size: smaller;
+          color: gray;
+          font-weight: lighter;
+          margin: 0px 0px;
+        "
+      >
+        (선택)
+      </p>
+      <div class="info-list">
+        <input id="btn" class="btn btn-info" type="submit" value="회원 가입" />
       </div>
     </form>
   </div>
 </template>
+
+<style scoped>
+* {
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-family: "Orbit", sans-serif;
+}
+h1 {
+  padding-bottom: 20px;
+  margin-bottom: 30px;
+  border-bottom: 5px #0dcaf0 solid;
+}
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  font-weight: bolder;
+  font-size: 20px;
+}
+.signup-form div {
+  margin: 10px 0px;
+}
+
+.signup-form label {
+  width: 150px;
+}
+.signup-form input {
+  width: 200px;
+  border-top: 0px;
+  border-right: 0px;
+  border-left: 0px;
+  border-bottom: lightgray solid 1px;
+  color: whitesmoke;
+  font-size: 20px;
+  font-weight: bolder;
+}
+
+.info-list {
+  display: flex;
+}
+#btn {
+  width: 350px;
+  height: 50px;
+}
+</style>
 
 <script setup>
 import axios from "axios";
@@ -94,5 +237,3 @@ const signUp = () => {
     });
 };
 </script>
-
-<style scoped></style>
