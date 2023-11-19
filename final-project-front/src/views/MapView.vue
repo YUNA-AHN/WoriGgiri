@@ -1,34 +1,55 @@
 <template>
   <div>
-    <h1>지도 페이지</h1>
-    <!-- <div id="map" style="width: 500px; height: 400px"></div> -->
-    <div id="map" style="width: 500px; height: 400px"></div>
-    <form @submit.prevent="search">
-      <select name="location1" id="location1" v-model="mainRegion">
-        <option v-for="locate1 in store.mainList">
-          {{ locate1 }}
-        </option>
-      </select>
-      <select name="location2" id="location2" v-model="subRegion">
-        <option v-for="locate2 in store.subList[mainRegion]">
-          {{ locate2 }}
-        </option>
-      </select>
-      <select name="bank" id="bank" v-model="bankKeyword">
-        <option v-for="bank in store.bankList">
-          {{ bank }}
-        </option>
-      </select>
-      <input type="submit" value="검색" />
-    </form>
+    <div class="detail-title">
+      <h1>지도 페이지</h1>
+      <hr />
+    </div>
 
-    <p>{{ mainRegion }}</p>
-    <p>{{ subRegion }}</p>
-    <p>{{ bankKeyword }}</p>
-    <!-- {{ store }} -->
-    <!-- {{ keyword }} -->
+    <div class="content-map">
+      <form @submit.prevent="search" class="search-form">
+        <select name="location1" id="location1" v-model="mainRegion">
+          <option disabled>시 / 도 를 선택해주세요</option>
+          <option v-for="locate1 in store.mainList">
+            {{ locate1 }}
+          </option>
+        </select>
+        <select name="location2" id="location2" v-model="subRegion">
+          <option v-for="locate2 in store.subList[mainRegion]">
+            {{ locate2 }}
+          </option>
+        </select>
+        <select name="bank" id="bank" v-model="bankKeyword">
+          <option v-for="bank in store.bankList">
+            {{ bank }}
+          </option>
+        </select>
+        <input type="submit" value="검색" />
+      </form>
+      <div id="map" style="width: 70%; height: 600px"></div>
+
+      <!-- <p>{{ mainRegion }}</p>
+      <p>{{ subRegion }}</p>
+      <p>{{ bankKeyword }}</p> -->
+    </div>
   </div>
 </template>
+
+<style scoped>
+.content-map {
+  display: flex;
+  justify-content: space-between;
+}
+
+.search-form {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+}
+
+.search-form * {
+  margin: 10px 0px;
+}
+</style>
 
 <script>
 import { ref, onMounted } from "vue";
@@ -172,5 +193,3 @@ const search = () => {
   console.log(searchKeyword.value);
 };
 </script>
-
-<style scoped></style>
