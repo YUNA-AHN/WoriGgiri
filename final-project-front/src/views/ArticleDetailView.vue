@@ -73,7 +73,7 @@ const createComment = function () {
     },
   })
     .then(() => {
-      router.push(`/detail/${article.id}`);
+      router.push(`/articledetail/${article.id}`);
     })
     .catch((err) => console.log(err));
 };

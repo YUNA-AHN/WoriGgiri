@@ -26,7 +26,7 @@ const deleteComment = function () {
     url: `${store.API_URL}/articles/comments/${props.comment.id}/`,
   })
     .then(() => {
-      router.push(`/detail/${article.id}`);
+      router.push(`/articledetail/${article.id}`);
     })
     .catch((err) => console.log(err));
 };

@@ -14,7 +14,7 @@ const props = defineProps({
 
 const route = useRouter();
 const godetail = function (article) {
-  route.push(`/detail/${article.id}`);
+  route.push(`/articledetail/${article.id}`);
 };
 </script>
 

@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import MainPageView from "@/views/MainPageView.vue";
 import ExchangeView from "@/views/ExchangeView.vue";
 import ArticleView from "@/views/ArticleView.vue";
-import DetailView from "@/views/DetailView.vue";
+import ArticleDetailView from "@/views/ArticleDetailView.vue";
 import ArticleCreateView from "@/views/ArticleCreateView.vue";
 
 const router = createRouter({
@@ -24,9 +24,9 @@ const router = createRouter({
       component: ArticleView,
     },
     {
-      path: "/detail/:id",
-      name: "detail",
-      component: DetailView,
+      path: "/articledetail/:id",
+      name: "articleDetail",
+      component: ArticleDetailView,
     },
     {
       path: "/article/create",
