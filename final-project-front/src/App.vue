@@ -24,6 +24,10 @@
           <RouterLink :to="{ name: 'login' }" class="nav-link"
             >Login</RouterLink
           >
+          <span> | </span>
+          <RouterLink :to="{ name: 'article' }" class="nav-link"
+            >Article</RouterLink
+          >
         </div>
       </nav>
     </nav>
@@ -36,19 +40,6 @@
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
 </script>
-
-<template>
-  <header>
-    <div>
-      <nav>
-        <RouterLink :to="{ name: 'home' }">Home</RouterLink> |
-        <RouterLink :to="{ name: 'exchange' }">Exchange</RouterLink> |
-        <RouterLink :to="{ name: 'article' }">Article</RouterLink>
-      </nav>
-    </div>
-  </header>
-  <RouterView />
-</template>
 
 <style scoped>
 .container-fluid {
@@ -68,7 +59,6 @@ import { RouterLink, RouterView } from "vue-router";
   text-align: center;
   align-items: center;
 }
-
 
 .navbar-list {
   display: flex;
