@@ -18,7 +18,9 @@
           >
           <span> | </span>
 
-          <RouterLink :to="{ name: 'article' }">Article</RouterLink>
+          <RouterLink :to="{ name: 'article' }" class="nav-link"
+            >Article</RouterLink
+          >
 
           <span> | </span>
 
@@ -42,7 +44,6 @@
 import { RouterLink, RouterView } from "vue-router";
 </script>
 
-
 <style scoped>
 .container-fluid {
   display: flex;
@@ -61,7 +62,6 @@ import { RouterLink, RouterView } from "vue-router";
   text-align: center;
   align-items: center;
 }
-
 
 .navbar-list {
   display: flex;

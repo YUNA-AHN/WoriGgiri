@@ -10,8 +10,7 @@ import ArticleCreateView from "@/views/ArticleCreateView.vue";
 import ProductListView from "@/views/ProductListView.vue";
 import SignUpView from "@/views/SignUpView.vue";
 import LogInView from "@/views/LogInView.vue";
-import ProductDetailView from "@/views/ProductDetailView.vue"
-
+import ProductDetailView from "@/views/ProductDetailView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -32,7 +31,6 @@ const router = createRouter({
       component: ExchangeView,
     },
     {
-
       path: "/article",
       name: "article",
       component: ArticleView,
@@ -46,7 +44,8 @@ const router = createRouter({
       path: "/article/create",
       name: "articleCreate",
       component: ArticleCreateView,
-
+    },
+    {
       path: "/product",
       name: "product",
       component: ProductListView,
@@ -65,7 +64,6 @@ const router = createRouter({
       path: "/detail/:fin_prdt_cd",
       name: "detail",
       component: ProductDetailView,
-
     },
   ],
 });
