@@ -1,29 +1,42 @@
 <template>
   <div>
     <div class="detail-title">
-      <h1>지도 페이지</h1>
-      <hr />
+      <h1>주변 은행 검색</h1>
     </div>
 
     <div class="content-map">
       <form @submit.prevent="search" class="search-form">
-        <select name="location1" id="location1" v-model="mainRegion">
-          <option disabled>시 / 도 를 선택해주세요</option>
-          <option v-for="locate1 in store.mainList">
+        <select
+          class="form-select"
+          name="location1"
+          id="location1"
+          v-model="mainRegion"
+        >
+          <option :value="null" selected hidden>시 / 도 를 선택해주세요</option>
+          <option v-for="locate1 in store.mainList" :value="locate1">
             {{ locate1 }}
           </option>
         </select>
-        <select name="location2" id="location2" v-model="subRegion">
+        <select
+          class="form-select"
+          name="location2"
+          id="location2"
+          v-model="subRegion"
+        >
+          <option :value="null" selected hidden>
+            시 / 군 / 구 를 선택해주세요
+          </option>
           <option v-for="locate2 in store.subList[mainRegion]">
             {{ locate2 }}
           </option>
         </select>
-        <select name="bank" id="bank" v-model="bankKeyword">
+        <select class="form-select" name="bank" id="bank" v-model="bankKeyword">
+          <option :value="null" selected hidden>은행을 선택해주세요</option>
           <option v-for="bank in store.bankList">
             {{ bank }}
           </option>
         </select>
-        <input type="submit" value="검색" />
+        <input class="btn btn-info" type="submit" value="검색" />
       </form>
       <div id="map" style="width: 70%; height: 600px"></div>
 
@@ -35,6 +48,11 @@
 </template>
 
 <style scoped>
+h1 {
+  padding-bottom: 20px;
+  margin-bottom: 30px;
+  border-bottom: 5px #0dcaf0 solid;
+}
 .content-map {
   display: flex;
   justify-content: space-between;
@@ -48,6 +66,10 @@
 
 .search-form * {
   margin: 10px 0px;
+}
+
+.select-box {
+  height: 35px;
 }
 </style>
 
@@ -133,6 +155,8 @@ const subRegion = ref(null);
 const bankKeyword = ref(null);
 
 const searchKeyword = ref(null);
+
+const dft = "시 / 도 를 선택해주세요";
 
 const search = () => {
   searchKeyword.value = `${mainRegion.value}+${subRegion.value}+${bankKeyword.value}`;

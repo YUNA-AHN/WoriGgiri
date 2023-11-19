@@ -70,6 +70,7 @@ import { RouterLink, RouterView } from "vue-router";
 
 .router-view {
   margin: 80px 100px;
+
   /* display: flex; */
   /* align-items: center; */
 }
