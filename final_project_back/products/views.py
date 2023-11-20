@@ -8,6 +8,24 @@ from . models import DepositProducts, DepositOptions, SavingProducts, SavingOpti
 
 # Create your views here.
 
+@api_view(['GET'])
+def temp(request):
+    api_key = "f6d469a35ac51357c3e810f371a30641"
+    url = f'http://finlife.fss.or.kr/finlifeapi/'
+    
+    params = {
+        'auth' : api_key,
+        'topFinGrpNo' : '020000',
+        'pageNo' : 1,
+    }
+    deposit = 'depositProductsSearch.json'
+    deposit_response = requests.get(url + deposit, params=params).json()
+
+    deposit_option_list = deposit_response.get('result').get('optionList')
+    serializer = DepositOptionsSerializer(data=deposit_option_list, many=True)
+    if serializer.is_valid(raise_exception=True):
+        return JsonResponse(deposit_response)
+
 
 @api_view(['GET'])
 def save_data(request):
@@ -109,4 +127,23 @@ def deposit_options(request):
 
     # options = DepositOptions.objects.filter(fin_prdt_cd)
     serializer = DepositOptionsSerializer(options, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def saving_products(request):
+    products = SavingProducts.objects.all()
+
+    # options = DepositOptions.objects.filter(fin_prdt_cd)
+    serializer = SavingProductsSerializer(products, many=True)
+    return Response(serializer.data)
+
+
+
+@api_view(['GET'])
+def saving_options(request):
+    options = SavingOptions.objects.all()
+
+    # options = DepositOptions.objects.filter(fin_prdt_cd)
+    serializer = SavingOptionsSerializer(options, many=True)
     return Response(serializer.data)

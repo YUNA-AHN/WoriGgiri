@@ -26,7 +26,30 @@ export const useProductsStore = defineStore("products", () => {
     .catch((error) => {
       console.log(error);
     });
-    
 
-  return { deposit_products, deposit_options };
+  const saving_products = ref(null);
+  axios({
+    method: "get",
+    url: "http://127.0.0.1:8000/products/saving_products/",
+  })
+    .then((response) => {
+      saving_products.value = response.data;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
+  const saving_options = ref(null);
+  axios({
+    method: "get",
+    url: "http://127.0.0.1:8000/products/saving_options/",
+  })
+    .then((response) => {
+      saving_options.value = response.data;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
+  return { deposit_products, deposit_options, saving_products, saving_options };
 });

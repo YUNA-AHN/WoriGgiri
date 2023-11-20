@@ -40,6 +40,7 @@
   <div class="router-view">
     <RouterView />
   </div>
+  
 </template>
 
 <script setup>

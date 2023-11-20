@@ -11,6 +11,8 @@ import ProductListView from "@/views/ProductListView.vue";
 import SignUpView from "@/views/SignUpView.vue";
 import LogInView from "@/views/LogInView.vue";
 import ProductDetailView from "@/views/ProductDetailView.vue";
+import DepositProductsView from "@/views/DepositProductsView.vue";
+import SavingProductsView from "@/views/SavingProductsView.vue";
 
 import { useSignStore } from "@/stores/Sign";
 
@@ -66,6 +68,16 @@ const router = createRouter({
       path: "/detail/:fin_prdt_cd",
       name: "detail",
       component: ProductDetailView,
+    },
+    {
+      path: "/product/depositproducts",
+      name: "deposit",
+      component: DepositProductsView,
+    },
+    {
+      path: "/product/savingproducts",
+      name: "saving",
+      component: SavingProductsView,
     },
   ],
 });
