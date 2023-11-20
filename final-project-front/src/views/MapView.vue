@@ -39,10 +39,6 @@
         <input class="btn btn-info" type="submit" value="검색" />
       </form>
       <div id="map" style="width: 70%; height: 600px"></div>
-
-      <!-- <p>{{ mainRegion }}</p>
-      <p>{{ subRegion }}</p>
-      <p>{{ bankKeyword }}</p> -->
     </div>
   </div>
 </template>
@@ -51,6 +47,7 @@
 * {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-family: "Orbit", sans-serif;
+  font-weight: bolder;
 }
 h1 {
   padding-bottom: 20px;
@@ -70,7 +67,6 @@ h1 {
 
 .search-form * {
   margin: 10px 0px;
-  font-weight: bolder;
 }
 
 .select-box {

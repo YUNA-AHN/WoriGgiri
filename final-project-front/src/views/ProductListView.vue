@@ -4,7 +4,7 @@
   <div class="deposit-products">
     <div v-for="product in store.deposit_products" :key="product.id">
       <!-- {{ product }} -->
-      <p>공시 제출일 : {{ product.fin_co_subm_day }}</p>
+      <p>공시 제출월 : {{ product.fin_co_subm_day.substring(0, 6) }}</p>
       <p>금융회사명 : {{ product.kor_co_nm }}</p>
       <p @click="detail(product)">상품명 : {{ product.fin_prdt_nm }}</p>
       <div v-for="option in store.deposit_options" :key="option.id">
@@ -67,6 +67,12 @@ const detail = (product) => {
 </script>
 
 <style scoped>
+* {
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-family: "Orbit", sans-serif;
+  font-weight: bolder;
+}
+
 h1 {
   padding-bottom: 20px;
   margin-bottom: 30px;

@@ -1,4 +1,16 @@
 <template>
+  <nav class="nav-auth">
+    <div v-if="store.username !== null && store.token !== null" class="logined">
+      <div class="greeting">{{ store.username }} 님 환영합니다.</div>
+      <div class="btn" @click="store.logout">로그아웃</div>
+    </div>
+    <div v-else class="sign">
+      <RouterLink :to="{ name: 'signup' }" class="nav-link"
+        >회원가입</RouterLink
+      >
+      <RouterLink :to="{ name: 'login' }" class="nav-link">로그인</RouterLink>
+    </div>
+  </nav>
   <div>
     <!-- 네비게이션 바 -->
     <nav>
@@ -21,16 +33,6 @@
           <RouterLink :to="{ name: 'article' }" class="nav-link"
             >Article</RouterLink
           >
-
-          <span> | </span>
-
-          <RouterLink :to="{ name: 'signup' }" class="nav-link"
-            >Signup</RouterLink
-          >
-          <span> | </span>
-          <RouterLink :to="{ name: 'login' }" class="nav-link"
-            >Login</RouterLink
-          >
         </div>
       </nav>
     </nav>
@@ -42,6 +44,12 @@
 
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
+import { useSignStore } from "@/stores/Sign";
+const store = useSignStore();
+
+const logout = () => {
+  const payload = {};
+};
 </script>
 
 <style scoped>
@@ -54,6 +62,33 @@ import { RouterLink, RouterView } from "vue-router";
   color: rgba(255, 255, 255);
   font-weight: bold;
   font-family: "Orbit", sans-serif;
+}
+.nav-auth {
+  height: 40px;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-family: "Orbit", sans-serif;
+}
+.logined {
+  display: flex;
+  justify-content: space-between;
+  margin: 0px 10px;
+}
+.greeting {
+  display: flex;
+  align-items: center;
+  margin: 0px 20px;
+  font-size: larger;
+  font-weight: bolder;
+}
+
+.sign {
+  display: flex;
+  justify-content: end;
+  margin: 0px 20px;
+}
+.sign a {
+  margin: 8px;
+  font-size: 15px;
 }
 .navbar-brand {
   display: flex;

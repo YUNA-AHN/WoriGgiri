@@ -60,6 +60,15 @@ const product = computed(() => {
 </script>
 
 <style scoped>
+* {
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-family: "Orbit", sans-serif;
+  font-weight: bolder;
+}
+.product-info * {
+  font-size: 18px;
+}
+
 h1 {
   padding-bottom: 20px;
   margin-bottom: 30px;
@@ -77,5 +86,6 @@ h1 {
 }
 .sub-detail {
   margin: 0px 0px 0px 50px;
+  width: 100%;
 }
 </style>

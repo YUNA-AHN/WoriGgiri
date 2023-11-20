@@ -12,6 +12,8 @@ import SignUpView from "@/views/SignUpView.vue";
 import LogInView from "@/views/LogInView.vue";
 import ProductDetailView from "@/views/ProductDetailView.vue";
 
+import { useSignStore } from "@/stores/Sign";
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -66,6 +68,14 @@ const router = createRouter({
       component: ProductDetailView,
     },
   ],
+});
+
+router.beforeEach((to, from) => {
+  const store = useSignStore();
+  if (to.name === "article" && !store.isLogin) {
+    window.alert("로그인이 필요합니다.");
+    return { name: "login" };
+  }
 });
 
 // import { useCounterStore } from "@/stores/counter";
