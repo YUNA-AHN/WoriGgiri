@@ -12,6 +12,9 @@
     <p>{{ article?.content }}</p>
   </div>
 
+  <p v-if="is_like" @click="clicklikes">❤</p>
+  <p v-else @click="clicklikes">🤍</p>
+  <h4>좋아요 {{ article?.like_count }}개</h4>
   <h4>댓글 [{{ article?.comment_count }}]</h4>
   <div>
     <h5>댓글 작성</h5>
@@ -116,20 +119,54 @@ const getId = function (args) {
     .catch((err) => console.log(err));
 };
 
-// // 작성자 프로필로 가기
-// const goprofile = function () {
-//   router.replace(`/profile/${article.user}`);
-// };
+// 좋아요 기능 추가
+const user = useSignStore().username;
 
-// console.log(article.value);
+const is_like = ref(null);
+
+const check_like = function () {
+  if (article.value.like_users.includes(user)) {
+    is_like.value = true;
+    console.log("좋아해용");
+  } else {
+    is_like.value = false;
+    console.log("안좋아해용");
+  }
+};
+
+const clicklikes = function () {
+  axios({
+    method: "post",
+    url: `${store.API_URL}/articles/${articleId}/likes/`,
+    headers: {
+      Authorization: `Token ${token}`,
+    },
+  })
+    .then(() => {
+      router.push(`/article/detail/${articleId}`);
+      is_like.value = !is_like.value;
+      if (is_like.value) {
+        article.value.like_count += 1;
+      } else {
+        article.value.like_count -= 1;
+      }
+      // article.value.comment_set = article.value.comment_set.filter(
+      //   (comment) => comment.id != args
+      // );
+      // article.value.comment_count -= 1;
+    })
+    .catch((err) => console.log(err));
+};
+
 onMounted(() => {
   axios({
     method: "get",
     url: `${store.API_URL}/articles/${articleId}/`,
   })
     .then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       article.value = res.data;
+      check_like();
     })
     .catch((err) => {
       console.log(err);

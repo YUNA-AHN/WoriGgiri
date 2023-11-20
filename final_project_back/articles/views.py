@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_list_or_404, get_object_or_404
 
+from django.contrib.auth import get_user_model
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -74,11 +75,16 @@ def comment_create(request, article_pk):
         # serializer.save(article=article)
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-    
-def likes(request, article_pk):
-    article = Article.objects.get(pk=article_pk)
-    user = request.user
-    if article.like_users.filter(id=user.id).exists():
-        article.like_users.remove(user)
-    else:
-        article.like_users.add(user)
+
+@api_view(['POST'])
+def likes(request, pk):
+    article = Article.objects.get(pk=pk)
+    user = get_user_model().objects.get(username=request.user)
+
+    if request.user.is_authenticated:
+        if article.like_users.filter(id=user.id).exists():
+            article.like_users.remove(user)
+        else:
+            article.like_users.add(user)
+        serializer = ArticleSerializer(article)
+        return Response(serializer.data)

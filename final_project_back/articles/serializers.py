@@ -15,11 +15,13 @@ class ArticleSerializer(serializers.ModelSerializer):
     username = serializers.CharField(source='user.username', read_only=True)
     comment_set = CommentSerializer(many=True, read_only=True)
     comment_count = serializers.IntegerField(source='comment_set.count', read_only=True)
+    like_users = serializers.SlugRelatedField(many=True, read_only=True, slug_field='username')
+    like_count = serializers.IntegerField(source='like_users.count', read_only=True)
 
     class Meta:
         model = Article
         # fields = ("id", "title","created_at", "user", "like_users")
         # read_only_fields  = ('like_users',)
-        read_only_fields  = ('like_users','user')
+        read_only_fields  = ('user', )
 
         fields = "__all__"
