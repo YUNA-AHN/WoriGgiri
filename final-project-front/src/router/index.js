@@ -58,7 +58,7 @@ const router = createRouter({
       component: ArticleUpdateView,
     },
     {
-      path: "/profile/:id",
+      path: "/profile",
       name: "profile",
       component: UserProfileView,
     },

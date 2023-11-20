@@ -1,18 +1,18 @@
 <template>
   <div>
-    <h1>{{ article.title }}</h1>
-    <p @click="goprofile">작성자 : {{ article.username }}</p>
+    <h1>{{ article?.title }}</h1>
+    <p>작성자 : {{ article?.username }}</p>
     <button @click="deleteArticle">삭제</button> |
     <button @click="goupdate">수정</button>
     <p>
-      생성일자 : {{ article.created_at.slice(0, 10) }} 수정일자 :
-      {{ article.updated_at.slice(0, 10) }}
+      생성일자 : {{ article?.created_at.slice(0, 10) }} 수정일자 :
+      {{ article?.updated_at.slice(0, 10) }}
     </p>
     <hr />
-    <p>{{ article.content }}</p>
+    <p>{{ article?.content }}</p>
   </div>
 
-  <h4>댓글 [{{ article.comment_count }}]</h4>
+  <h4>댓글 [{{ article?.comment_count }}]</h4>
   <div>
     <h5>댓글 작성</h5>
     <div>
@@ -26,7 +26,7 @@
   </div>
   <div>
     <CommentDetail
-      v-for="comment in article.comment_set"
+      v-for="comment in article?.comment_set"
       :key="comment.id"
       :comment="comment"
       @comment-id="getId"
@@ -111,15 +111,15 @@ const getId = function (args) {
         (comment) => comment.id != args
       );
       article.value.comment_count -= 1;
-      console.log(article.value.comment_set);
+      // console.log(article.value.comment_set);
     })
     .catch((err) => console.log(err));
 };
 
-// 작성자 프로필로 가기
-const goprofile = function () {
-  router.replace(`/profile/${article.user}`);
-};
+// // 작성자 프로필로 가기
+// const goprofile = function () {
+//   router.replace(`/profile/${article.user}`);
+// };
 
 // console.log(article.value);
 onMounted(() => {
