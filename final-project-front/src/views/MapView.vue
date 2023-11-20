@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="detail-title">
-      <h1>주변 은행 검색</h1>
+      <h1>🔍 주변 은행 검색</h1>
     </div>
 
     <div class="content-map">
@@ -52,7 +52,7 @@
 h1 {
   padding-bottom: 20px;
   margin-bottom: 30px;
-  border-bottom: 5px #0dcaf0 solid;
+  border-bottom: 5px rgba(13, 172, 220, 0.7) solid;
 }
 .content-map {
   display: flex;

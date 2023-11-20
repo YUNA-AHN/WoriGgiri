@@ -16,7 +16,7 @@
     <!-- 네비게이션 바 -->
     <nav>
       <nav class="container-fluid">
-        <a class="navbar-brand" href="#">우리끼리</a>
+        <a class="navbar-brand" href="#">🐘우리끼리😘</a>
         <div class="navbar-list">
           <RouterLink :to="{ name: 'main' }" class="nav-link">Main</RouterLink>
           <span> | </span>

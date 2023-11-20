@@ -1,7 +1,7 @@
 <template>
-  <h1>예금 비교</h1>
+  <h1>📋 예금 비교</h1>
 
-  <select name="" id="" v-model="isSelected">
+  <select class="form-select selectbox" v-model="isSelected">
     <option value="default">전체 상품</option>
     <option value="deposit">정기 예금 상품</option>
     <option value="saving">적금 상품</option>
@@ -119,18 +119,22 @@ const savingDetail = (product) => {
 h1 {
   padding-bottom: 20px;
   margin-bottom: 30px;
-  border-bottom: 5px #0dcaf0 solid;
+  border-bottom: 5px rgba(13, 172, 220, 0.7) solid;
 }
 .base {
   overflow: scroll;
-  width: 800px;
+  width: 100%;
   height: 1200px;
+}
+.selectbox {
+  width: 150px;
+  margin: 0px 0px 20px 0px;
 }
 
 .product-container {
   display: flex;
   height: 50px;
-  width: 150%;
+  width: 100%;
 }
 
 /* .product-trm {

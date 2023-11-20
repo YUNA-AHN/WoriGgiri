@@ -151,7 +151,7 @@
 h1 {
   padding-bottom: 20px;
   margin-bottom: 30px;
-  border-bottom: 5px #0dcaf0 solid;
+  border-bottom: 5px rgba(13, 172, 220, 0.7) solid;
 }
 .signup-form {
   display: flex;
@@ -172,7 +172,6 @@ h1 {
   border-right: 0px;
   border-left: 0px;
   border-bottom: lightgray solid 1px;
-  color: whitesmoke;
   font-size: 20px;
   font-weight: bolder;
 }
@@ -190,8 +189,10 @@ h1 {
 import axios from "axios";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import { useSignStore } from "@/stores/sign";
 
 const router = useRouter();
+const store = useSignStore();
 
 const username = ref(null);
 const email = ref(null);
@@ -224,12 +225,18 @@ const signUp = () => {
     data.salary = salary.value;
   }
 
+  const payload = {
+    username: username.value,
+    password: password1.value,
+  };
+
   axios({
     method: "post",
     url: "http://127.0.0.1:8000/dj-rest-auth/registration/",
     data: data,
   })
     .then((response) => {
+      store.logIn(payload);
       router.push({ name: "main" });
     })
     .catch((error) => {

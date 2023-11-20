@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>Article List</h1>
     <ArticleListItem
       v-for="article in store.articles"
       :key="article.id"

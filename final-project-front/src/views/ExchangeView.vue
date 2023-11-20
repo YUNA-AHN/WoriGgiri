@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>환율 계산기</h1>
+    <h1>💰 환율 계산기</h1>
 
     <div class="header-box">
       <select v-model="select1" class="form-select">
@@ -54,7 +54,7 @@
 h1 {
   padding-bottom: 20px;
   margin-bottom: 30px;
-  border-bottom: 5px #0dcaf0 solid;
+  border-bottom: 5px rgba(13, 172, 220, 0.7) solid;
 }
 
 .form-select {
