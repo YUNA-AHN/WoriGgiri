@@ -6,6 +6,9 @@ import ExchangeView from "@/views/ExchangeView.vue";
 import ArticleView from "@/views/ArticleView.vue";
 import ArticleDetailView from "@/views/ArticleDetailView.vue";
 import ArticleCreateView from "@/views/ArticleCreateView.vue";
+import ArticleUpdateView from "@/views/ArticleUpdateView.vue";
+
+import UserProfileView from "@/views/UserProfileView.vue";
 
 import ProductListView from "@/views/ProductListView.vue";
 import SignUpView from "@/views/SignUpView.vue";
@@ -36,7 +39,7 @@ const router = createRouter({
       component: ArticleView,
     },
     {
-      path: "/articledetail/:id",
+      path: "/article/detail/:id",
       name: "articleDetail",
       component: ArticleDetailView,
     },
@@ -44,6 +47,16 @@ const router = createRouter({
       path: "/article/create",
       name: "articlecreate",
       component: ArticleCreateView,
+    },
+    {
+      path: "/article/update/:id",
+      name: "articleUpdate",
+      component: ArticleUpdateView,
+    },
+    {
+      path: "/profile/:id",
+      name: "profile",
+      component: UserProfileView,
     },
     {
       path: "/product",

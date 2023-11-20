@@ -12,9 +12,9 @@ const props = defineProps({
   article: Object,
 });
 
-const route = useRouter();
+const router = useRouter();
 const godetail = function (article) {
-  route.push(`/articledetail/${article.id}`);
+  router.push(`/article/detail/${article.id}`);
 };
 </script>
 

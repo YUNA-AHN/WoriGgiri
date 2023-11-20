@@ -31,10 +31,6 @@
           <RouterLink :to="{ name: 'login' }" class="nav-link"
             >Login</RouterLink
           >
-          <span> | </span>
-          <RouterLink :to="{ name: 'article' }" class="nav-link"
-            >Article</RouterLink
-          >
         </div>
       </nav>
     </nav>

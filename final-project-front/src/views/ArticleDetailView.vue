@@ -1,7 +1,9 @@
 <template>
   <div>
     <h1>{{ article.title }}</h1>
-    <button @click="deleteArticle">삭제</button>
+    <p @click="goprofile">작성자 : {{ article.username }}</p>
+    <button @click="deleteArticle">삭제</button> |
+    <button @click="goupdate">수정</button>
     <p>
       생성일자 : {{ article.created_at.slice(0, 10) }} 수정일자 :
       {{ article.updated_at.slice(0, 10) }}
@@ -27,31 +29,36 @@
       v-for="comment in article.comment_set"
       :key="comment.id"
       :comment="comment"
+      @comment-id="getId"
     />
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { useArticleStore } from "@/stores/articles";
+import { useSignStore } from "@/stores/sign.js";
 import { useRoute, useRouter } from "vue-router";
 import CommentDetail from "@/components/CommentDetail.vue";
 import axios from "axios";
 
 // 단일 게시물 가져오기
 const route = useRoute();
+const router = useRouter();
+
 const articleId = route.params.id;
-const articles = useArticleStore().articles;
 
-const article = articles.filter((product) => product.id == articleId)[0];
+const store = useArticleStore();
 
-// console.log(article.id);
+const article = ref(
+  store.articles.filter((product) => product.id == articleId)[0]
+);
 
 // 게시물 삭제 : 권한 추가 필요
 const deleteArticle = function () {
   axios({
     method: "delete",
-    url: `${store.API_URL}/articles/${article.id}/`,
+    url: `${store.API_URL}/articles/${articleId}/`,
   })
     .then(() => {
       router.push({ name: "article" });
@@ -59,24 +66,75 @@ const deleteArticle = function () {
     .catch((err) => console.log(err));
 };
 
+// 게시물 수정 : 권한 추가 필요
+const goupdate = function () {
+  router.push(`/article/update/${articleId}`);
+};
+
 // 댓글 작성 -  새로고침 이슈? / 글 작성자가 작성시 작성자임을 표시 추가했으면..!
 const content = ref(null);
-const store = useArticleStore();
-const router = useRouter();
+const token = useSignStore().token;
 
 const createComment = function () {
   axios({
     method: "post",
-    url: `${store.API_URL}/articles/createcomments/${article.id}/`,
+    url: `${store.API_URL}/articles/createcomments/${articleId}/`,
+    headers: {
+      Authorization: `Token ${token}`,
+    },
     data: {
       content: content.value,
     },
   })
-    .then(() => {
-      router.push(`/articledetail/${article.id}`);
+    .then((res) => {
+      router.push(`/article/detail/${articleId}`);
+      console.log("댓글이 생성되었습니다.");
+      // console.log(res.data);
+      article.value.comment_set.push(res.data);
+      article.value.comment_count += 1;
+      article.value = { ...article.value };
+      content.value = "";
     })
     .catch((err) => console.log(err));
 };
+
+// 댓글 삭제
+const getId = function (args) {
+  axios({
+    method: "delete",
+    url: `${store.API_URL}/articles/comments/${args}/`,
+  })
+    .then(() => {
+      router.push(`/article/detail/${articleId}`);
+      console.log("댓글이 삭제되었습니다.");
+      article.value.comment_set = article.value.comment_set.filter(
+        (comment) => comment.id != args
+      );
+      article.value.comment_count -= 1;
+      console.log(article.value.comment_set);
+    })
+    .catch((err) => console.log(err));
+};
+
+// 작성자 프로필로 가기
+const goprofile = function () {
+  router.replace(`/profile/${article.user}`);
+};
+
+// console.log(article.value);
+onMounted(() => {
+  axios({
+    method: "get",
+    url: `${store.API_URL}/articles/${articleId}/`,
+  })
+    .then((res) => {
+      console.log(res.data);
+      article.value = res.data;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
 </script>
 
 <style scoped></style>
