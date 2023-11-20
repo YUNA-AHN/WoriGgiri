@@ -29,6 +29,7 @@
       v-for="comment in article.comment_set"
       :key="comment.id"
       :comment="comment"
+      @comment-id="getId"
     />
   </div>
 </template>
@@ -36,6 +37,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useArticleStore } from "@/stores/articles";
+import { useSignStore } from "@/stores/sign.js";
 import { useRoute, useRouter } from "vue-router";
 import CommentDetail from "@/components/CommentDetail.vue";
 import axios from "axios";
@@ -43,18 +45,20 @@ import axios from "axios";
 // 단일 게시물 가져오기
 const route = useRoute();
 const router = useRouter();
+
 const articleId = route.params.id;
-const articles = useArticleStore().articles;
 
-const article = articles.filter((product) => product.id == articleId)[0];
+const store = useArticleStore();
 
-// console.log(article);
+const article = ref(
+  store.articles.filter((product) => product.id == articleId)[0]
+);
 
 // 게시물 삭제 : 권한 추가 필요
 const deleteArticle = function () {
   axios({
     method: "delete",
-    url: `${store.API_URL}/articles/${article.id}/`,
+    url: `${store.API_URL}/articles/${articleId}/`,
   })
     .then(() => {
       router.push({ name: "article" });
@@ -64,34 +68,72 @@ const deleteArticle = function () {
 
 // 게시물 수정 : 권한 추가 필요
 const goupdate = function () {
-  router.push(`/article/update/${article.id}`);
+  router.push(`/article/update/${articleId}`);
 };
 
 // 댓글 작성 -  새로고침 이슈? / 글 작성자가 작성시 작성자임을 표시 추가했으면..!
 const content = ref(null);
-const store = useArticleStore();
+const token = useSignStore().token;
 
 const createComment = function () {
   axios({
     method: "post",
-    url: `${store.API_URL}/articles/createcomments/${article.id}/`,
+    url: `${store.API_URL}/articles/createcomments/${articleId}/`,
+    headers: {
+      Authorization: `Token ${token}`,
+    },
     data: {
       content: content.value,
     },
   })
+    .then((res) => {
+      router.push(`/article/detail/${articleId}`);
+      console.log("댓글이 생성되었습니다.");
+      // console.log(res.data);
+      article.value.comment_set.push(res.data);
+      article.value.comment_count += 1;
+      article.value = { ...article.value };
+      content.value = "";
+    })
+    .catch((err) => console.log(err));
+};
+
+// 댓글 삭제
+const getId = function (args) {
+  axios({
+    method: "delete",
+    url: `${store.API_URL}/articles/comments/${args}/`,
+  })
     .then(() => {
-      router.push(`/article/detail/${article.id}`);
+      router.push(`/article/detail/${articleId}`);
+      console.log("댓글이 삭제되었습니다.");
+      article.value.comment_set = article.value.comment_set.filter(
+        (comment) => comment.id != args
+      );
+      article.value.comment_count -= 1;
+      console.log(article.value.comment_set);
     })
     .catch((err) => console.log(err));
 };
 
 // 작성자 프로필로 가기
 const goprofile = function () {
-  router.push(`/profile/${article.user}`);
+  router.replace(`/profile/${article.user}`);
 };
 
+// console.log(article.value);
 onMounted(() => {
-  store.getArticles();
+  axios({
+    method: "get",
+    url: `${store.API_URL}/articles/${articleId}/`,
+  })
+    .then((res) => {
+      console.log(res.data);
+      article.value = res.data;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 </script>
 

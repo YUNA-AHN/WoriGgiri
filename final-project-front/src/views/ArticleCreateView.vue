@@ -16,18 +16,26 @@
 import axios from "axios";
 import { ref } from "vue";
 import { useArticleStore } from "@/stores/articles.js";
+import { useSignStore } from "@/stores/sign.js";
 import { useRouter } from "vue-router";
 
 const title = ref(null);
 const content = ref(null);
 
 const store = useArticleStore();
+const token = useSignStore().token;
+
+console.log(token);
+
 const router = useRouter();
 
 const createArticle = function () {
   axios({
     method: "post",
     url: `${store.API_URL}/articles/`,
+    headers: {
+      Authorization: `Token ${token}`,
+    },
     data: {
       title: title.value,
       content: content.value,
