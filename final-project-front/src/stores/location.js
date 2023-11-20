@@ -284,6 +284,7 @@ export const useLocationStore = defineStore("location", () => {
     "우리은행",
     "농협",
     "기업은행",
+    "대구은행",
   ];
   return {
     mainList,

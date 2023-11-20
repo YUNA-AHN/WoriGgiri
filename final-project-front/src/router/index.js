@@ -14,6 +14,10 @@ import ProductListView from "@/views/ProductListView.vue";
 import SignUpView from "@/views/SignUpView.vue";
 import LogInView from "@/views/LogInView.vue";
 import ProductDetailView from "@/views/ProductDetailView.vue";
+import DepositProductsView from "@/views/DepositProductsView.vue";
+import SavingProductsView from "@/views/SavingProductsView.vue";
+
+import { useSignStore } from "@/stores/Sign";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -78,7 +82,25 @@ const router = createRouter({
       name: "detail",
       component: ProductDetailView,
     },
+    {
+      path: "/product/depositproducts",
+      name: "deposit",
+      component: DepositProductsView,
+    },
+    {
+      path: "/product/savingproducts",
+      name: "saving",
+      component: SavingProductsView,
+    },
   ],
+});
+
+router.beforeEach((to, from) => {
+  const store = useSignStore();
+  if (to.name === "article" && !store.isLogin) {
+    window.alert("로그인이 필요합니다.");
+    return { name: "login" };
+  }
 });
 
 // import { useCounterStore } from "@/stores/counter";
