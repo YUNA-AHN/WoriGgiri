@@ -2,8 +2,11 @@
   <div>
     <h1>{{ article?.title }}</h1>
     <p>작성자 : {{ article?.username }}</p>
-    <button @click="deleteArticle">삭제</button> |
-    <button @click="goupdate">수정</button>
+    <div v-if="is_article">
+      <button @click="deleteArticle">삭제</button> |
+      <button @click="goupdate">수정</button>
+    </div>
+
     <p>
       생성일자 : {{ article?.created_at.slice(0, 10) }} 수정일자 :
       {{ article?.updated_at.slice(0, 10) }}
@@ -57,7 +60,7 @@ const article = ref(
   store.articles.filter((product) => product.id == articleId)[0]
 );
 
-// 게시물 삭제 : 권한 추가 필요
+// 게시물 삭제
 const deleteArticle = function () {
   axios({
     method: "delete",
@@ -69,12 +72,12 @@ const deleteArticle = function () {
     .catch((err) => console.log(err));
 };
 
-// 게시물 수정 : 권한 추가 필요
+// 게시물 수정
 const goupdate = function () {
   router.push(`/article/update/${articleId}`);
 };
 
-// 댓글 작성 -  새로고침 이슈? / 글 작성자가 작성시 작성자임을 표시 추가했으면..!
+// 댓글 작성 - 글 작성자가 작성시 작성자임을 표시 추가했으면..!
 const content = ref(null);
 const token = useSignStore().token;
 
@@ -106,6 +109,9 @@ const getId = function (args) {
   axios({
     method: "delete",
     url: `${store.API_URL}/articles/comments/${args}/`,
+    headers: {
+      Authorization: `Token ${token}`,
+    },
   })
     .then(() => {
       router.push(`/article/detail/${articleId}`);
@@ -127,10 +133,10 @@ const is_like = ref(null);
 const check_like = function () {
   if (article.value.like_users.includes(user)) {
     is_like.value = true;
-    console.log("좋아해용");
+    console.log("좋아용");
   } else {
     is_like.value = false;
-    console.log("안좋아해용");
+    console.log("안좋아용");
   }
 };
 
@@ -150,12 +156,21 @@ const clicklikes = function () {
       } else {
         article.value.like_count -= 1;
       }
-      // article.value.comment_set = article.value.comment_set.filter(
-      //   (comment) => comment.id != args
-      // );
-      // article.value.comment_count -= 1;
     })
     .catch((err) => console.log(err));
+};
+
+// 작성자인지 체크
+const is_article = ref(null);
+
+const checkArticleUser = function () {
+  if (article.value.username == user) {
+    is_article.value = true;
+    console.log("글 작성자입니다.");
+  } else {
+    is_article.value = false;
+    console.log("글 작성자가 아닙니다.");
+  }
 };
 
 onMounted(() => {
@@ -167,6 +182,8 @@ onMounted(() => {
       // console.log(res.data);
       article.value = res.data;
       check_like();
+      checkArticleUser();
+      console.log(article.value);
     })
     .catch((err) => {
       console.log(err);

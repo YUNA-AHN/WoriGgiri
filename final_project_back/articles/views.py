@@ -28,17 +28,20 @@ def article_list(request):
 @api_view(['GET', 'DELETE', 'PUT'])
 def article_detail(request, pk):
     article = Article.objects.get(pk=pk)
+    user = request.user
     if request.method == "GET":
         serializer = ArticleSerializer(article)
         return Response(serializer.data)
     elif request.method == "DELETE":
-        article.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        if user == article.user:
+            article.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
     elif request.method == 'PUT':
-        serializer = ArticleSerializer(article, data=request.data)
-        if serializer.is_valid(raise_exception=True):
-            serializer.save()
-            return Response(serializer.data)
+        if user == article.user:
+            serializer = ArticleSerializer(article, data=request.data)
+            if serializer.is_valid(raise_exception=True):
+                serializer.save()
+                return Response(serializer.data)
 
 
 @api_view(['GET'])
@@ -56,8 +59,10 @@ def comment_detail(request, pk):
         serializer = CommentSerializer(comment)
         return Response(serializer.data)
     elif request.method == "DELETE":
-        comment.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        if request.user.is_authenticated:
+            if request.user == comment.user:
+                comment.delete()
+                return Response(status=status.HTTP_204_NO_CONTENT)
     elif request.method == 'PUT':
         serializer = CommentSerializer(comment, data=request.data)
         if serializer.is_valid(raise_exception=True):
