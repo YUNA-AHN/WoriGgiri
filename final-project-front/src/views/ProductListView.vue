@@ -1,11 +1,18 @@
 <template>
   <h1>📋 예금 비교</h1>
-
-  <select class="form-select selectbox" v-model="isSelected">
-    <option value="default">전체 상품</option>
-    <option value="deposit">정기 예금 상품</option>
-    <option value="saving">적금 상품</option>
-  </select>
+  <div class="select-category">
+    <select class="form-select selectbox" v-model="isSelected">
+      <option value="default">전체 상품</option>
+      <option value="deposit">정기 예금 상품</option>
+      <option value="saving">적금 상품</option>
+    </select>
+    <select class="form-select selectbox" v-model="selectedBank">
+      <option value="default">은행 목록</option>
+      <option v-for="bank in store.bankList" :value="bank">
+        {{ bank }}
+      </option>
+    </select>
+  </div>
 
   <div class="base">
     <div class="titles">
@@ -17,34 +24,39 @@
       <span class="title-24">24개월</span>
       <span class="title-36">36개월</span>
     </div>
-    <hr />
+    <hr style="width: 170%" />
     <div
       class="deposit-products"
       v-if="isSelected === 'default' || isSelected === 'deposit'"
     >
-      <div
-        class="product-container"
-        v-for="product in store.deposit_products"
-        :key="product.id"
-      >
-        <p class="title-month">{{ product.fin_co_subm_day.substring(0, 6) }}</p>
-        <p class="title-cn">{{ product.kor_co_nm }}</p>
-        <p class="title-fn" @click="depositDetail(product)">
-          {{ product.fin_prdt_nm }}
-        </p>
-        <div v-for="option in store.deposit_options" :key="option.id">
-          <div v-if="option.fin_prdt_cd === product.id">
-            <div class="title-6" v-if="option.save_trm === 6">
-              {{ option.intr_rate2 }}
-            </div>
-            <div class="title-12" v-if="option.save_trm === 12">
-              {{ option.intr_rate2 }}
-            </div>
-            <div class="title-24" v-if="option.save_trm === 24">
-              {{ option.intr_rate2 }}
-            </div>
-            <div class="title-36" v-if="option.save_trm === 36">
-              {{ option.intr_rate2 }}
+      <div v-for="product in store.deposit_products" :key="product.id">
+        <div
+          class="product-container"
+          v-if="
+            selectedBank === 'default' || product.kor_co_nm === selectedBank
+          "
+        >
+          <p class="title-month">
+            {{ product.fin_co_subm_day.substring(0, 6) }}
+          </p>
+          <p class="title-cn">{{ product.kor_co_nm }}</p>
+          <p class="title-fn" @click="depositDetail(product)">
+            {{ product.fin_prdt_nm }}
+          </p>
+          <div v-for="option in store.deposit_options" :key="option.id">
+            <div v-if="option.fin_prdt_cd === product.id">
+              <div class="title-6" v-if="option.save_trm === 6">
+                {{ option.intr_rate2 }}
+              </div>
+              <div class="title-12" v-if="option.save_trm === 12">
+                {{ option.intr_rate2 }}
+              </div>
+              <div class="title-24" v-if="option.save_trm === 24">
+                {{ option.intr_rate2 }}
+              </div>
+              <div class="title-36" v-if="option.save_trm === 36">
+                {{ option.intr_rate2 }}
+              </div>
             </div>
           </div>
         </div>
@@ -55,29 +67,34 @@
       class="saving-products"
       v-if="isSelected === 'default' || isSelected === 'saving'"
     >
-      <div
-        class="product-container"
-        v-for="product in store.saving_products"
-        :key="product.id"
-      >
-        <p class="title-month">{{ product.fin_co_subm_day.substring(0, 6) }}</p>
-        <p class="title-cn">{{ product.kor_co_nm }}</p>
-        <p class="title-fn" @click="savingDetail(product)">
-          {{ product.fin_prdt_nm }}
-        </p>
-        <div v-for="option in store.saving_options" :key="option.id">
-          <div v-if="option.fin_prdt_cd === product.id">
-            <div class="title-6" v-if="option.save_trm === 6">
-              {{ option.intr_rate2 }}
-            </div>
-            <div class="title-12" v-if="option.save_trm === 12">
-              {{ option.intr_rate2 }}
-            </div>
-            <div class="title-24" v-if="option.save_trm === 24">
-              {{ option.intr_rate2 }}
-            </div>
-            <div class="title-36" v-if="option.save_trm === 36">
-              {{ option.intr_rate2 }}
+      <div v-for="product in store.saving_products" :key="product.id">
+        <div
+          class="product-container"
+          v-if="
+            selectedBank === 'default' || product.kor_co_nm === selectedBank
+          "
+        >
+          <p class="title-month">
+            {{ product.fin_co_subm_day.substring(0, 6) }}
+          </p>
+          <p class="title-cn">{{ product.kor_co_nm }}</p>
+          <p class="title-fn" @click="savingDetail(product)">
+            {{ product.fin_prdt_nm }}
+          </p>
+          <div v-for="option in store.saving_options" :key="option.id">
+            <div v-if="option.fin_prdt_cd === product.id">
+              <div class="title-6" v-if="option.save_trm === 6">
+                {{ option.intr_rate2 }}
+              </div>
+              <div class="title-12" v-if="option.save_trm === 12">
+                {{ option.intr_rate2 }}
+              </div>
+              <div class="title-24" v-if="option.save_trm === 24">
+                {{ option.intr_rate2 }}
+              </div>
+              <div class="title-36" v-if="option.save_trm === 36">
+                {{ option.intr_rate2 }}
+              </div>
             </div>
           </div>
         </div>
@@ -89,13 +106,16 @@
 <script setup>
 // import axios from 'axios'
 import { useProductsStore } from "@/stores/products";
+import { useLocationStore } from "@/stores/location";
 import { useRouter } from "vue-router";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { RouterLink, RouterView } from "vue-router";
 const store = useProductsStore();
+const locationStore = useLocationStore();
 const router = useRouter();
 
 const isSelected = ref("default");
+const selectedBank = ref("default");
 
 const depositDetail = (product) => {
   router.push({
@@ -126,9 +146,13 @@ h1 {
   width: 100%;
   height: 1200px;
 }
+
+.select-category {
+  display: flex;
+}
 .selectbox {
-  width: 150px;
-  margin: 0px 0px 20px 0px;
+  width: 200px;
+  margin: 0px 30px 20px 0px;
 }
 
 .product-container {
@@ -142,13 +166,13 @@ h1 {
   margin: 0px 3px;
 } */
 .deposit-products {
-  width: 150%;
+  width: 170%;
 }
 .saving-products {
-  width: 150%;
+  width: 170%;
 }
 .titles {
-  width: 150%;
+  width: 170%;
   display: flex;
 }
 
