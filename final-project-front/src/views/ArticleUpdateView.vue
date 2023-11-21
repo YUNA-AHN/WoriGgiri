@@ -34,28 +34,24 @@
 
 <script setup>
 import { ref, onMounted, onUpdated } from "vue";
-import { storeToRefs } from "pinia";
+// import { storeToRefs } from "pinia";
 import { useArticleStore } from "@/stores/articles";
 import { useSignStore } from "@/stores/sign";
 import { useRoute, useRouter } from "vue-router";
 import axios from "axios";
-import { computed } from "@vue/reactivity";
+// import { computed } from "@vue/reactivity";
 
 const route = useRoute();
 const router = useRouter();
 
 const articleId = route.params.id;
 const store = useArticleStore();
-// const { articles } = storeToRefs(store);
-
-// console.log(articles);
-// console.log(articles.value);
 
 const title = ref(null);
 const content = ref(null);
 
 const token = useSignStore().token;
-// updateArticle - 마찬가지로 새로고침 이슈..
+// updateArticle
 const updateArticle = function () {
   axios({
     method: "put",

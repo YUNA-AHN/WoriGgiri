@@ -15,6 +15,9 @@ import { useArticleStore } from "@/stores/articles";
 const store = useArticleStore();
 
 // console.log(store.articles);
+// onMounted(() => {
+//   store;
+// });
 </script>
 
 <style scoped></style>

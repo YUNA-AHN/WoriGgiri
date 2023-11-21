@@ -16,12 +16,16 @@ import ArticleList from "@/components/ArticleList.vue";
 import { useArticleStore } from "@/stores/articles";
 import { RouterLink } from "vue-router";
 import { onMounted } from "vue";
+// import { storeToRefs } from "pinia";
 
 const store = useArticleStore();
 
-// onMounted(() => {
-//   store.getArticles();
-// });
+onMounted(() => {
+  store.getArticles();
+  console.log(store.articles);
+  // const { articles } = storeToRefs(store);
+  // console.log(articles);
+});
 </script>
 
 <style scoped>
