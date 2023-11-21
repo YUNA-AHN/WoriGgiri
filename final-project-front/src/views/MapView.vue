@@ -62,11 +62,11 @@ h1 {
 .search-form {
   display: flex;
   flex-direction: column;
-  width: 200px;
+  width: 300px;
 }
 
 .search-form * {
-  margin: 10px 0px;
+  margin: 0px 0px 30px 0px;
 }
 
 .select-box {
@@ -79,10 +79,13 @@ h1 {
   justify-content: center;
   align-content: center;
   /* font-weight: bolder; */
-  color: whitesmoke;
+  border: rgba(119, 185, 252, 0.1) 1px solid;
+  background-color: rgba(119, 185, 252, 0.6);
+  color: rgb(80, 80, 80);
 }
 #map {
   border-radius: 20px;
+  border: rgba(13, 172, 220, 0.7) 3px solid;
 }
 </style>
 
@@ -176,7 +179,7 @@ const dft = "시 / 도 를 선택해주세요";
 const search = () => {
   searchKeyword.value = `${mainRegion.value}+${subRegion.value}+${bankKeyword.value}`;
 
-  // var infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
+  var infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
 
   var mapContainer = document.getElementById("map"), // 지도를 표시할 div
     mapOption = {

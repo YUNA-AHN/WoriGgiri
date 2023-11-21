@@ -7,21 +7,42 @@
         >게시물 생성</RouterLink
       >
     </div>
-    <ArticleList />
+    <div v-for="article in articles">
+      <div @click="godetail(article)">
+        <h5>{{ article.id }} | {{ article.title }}</h5>
+        <hr />
+      </div>
+    </div>
+    <!-- <ArticleList /> -->
   </div>
 </template>
 
 <script setup>
 import ArticleList from "@/components/ArticleList.vue";
 import { useArticleStore } from "@/stores/articles";
-import { RouterLink } from "vue-router";
-import { onMounted } from "vue";
+import { RouterLink, useRouter } from "vue-router";
+import { ref, onMounted, onUpdated } from "vue";
+import axios from "axios";
 
 const store = useArticleStore();
+const articles = ref(null);
 
-// onMounted(() => {
-//   store.getArticles();
-// });
+const router = useRouter();
+const godetail = function (article) {
+  router.push(`/article/detail/${article.id}`);
+};
+onMounted(() => {
+  axios({
+    method: "get",
+    url: `${store.API_URL}/articles/`,
+  })
+    .then((res) => {
+      articles.value = res.data;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
 </script>
 
 <style scoped>

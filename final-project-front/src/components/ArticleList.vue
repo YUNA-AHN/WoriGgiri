@@ -1,7 +1,7 @@
 <template>
   <div>
     <ArticleListItem
-      v-for="article in store.articles"
+      v-for="article in articles"
       :key="article.id"
       :article="article"
     />

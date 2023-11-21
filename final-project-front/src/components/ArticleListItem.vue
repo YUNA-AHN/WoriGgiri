@@ -1,9 +1,4 @@
-<template>
-  <div @click="godetail(article)">
-    <h5>{{ article.id }} | {{ article.title }}</h5>
-    <hr />
-  </div>
-</template>
+<template></template>
 
 <script setup>
 import { useRouter } from "vue-router";
