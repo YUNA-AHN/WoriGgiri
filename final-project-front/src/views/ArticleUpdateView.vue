@@ -43,6 +43,8 @@ import { computed } from "@vue/reactivity";
 
 const route = useRoute();
 const router = useRouter();
+
+const articleId = route.params.id;
 const store = useArticleStore();
 // const { articles } = storeToRefs(store);
 
