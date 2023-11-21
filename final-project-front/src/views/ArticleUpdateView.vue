@@ -13,9 +13,10 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted, onUpdated } from "vue";
+import { storeToRefs } from "pinia";
 import { useArticleStore } from "@/stores/articles";
-import { useSignStore } from "@/stores/sign.js";
+import { useSignStore } from "@/stores/sign";
 import { useRoute, useRouter } from "vue-router";
 import axios from "axios";
 
@@ -24,21 +25,20 @@ const router = useRouter();
 
 const articleId = route.params.id;
 const store = useArticleStore();
+// const { articles } = storeToRefs(store);
 
-const article = ref(
-  store.articles.filter((product) => product.id == articleId)[0]
-);
+// console.log(articles);
+// console.log(articles.value);
 
-// 기존 값 입력해주기
-const title = ref(article.value.title);
-const content = ref(article.value.content);
+const title = ref(null);
+const content = ref(null);
 
 const token = useSignStore().token;
 // updateArticle - 마찬가지로 새로고침 이슈..
 const updateArticle = function () {
   axios({
     method: "put",
-    url: `${store.API_URL}/articles/${article.value.id}/`,
+    url: `${store.API_URL}/articles/${articleId}/`,
     headers: {
       Authorization: `Token ${token}`,
     },
@@ -48,11 +48,28 @@ const updateArticle = function () {
     },
   })
     .then((res) => {
-      router.push(`/article/detail/${article.value.id}`);
+      router.push(`/article/detail/${articleId}`);
       console.log(res.data);
     })
     .catch((err) => console.log(err));
 };
+
+const article = ref(null);
+onMounted(() => {
+  axios({
+    method: "get",
+    url: `${store.API_URL}/articles/${articleId}/`,
+  })
+    .then((res) => {
+      article.value = res.data;
+      // console.log(article.value);
+      title.value = article.value.title;
+      content.value = article.value.content;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
 </script>
 
 <style scoped></style>
