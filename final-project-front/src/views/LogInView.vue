@@ -54,7 +54,7 @@ const logIn = () => {
 h1 {
   padding-bottom: 20px;
   margin-bottom: 30px;
-  border-bottom: 5px #0dcaf0 solid;
+  border-bottom: 5px rgba(13, 172, 220, 0.7) solid;
 }
 .form-container {
   display: flex;
@@ -71,5 +71,12 @@ form {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+.btn {
+  border: 1px solid rgba(119, 185, 252, 0.1);
+  background-color: rgba(119, 185, 252, 0.6);
+  color: rgb(60, 60, 60);
+  font-size: 17px;
+  font-weight: bolder;
 }
 </style>

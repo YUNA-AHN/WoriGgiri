@@ -18,13 +18,13 @@ def temp(request):
         'topFinGrpNo' : '020000',
         'pageNo' : 1,
     }
-    deposit = 'depositProductsSearch.json'
-    deposit_response = requests.get(url + deposit, params=params).json()
+    saving = 'savingProductsSearch.json'
+    saving_response = requests.get(url + saving, params=params).json()
 
-    deposit_option_list = deposit_response.get('result').get('optionList')
-    serializer = DepositOptionsSerializer(data=deposit_option_list, many=True)
+    saving_option_list = saving_response.get('result').get('optionList')
+    serializer = DepositOptionsSerializer(data=saving_option_list, many=True)
     if serializer.is_valid(raise_exception=True):
-        return JsonResponse(deposit_response)
+        return JsonResponse(saving_response)
 
 
 @api_view(['GET'])
@@ -114,7 +114,7 @@ def save_data(request):
 @api_view(['GET'])
 def deposit_products(request):
     products = DepositProducts.objects.all()
-
+    print(products)
     # options = DepositOptions.objects.filter(fin_prdt_cd)
     serializer = DepositProductsSerializer(products, many=True)
     return Response(serializer.data)

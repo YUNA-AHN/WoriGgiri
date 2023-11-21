@@ -10,12 +10,13 @@
       >
       <RouterLink :to="{ name: 'login' }" class="nav-link">로그인</RouterLink>
     </div>
+    <!-- <RouterLink :to="{ name: 'update' }">회원정보수정</RouterLink> -->
   </nav>
   <div>
     <!-- 네비게이션 바 -->
     <nav>
       <nav class="container-fluid">
-        <a class="navbar-brand" href="#">은행프젝</a>
+        <a class="navbar-brand" href="#">🐘우리끼리😘</a>
         <div class="navbar-list">
           <RouterLink :to="{ name: 'main' }" class="nav-link">Main</RouterLink>
           <span> | </span>
@@ -50,6 +51,7 @@
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
 import { useSignStore } from "@/stores/Sign";
+
 const store = useSignStore();
 
 const logout = () => {

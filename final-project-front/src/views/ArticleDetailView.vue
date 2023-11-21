@@ -1,32 +1,52 @@
 <template>
   <div>
     <h1>{{ article?.title }}</h1>
-    <p>작성자 : {{ article?.username }}</p>
-    <div v-if="is_article">
-      <button @click="deleteArticle">삭제</button> |
-      <button @click="goupdate">수정</button>
-    </div>
+    <div class="detail-header">
+      <p @click="goprofile">작성자 : {{ article?.username }}</p>
 
+      <div>
+        <button class="btn btn-info" @click="goupdate">수정</button>
+        <span> | </span>
+        <button class="btn btn-info" @click="deleteArticle">삭제</button>
+      </div>
+    </div>
     <p>
       생성일자 : {{ article?.created_at.slice(0, 10) }} 수정일자 :
       {{ article?.updated_at.slice(0, 10) }}
     </p>
     <hr />
-    <p>{{ article?.content }}</p>
+    <div class="article-container">
+      <p>{{ article?.content }}</p>
+    </div>
   </div>
+  <hr />
 
   <p v-if="is_like" @click="clicklikes">❤</p>
   <p v-else @click="clicklikes">🤍</p>
   <h4>좋아요 {{ article?.like_count }}개</h4>
-  <h4>댓글 [{{ article?.comment_count }}]</h4>
+
+  <h4 class="mb-4">댓글 [{{ article?.comment_count }}]</h4>
+
   <div>
     <h5>댓글 작성</h5>
     <div>
       <form @submit.prevent="createComment">
-        <label for="content">내용 : </label>
-        <textarea type="text" id="content" v-model.trim="content"></textarea
-        ><br />
-        <input type="submit" />
+        <div class="form-floating">
+          <input
+            class="form-control"
+            type="text"
+            id="floatingInputValue"
+            placeholder="내용을 입력하세요"
+            v-model.trim="content"
+          />
+          <label for="floatingInputValue">내용을 입력하세요</label>
+        </div>
+        <input
+          id="comment-btn"
+          class="btn btn-info"
+          type="submit"
+          value="작성"
+        />
       </form>
     </div>
   </div>
@@ -60,7 +80,7 @@ const article = ref(
   store.articles.filter((product) => product.id == articleId)[0]
 );
 
-// 게시물 삭제
+// 게시물 삭제 : 권한 추가 필요
 const deleteArticle = function () {
   axios({
     method: "delete",
@@ -72,12 +92,12 @@ const deleteArticle = function () {
     .catch((err) => console.log(err));
 };
 
-// 게시물 수정
+// 게시물 수정 : 권한 추가 필요
 const goupdate = function () {
   router.push(`/article/update/${articleId}`);
 };
 
-// 댓글 작성 - 글 작성자가 작성시 작성자임을 표시 추가했으면..!
+// 댓글 작성 -  새로고침 이슈? / 글 작성자가 작성시 작성자임을 표시 추가했으면..!
 const content = ref(null);
 const token = useSignStore().token;
 
@@ -173,6 +193,7 @@ const checkArticleUser = function () {
   }
 };
 
+// console.log(article.value);
 onMounted(() => {
   axios({
     method: "get",
@@ -191,4 +212,57 @@ onMounted(() => {
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+* {
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-family: "Orbit", sans-serif;
+  font-weight: bolder;
+}
+h1 {
+  padding-bottom: 20px;
+  margin-bottom: 30px;
+  border-bottom: 5px rgba(13, 172, 220, 0.7) solid;
+}
+
+.form-control {
+  border-top: white;
+  border-left: white;
+  border-right: white;
+  border-bottom: 1px solid rgb(119, 185, 252);
+  border-radius: 0px;
+  margin: 0px 0px 10px 0px;
+  width: 400px;
+}
+
+.detail-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.article-container {
+  width: 100%;
+  height: 300px;
+  border: 1px solid lightgray;
+  padding: 10px;
+}
+
+form {
+  display: flex;
+  align-items: center;
+}
+
+.btn {
+  width: 100px;
+  height: 40px;
+  border: 1px solid rgba(119, 185, 252, 0.1);
+  background-color: rgba(119, 185, 252, 0.6);
+  color: rgb(60, 60, 60);
+  font-size: 17px;
+  font-weight: bolder;
+}
+
+#comment-btn {
+  width: 70px;
+  margin-left: 10px;
+}
+</style>

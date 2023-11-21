@@ -53,7 +53,7 @@ const productCd = route.params.fin_prdt_cd;
 const product = computed(() => {
   // filtered.value = store.deposit_products.filter((product) =>
   // product.fin_prdt_cd === productCd)
-  return store.deposit_products?.filter(
+  return store.saving_products?.filter(
     (product) => product.fin_prdt_cd === productCd
   )[0];
 });

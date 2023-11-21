@@ -1,7 +1,10 @@
 <template>
   <div>
-    <h1>게시판</h1>
-    <RouterLink :to="{ name: 'articlecreate' }">[게시물 생성]</RouterLink>
+    <h1>📝 게시판</h1>
+    <div class="article-list-header">
+      <h2>Article List</h2>
+      <RouterLink :to="{ name: 'articlecreate' }">[게시물 생성]</RouterLink>
+    </div>
     <ArticleList />
   </div>
 </template>
@@ -19,4 +22,20 @@ onMounted(() => {
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+* {
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-family: "Orbit", sans-serif;
+  font-weight: bolder;
+}
+h1 {
+  padding-bottom: 20px;
+  margin-bottom: 30px;
+  border-bottom: 5px rgba(13, 172, 220, 0.7) solid;
+}
+.article-list-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+</style>
