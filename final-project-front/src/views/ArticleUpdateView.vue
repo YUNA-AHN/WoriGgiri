@@ -33,9 +33,10 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { ref, onMounted, onUpdated } from "vue";
+import { storeToRefs } from "pinia";
 import { useArticleStore } from "@/stores/articles";
-import { useSignStore } from "@/stores/sign.js";
+import { useSignStore } from "@/stores/sign";
 import { useRoute, useRouter } from "vue-router";
 import axios from "axios";
 import { computed } from "@vue/reactivity";
@@ -43,44 +44,50 @@ import { computed } from "@vue/reactivity";
 const route = useRoute();
 const router = useRouter();
 const store = useArticleStore();
+// const { articles } = storeToRefs(store);
 
-const articleId = route.params.id;
+// console.log(articles);
+// console.log(articles.value);
 
-const article = store.articles.filter((one) => one.id == articleId);
-const title = computed(() => {
-  return article[0].title;
-});
-const content = computed(() => {
-  return article[0].content;
-});
-// const article = ref(
-//   store.articles.filter((product) => product.id === articleId)[0]
-// );
-onMounted(() => {
-  // const article = ref(null);
-  article.value = store.articles.filter((product) => product.id == articleId);
-  // 기존 값 입력해주기
+const title = ref(null);
+const content = ref(null);
 
-  const token = useSignStore().token;
-  // updateArticle - 마찬가지로 새로고침 이슈..
-  const updateArticle = function () {
-    axios({
-      method: "put",
-      url: `${store.API_URL}/articles/${article.value.id}/`,
-      headers: {
-        Authorization: `Token ${token}`,
-      },
-      data: {
-        title: title.value,
-        content: content.value,
-      },
+const token = useSignStore().token;
+// updateArticle - 마찬가지로 새로고침 이슈..
+const updateArticle = function () {
+  axios({
+    method: "put",
+    url: `${store.API_URL}/articles/${articleId}/`,
+    headers: {
+      Authorization: `Token ${token}`,
+    },
+    data: {
+      title: title.value,
+      content: content.value,
+    },
+  })
+    .then((res) => {
+      router.push(`/article/detail/${articleId}`);
+      console.log(res.data);
     })
-      .then((res) => {
-        router.push(`/article/detail/${article.value.id}`);
-        console.log(res.data);
-      })
-      .catch((err) => console.log(err));
-  };
+    .catch((err) => console.log(err));
+};
+
+const article = ref(null);
+onMounted(() => {
+  axios({
+    method: "get",
+    url: `${store.API_URL}/articles/${articleId}/`,
+  })
+    .then((res) => {
+      article.value = res.data;
+      // console.log(article.value);
+      title.value = article.value.title;
+      content.value = article.value.content;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 </script>
 

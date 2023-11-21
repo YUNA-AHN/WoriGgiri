@@ -2,10 +2,10 @@
   <div>
     <h1>{{ article?.title }}</h1>
     <div class="detail-header">
-      <p @click="goprofile">작성자 : {{ article?.username }}</p>
+      <p>작성자 : {{ article?.username }}</p>
 
-      <div>
-        <button id="btn" class="btn" @click="goupdate">수정</button>
+      <div v-if="is_article">
+        <button class="btn btn-info" @click="goupdate">수정</button>
         <span> | </span>
         <button id="btn" class="btn" @click="deleteArticle">삭제</button>
       </div>
