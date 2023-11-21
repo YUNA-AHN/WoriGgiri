@@ -36,7 +36,7 @@
       >
         (선택)
       </p>
-      <div class="info-list">
+      <!-- <div class="info-list">
         <label for="password1">비밀번호 : </label>
         <input
           type="password"
@@ -73,7 +73,7 @@
         "
       >
         (필수) 비밀번호를 한 번 더 입력해주세요.
-      </p>
+      </p> -->
       <div class="info-list">
         <label for="nickname">닉네임 : </label>
         <input
@@ -136,7 +136,12 @@
         (선택)
       </p>
       <div class="info-list">
-        <input id="btn" class="btn btn-info" type="submit" value="회원 가입" />
+        <input
+          id="btn"
+          class="btn btn-info"
+          type="submit"
+          value="회원 정보 수정"
+        />
       </div>
     </form>
   </div>
@@ -146,14 +151,17 @@
 import axios from "axios";
 import { useSignStore } from "@/stores/Sign";
 import { useRoute, useRouter } from "vue-router";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 const store = useSignStore();
 const router = useRouter();
 
+const user = ref();
+const token = store.token;
+
 const username = ref(null);
 const email = ref(null);
-const password1 = ref(null);
-const password2 = ref(null);
+// const password1 = ref(null);
+// const password2 = ref(null);
 const nickname = ref(null);
 const age = ref(null);
 const money = ref(null);
@@ -162,8 +170,8 @@ const salary = ref(null);
 const Update = () => {
   const data = {
     username: username.value,
-    password1: password1.value,
-    password2: password2.value,
+    // password1: password1.value,
+    // password2: password2.value,
   };
   if (email.value !== null && email.value !== "") {
     data.email = email.value;
@@ -183,7 +191,7 @@ const Update = () => {
 
   axios({
     method: "put",
-    url: "http://127.0.0.1:8000/dj-rest-auth/user/",
+    url: "http://127.0.0.1:8000/accounts/update/",
     data: data,
     headers: {
       Authorization: `Token ${store.token}`,
@@ -191,20 +199,44 @@ const Update = () => {
   })
     .then((response) => {
       console.log(username.value);
-      console.log(password1.value);
-      console.log(password2.value);
+      // console.log(password1.value);
+      // console.log(password2.value);
       console.log(email.value);
       console.log(age.value);
       console.log(nickname.value);
       console.log(money.value);
       console.log(salary.value);
       console.log(store.token);
-      router.push({ name: "main" });
+      router.push({ name: "profile" });
     })
     .catch((error) => {
       console.log(error);
     });
 };
+
+onMounted(() => {
+  axios({
+    method: "get",
+    url: `http://127.0.0.1:8000/accounts/`,
+    headers: {
+      Authorization: `Token ${token}`,
+    },
+  })
+    .then((res) => {
+      console.log(res.data);
+      user.value = res.data;
+      username.value = user.value.username;
+      email.value = user.value.email;
+      nickname.value = user.value.nickname;
+      age.value = user.value.age;
+      money.value = user.value.money;
+      salary.value = user.value.salary;
+      console.log(salary);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
 </script>
 
 <style lang="scss" scoped></style>
