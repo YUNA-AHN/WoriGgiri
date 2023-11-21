@@ -33,6 +33,11 @@
           <RouterLink :to="{ name: 'article' }" class="nav-link"
             >Article</RouterLink
           >
+
+          <span> | </span>
+          <RouterLink :to="{ name: 'profile' }" class="nav-link"
+            >Profile</RouterLink
+          >
         </div>
       </nav>
     </nav>
@@ -40,7 +45,6 @@
   <div class="router-view">
     <RouterView />
   </div>
-  
 </template>
 
 <script setup>
