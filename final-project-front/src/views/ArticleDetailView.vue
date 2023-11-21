@@ -21,6 +21,10 @@
   </div>
   <hr />
 
+  <p v-if="is_like" @click="clicklikes">❤</p>
+  <p v-else @click="clicklikes">🤍</p>
+  <h4>좋아요 {{ article?.like_count }}개</h4>
+
   <h4 class="mb-4">댓글 [{{ article?.comment_count }}]</h4>
 
   <div>
@@ -125,6 +129,9 @@ const getId = function (args) {
   axios({
     method: "delete",
     url: `${store.API_URL}/articles/comments/${args}/`,
+    headers: {
+      Authorization: `Token ${token}`,
+    },
   })
     .then(() => {
       router.push(`/article/detail/${articleId}`);
@@ -133,14 +140,57 @@ const getId = function (args) {
         (comment) => comment.id != args
       );
       article.value.comment_count -= 1;
-      console.log(article.value.comment_set);
+      // console.log(article.value.comment_set);
     })
     .catch((err) => console.log(err));
 };
 
-// 작성자 프로필로 가기
-const goprofile = function () {
-  router.replace(`/profile/${article.user}`);
+// 좋아요 기능 추가
+const user = useSignStore().username;
+
+const is_like = ref(null);
+
+const check_like = function () {
+  if (article.value.like_users.includes(user)) {
+    is_like.value = true;
+    console.log("좋아용");
+  } else {
+    is_like.value = false;
+    console.log("안좋아용");
+  }
+};
+
+const clicklikes = function () {
+  axios({
+    method: "post",
+    url: `${store.API_URL}/articles/${articleId}/likes/`,
+    headers: {
+      Authorization: `Token ${token}`,
+    },
+  })
+    .then(() => {
+      router.push(`/article/detail/${articleId}`);
+      is_like.value = !is_like.value;
+      if (is_like.value) {
+        article.value.like_count += 1;
+      } else {
+        article.value.like_count -= 1;
+      }
+    })
+    .catch((err) => console.log(err));
+};
+
+// 작성자인지 체크
+const is_article = ref(null);
+
+const checkArticleUser = function () {
+  if (article.value.username == user) {
+    is_article.value = true;
+    console.log("글 작성자입니다.");
+  } else {
+    is_article.value = false;
+    console.log("글 작성자가 아닙니다.");
+  }
 };
 
 // console.log(article.value);
@@ -150,8 +200,11 @@ onMounted(() => {
     url: `${store.API_URL}/articles/${articleId}/`,
   })
     .then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       article.value = res.data;
+      check_like();
+      checkArticleUser();
+      console.log(article.value);
     })
     .catch((err) => {
       console.log(err);
