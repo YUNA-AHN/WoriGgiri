@@ -1,9 +1,9 @@
 <template>
   <div>
-    <p>작성자 : {{ comment.username }}</p>
+    <p>{{ comment.username }} 님의 댓글</p>
     <p>
       {{ comment.content }}
-      <button v-if="checkUser" @click="commentId">X</button>
+      <button class="btn" v-if="checkUser" @click="commentId">X</button>
     </p>
 
     <hr />
@@ -38,4 +38,14 @@ const checkUser = computed(() => {
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.btn {
+  width: 28px;
+  height: 28px;
+  border: 1px solid rgba(119, 185, 252, 0.1);
+  background-color: rgba(119, 185, 252, 0.2);
+  color: rgba(60, 60, 60, 0.4);
+  font-weight: bolder;
+  padding: 0px 0px 2px 0px;
+}
+</style>
