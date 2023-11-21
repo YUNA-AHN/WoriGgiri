@@ -7,7 +7,7 @@
       <div v-if="is_article">
         <button class="btn btn-info" @click="goupdate">수정</button>
         <span> | </span>
-        <button class="btn btn-info" @click="deleteArticle">삭제</button>
+        <button id="btn" class="btn" @click="deleteArticle">삭제</button>
       </div>
     </div>
     <p>
@@ -20,16 +20,28 @@
     </div>
   </div>
   <hr />
-
-  <p v-if="is_like" @click="clicklikes">❤</p>
-  <p v-else @click="clicklikes">🤍</p>
-  <h4>좋아요 {{ article?.like_count }}개</h4>
-
-  <h4 class="mb-4">댓글 [{{ article?.comment_count }}]</h4>
+  <div class="sub-container mb-3">
+    <h4 class="">댓글 {{ article?.comment_count }} 개</h4>
+    <span class="mx-2" style="font-size: 20px">|</span>
+    <h4>좋아요 {{ article?.like_count }} 개</h4>
+  </div>
 
   <div>
-    <h5>댓글 작성</h5>
-    <div>
+    <div class="sub-content">
+      <h5 class="mt-2 me-2" style="margin-left: 0px">댓글 작성</h5>
+      <p
+        class="my-1 heart"
+        style="font-size: 21px"
+        v-if="is_like"
+        @click="clicklikes"
+      >
+        💖
+      </p>
+      <p class="my-1 heart" style="font-size: 21px" v-else @click="clicklikes">
+        🤍
+      </p>
+    </div>
+    <div class="comment-form">
       <form @submit.prevent="createComment">
         <div class="form-floating">
           <input
@@ -41,12 +53,7 @@
           />
           <label for="floatingInputValue">내용을 입력하세요</label>
         </div>
-        <input
-          id="comment-btn"
-          class="btn btn-info"
-          type="submit"
-          value="작성"
-        />
+        <input id="comment-btn" class="btn" type="submit" value="작성" />
       </form>
     </div>
   </div>
@@ -245,13 +252,13 @@ h1 {
   border: 1px solid lightgray;
   padding: 10px;
 }
-
 form {
   display: flex;
   align-items: center;
+  margin: 0px 0px 10px 0px;
 }
 
-.btn {
+#btn {
   width: 100px;
   height: 40px;
   border: 1px solid rgba(119, 185, 252, 0.1);
@@ -264,5 +271,22 @@ form {
 #comment-btn {
   width: 70px;
   margin-left: 10px;
+  border: 1px solid rgba(119, 185, 252, 0.1);
+  background-color: rgba(119, 185, 252, 0.6);
+  color: rgb(60, 60, 60);
+  font-size: 17px;
+  font-weight: bolder;
+}
+
+.sub-container {
+  display: flex;
+}
+.sub-content {
+  display: flex;
+}
+
+.heart {
+  padding: 0px;
+  cursor: pointer;
 }
 </style>

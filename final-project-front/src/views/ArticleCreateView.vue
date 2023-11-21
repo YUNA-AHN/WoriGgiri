@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>게시물 작성</h1>
+    <h1>게시글 작성</h1>
     <form class="form-floating" @submit.prevent="createArticle">
       <div class="wrap-container">
         <div class="form-floating">
@@ -97,7 +97,7 @@ label {
 }
 #floatingTextarea {
   width: 100%;
-  height: 500px;
+  height: 400px;
   padding-top: 40px;
 }
 #floatingInputValue {

@@ -32,7 +32,7 @@
         </select>
         <select class="form-select" name="bank" id="bank" v-model="bankKeyword">
           <option :value="null" selected hidden>은행을 선택해주세요</option>
-          <option v-for="bank in store.bankList">
+          <option v-for="bank in mapStore.bankList">
             {{ bank }}
           </option>
         </select>
@@ -158,8 +158,10 @@ export default {
 <script setup>
 import { ref } from "vue";
 import { useLocationStore } from "@/stores/location";
+import { useProductsStore } from "@/stores/products";
 
 const store = useLocationStore();
+const mapStore = useProductsStore();
 const mainRegion = ref(null);
 const subRegion = ref(null);
 const bankKeyword = ref(null);

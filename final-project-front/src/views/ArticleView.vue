@@ -3,7 +3,9 @@
     <h1>📝 게시판</h1>
     <div class="article-list-header">
       <h2>Article List</h2>
-      <RouterLink :to="{ name: 'articlecreate' }">[게시물 생성]</RouterLink>
+      <RouterLink class="btn" :to="{ name: 'articlecreate' }"
+        >게시물 생성</RouterLink
+      >
     </div>
     <ArticleList />
   </div>
@@ -17,9 +19,9 @@ import { onMounted } from "vue";
 
 const store = useArticleStore();
 
-onMounted(() => {
-  store.getArticles();
-});
+// onMounted(() => {
+//   store.getArticles();
+// });
 </script>
 
 <style scoped>
@@ -37,5 +39,13 @@ h1 {
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
+}
+
+.btn {
+  width: 150px;
+  height: 50px;
+  background-color: rgba(119, 185, 252, 0.6);
+  color: rgb(80, 80, 80);
+  font-size: 20px;
 }
 </style>
