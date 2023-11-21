@@ -1,5 +1,5 @@
 <template>
-  <h1>회원 가입 페이지</h1>
+  <h1>회원 가입</h1>
 
   <div>
     <form @submit.prevent="signUp" class="signup-form">
@@ -10,6 +10,10 @@
           name="username"
           id="username"
           v-model.trim="username"
+          class="form-control required"
+          placeholder="(필수)"
+          onfocus="this.placeholder=''"
+          onblur="this.placeholder='(필수)'"
         />
       </div>
       <p
@@ -17,26 +21,33 @@
           font-size: smaller;
           color: gray;
           font-weight: lighter;
-          margin: 0px 0px;
+          height: 25px;
+          margin: 0px;
         "
-      >
-        (필수)
-      </p>
+      ></p>
 
       <div class="info-list">
         <label for="email">e-mail : </label>
-        <input type="text" name="email" id="email" v-model.trim="email" />
+        <input
+          type="text"
+          name="email"
+          id="email"
+          v-model.trim="email"
+          class="form-control"
+          placeholder="(선택)"
+          onfocus="this.placeholder=''"
+          onblur="this.placeholder='(선택)'"
+        />
       </div>
       <p
         style="
           font-size: smaller;
           color: gray;
           font-weight: lighter;
-          margin: 0px 0px;
+          height: 25px;
+          margin: 0px;
         "
-      >
-        (선택)
-      </p>
+      ></p>
       <div class="info-list">
         <label for="password1">비밀번호 : </label>
         <input
@@ -44,6 +55,10 @@
           name="password1"
           id="password1"
           v-model.trim="password1"
+          class="form-control required"
+          placeholder="(필수)"
+          onfocus="this.placeholder=''"
+          onblur="this.placeholder='(필수)'"
         />
       </div>
       <p
@@ -63,6 +78,10 @@
           name="password2"
           id="password2"
           v-model.trim="password2"
+          class="form-control required"
+          placeholder="(필수)"
+          onfocus="this.placeholder=''"
+          onblur="this.placeholder='(필수)'"
         />
       </div>
       <p
@@ -82,6 +101,76 @@
           name="nickname"
           id="nickname"
           v-model.trim="nickname"
+          class="form-control"
+          placeholder="(선택)"
+          onfocus="this.placeholder=''"
+          onblur="this.placeholder='(선택)'"
+        />
+      </div>
+      <p
+        style="
+          font-size: smaller;
+          color: gray;
+          font-weight: lighter;
+          height: 25px;
+          margin: 0px;
+        "
+      ></p>
+      <div class="info-list">
+        <label for="age">나이 : </label>
+        <input
+          type="text"
+          name="age"
+          id="age"
+          v-model.trim="age"
+          class="form-control"
+          placeholder="(선택)"
+          onfocus="this.placeholder=''"
+          onblur="this.placeholder='(선택)'"
+        />
+      </div>
+      <p
+        style="
+          font-size: smaller;
+          color: gray;
+          font-weight: lighter;
+          height: 25px;
+          margin: 0px;
+        "
+      ></p>
+      <div class="info-list">
+        <label for="money">잔고 : </label>
+        <input
+          type="text"
+          name="money"
+          id="money"
+          v-model.trim="money"
+          class="form-control"
+          placeholder="(선택)"
+          onfocus="this.placeholder=''"
+          onblur="this.placeholder='(선택)'"
+        />
+      </div>
+      <p
+        style="
+          font-size: smaller;
+          color: gray;
+          font-weight: lighter;
+          height: 25px;
+          margin: 0px;
+        "
+      ></p>
+      <div class="info-list">
+        <label for="salary">연봉 : </label>
+        <input
+          type="text"
+          name="salary"
+          id="salary"
+          v-model.trim="salary"
+          class="form-control"
+          placeholder="(선택)"
+          onfocus="this.placeholder=''"
+          onblur="this.placeholder='(선택)'"
         />
       </div>
       <p
@@ -91,51 +180,7 @@
           font-weight: lighter;
           margin: 0px 0px;
         "
-      >
-        (선택)
-      </p>
-      <div class="info-list">
-        <label for="age">나이 : </label>
-        <input type="text" name="age" id="age" v-model.trim="age" />
-      </div>
-      <p
-        style="
-          font-size: smaller;
-          color: gray;
-          font-weight: lighter;
-          margin: 0px 0px;
-        "
-      >
-        (선택)
-      </p>
-      <div class="info-list">
-        <label for="money">잔고 : </label>
-        <input type="text" name="money" id="money" v-model.trim="money" />
-      </div>
-      <p
-        style="
-          font-size: smaller;
-          color: gray;
-          font-weight: lighter;
-          margin: 0px 0px;
-        "
-      >
-        (선택)
-      </p>
-      <div class="info-list">
-        <label for="salary">연봉 : </label>
-        <input type="text" name="salary" id="salary" v-model.trim="salary" />
-      </div>
-      <p
-        style="
-          font-size: smaller;
-          color: gray;
-          font-weight: lighter;
-          margin: 0px 0px;
-        "
-      >
-        (선택)
-      </p>
+      ></p>
       <div class="info-list">
         <input id="btn" class="btn btn-info" type="submit" value="회원 가입" />
       </div>
@@ -167,7 +212,7 @@ h1 {
   width: 150px;
 }
 .signup-form input {
-  width: 200px;
+  width: 300px;
   border-top: 0px;
   border-right: 0px;
   border-left: 0px;
@@ -179,8 +224,19 @@ h1 {
 .info-list {
   display: flex;
 }
+
+.required::placeholder {
+  color: crimson;
+}
+
 #btn {
-  width: 350px;
+  border: 1px solid rgba(119, 185, 252, 0.1);
+  background-color: rgba(119, 185, 252, 0.6);
+  color: rgb(60, 60, 60);
+  font-size: 17px;
+  font-weight: bolder;
+  margin-top: 15px;
+  width: 450px;
   height: 50px;
 }
 </style>

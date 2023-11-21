@@ -1,7 +1,10 @@
 <template>
   <div>
     <p @click="goprofile">작성자 : {{ comment.username }}</p>
-    <p>{{ comment.content }} <button @click="commentId">X</button></p>
+    <p>
+      {{ comment.content }}
+      <button class="btn btn-light" @click="commentId">X</button>
+    </p>
 
     <hr />
   </div>

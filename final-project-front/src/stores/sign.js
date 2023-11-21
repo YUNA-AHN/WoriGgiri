@@ -34,11 +34,11 @@ export const useSignStore = defineStore(
         .then((response) => {
           token.value = response.data.key;
           console.log(response.data);
-          alert("로그인 성공");
+          window.alert("로그인 성공");
           router.push({ name: "main" });
         })
         .catch((error) => {
-          alert("잘못 된 접근 방식입니다.");
+          window.alert("잘못 된 접근 방식입니다.");
           username.value = null;
           password.value = null;
           console.log(error);

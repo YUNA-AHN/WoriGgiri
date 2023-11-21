@@ -10,7 +10,7 @@
       >
       <RouterLink :to="{ name: 'login' }" class="nav-link">로그인</RouterLink>
     </div>
-    <RouterLink :to="{ name: 'update' }">회원정보수정</RouterLink>
+    <!-- <RouterLink :to="{ name: 'update' }">회원정보수정</RouterLink> -->
   </nav>
   <div>
     <!-- 네비게이션 바 -->

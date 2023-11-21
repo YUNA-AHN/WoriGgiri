@@ -72,4 +72,11 @@ form {
   flex-direction: column;
   justify-content: space-between;
 }
+.btn {
+  border: 1px solid rgba(119, 185, 252, 0.1);
+  background-color: rgba(119, 185, 252, 0.6);
+  color: rgb(60, 60, 60);
+  font-size: 17px;
+  font-weight: bolder;
+}
 </style>
