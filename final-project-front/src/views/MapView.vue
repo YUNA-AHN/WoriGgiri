@@ -81,6 +81,9 @@ h1 {
   /* font-weight: bolder; */
   color: whitesmoke;
 }
+#map {
+  border-radius: 20px;
+}
 </style>
 
 <script>

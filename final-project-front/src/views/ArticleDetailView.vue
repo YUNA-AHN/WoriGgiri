@@ -5,7 +5,7 @@
       <p>작성자 : {{ article?.username }}</p>
 
       <div v-if="is_article">
-        <button class="btn btn-info" @click="goupdate">수정</button>
+        <button id="btn" class="btn btn-info" @click="goupdate">수정</button>
         <span> | </span>
         <button id="btn" class="btn" @click="deleteArticle">삭제</button>
       </div>
