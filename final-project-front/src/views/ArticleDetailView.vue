@@ -92,6 +92,9 @@ const deleteArticle = function () {
   axios({
     method: "delete",
     url: `${store.API_URL}/articles/${articleId}/`,
+    headers: {
+      Authorization: `Token ${token}`,
+    },
   })
     .then(() => {
       router.push({ name: "article" });

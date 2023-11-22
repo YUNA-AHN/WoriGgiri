@@ -18,7 +18,6 @@
 </template>
 
 <script setup>
-import ArticleList from "@/components/ArticleList.vue";
 import { useArticleStore } from "@/stores/articles";
 import { RouterLink, useRouter } from "vue-router";
 import { ref, onMounted, onUpdated } from "vue";
