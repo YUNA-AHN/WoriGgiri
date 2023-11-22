@@ -9,7 +9,17 @@
     </div>
     <div v-for="article in articles">
       <div @click="godetail(article)">
-        <h5>{{ article.id }} | {{ article.title }}</h5>
+        <h5>{{ article.title }} [{{ article.comment_count }}]</h5>
+        <p
+          style="
+            font-size: smaller;
+            color: gray;
+            font-weight: lighter;
+            margin: 0px 0px;
+          "
+        >
+          {{ article.created_at.slice(0, 10) }} {{ article.username }}
+        </p>
         <hr />
       </div>
     </div>

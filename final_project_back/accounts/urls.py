@@ -6,4 +6,5 @@ urlpatterns = [
     path('', views.user_info),
     path('update/', views.CustomUserDetailsView.as_view()),
     path('password/', views.password_change),
+    path('delete/', views.user_delete)
 ]

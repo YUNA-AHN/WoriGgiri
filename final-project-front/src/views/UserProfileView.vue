@@ -12,7 +12,10 @@
     <p>연봉 : {{ user?.salary || "연봉을 입력해주세요." }}</p>
     <button class="btn" @click="userupdate">프로필 수정하기</button>
     <button class="btn" @click="passwordchange">비밀번호 변경하기</button>
+    <button class="btn" @click="userdelete">회원 탈퇴</button>
 
+    <hr />
+    <h3 @click="likesarticle">내가 좋아요한 게시글 보러가기</h3>
     <hr />
     <h3>추천 상품</h3>
   </div>
@@ -41,6 +44,14 @@ const passwordchange = function () {
 };
 
 // 회원 탈퇴하기
+const userdelete = function () {
+  router.push(`/delete`);
+};
+
+// 내가 좋아요한 게시글 보러가기
+const likesarticle = function () {
+  router.push({ name: "likesarticle" });
+};
 
 onMounted(() => {
   axios({

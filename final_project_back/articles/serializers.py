@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from .models import Article, Comment
 
+from django.contrib.auth import get_user_model
+
 class CommentSerializer(serializers.ModelSerializer):
     username = serializers.CharField(source='user.username', read_only=True)
 
@@ -25,3 +27,9 @@ class ArticleSerializer(serializers.ModelSerializer):
         read_only_fields  = ('user', )
 
         fields = "__all__"
+
+class LikeArticleSerializer(serializers.ModelSerializer):
+    articles = ArticleSerializer(many=True, allow_null=True)
+    class Meta:
+        model = get_user_model
+        field = ('username',)

@@ -1,6 +1,6 @@
 <template>
   <nav class="nav-auth">
-    <div v-if="store.username !== null && store.token !== null" class="logined">
+    <div v-if="username !== null && token !== null" class="logined">
       <div class="greeting">{{ store.username }} 님 환영합니다.</div>
       <div class="btn" @click="store.logout">로그아웃</div>
     </div>
@@ -51,12 +51,17 @@
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
 import { useSignStore } from "@/stores/Sign";
+import { storeToRefs } from "pinia";
 
 const store = useSignStore();
+
+const { username, token } = storeToRefs(store);
 
 const logout = () => {
   const payload = {};
 };
+
+console.log(username.value);
 </script>
 
 <style scoped>
