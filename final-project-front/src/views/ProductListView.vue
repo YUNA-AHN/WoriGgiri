@@ -2,15 +2,22 @@
   <h1>📋 예금 비교</h1>
   <div class="select-category">
     <select class="form-select selectbox" v-model="isSelected">
-      <option value="default">전체 상품</option>
+      <option value="default">전체 상품 조회</option>
       <option value="deposit">정기 예금 상품</option>
       <option value="saving">적금 상품</option>
     </select>
     <select class="form-select selectbox" v-model="selectedBank">
-      <option value="default">은행 목록</option>
+      <option value="default">전체 은행 조회</option>
       <option v-for="bank in store.bankList" :value="bank">
         {{ bank }}
       </option>
+    </select>
+    <select class="form-select selectbox" v-model="selectMonth">
+      <option value="default">전체 기간 조회</option>
+      <option value="6-month">6개월</option>
+      <option value="12-month">12개월</option>
+      <option value="24-month">24개월</option>
+      <option value="36-month">36개월</option>
     </select>
   </div>
 
@@ -19,10 +26,28 @@
       <span class="title-month"> 공시 제출월 </span>
       <span class="title-cn"> 금융회사명 </span>
       <span class="title-fn"> 은행상품명 </span>
-      <span class="title-6"> 6개월 </span>
-      <span class="title-12"> 12개월 </span>
-      <span class="title-24">24개월</span>
-      <span class="title-36">36개월</span>
+      <span
+        class="title-6"
+        v-if="selectMonth === 'default' || selectMonth === '6-month'"
+      >
+        6개월
+      </span>
+      <span
+        class="title-12"
+        v-if="selectMonth === 'default' || selectMonth === '12-month'"
+      >
+        12개월
+      </span>
+      <span
+        class="title-24"
+        v-if="selectMonth === 'default' || selectMonth === '24-month'"
+        >24개월</span
+      >
+      <span
+        class="title-36"
+        v-if="selectMonth === 'default' || selectMonth === '36-month'"
+        >36개월</span
+      >
     </div>
     <hr style="width: 170%" />
     <div
@@ -46,16 +71,32 @@
           <div v-for="option in store.deposit_options" :key="option.id">
             <div v-if="option.fin_prdt_cd === product.id">
               <div class="title-6" v-if="option.save_trm === 6">
-                {{ option.intr_rate2 }}
+                <div
+                  v-if="selectMonth === 'default' || selectMonth === '6-month'"
+                >
+                  {{ option.intr_rate2 }}
+                </div>
               </div>
               <div class="title-12" v-if="option.save_trm === 12">
-                {{ option.intr_rate2 }}
+                <div
+                  v-if="selectMonth === 'default' || selectMonth === '12-month'"
+                >
+                  {{ option.intr_rate2 }}
+                </div>
               </div>
               <div class="title-24" v-if="option.save_trm === 24">
-                {{ option.intr_rate2 }}
+                <div
+                  v-if="selectMonth === 'default' || selectMonth === '24-month'"
+                >
+                  {{ option.intr_rate2 }}
+                </div>
               </div>
               <div class="title-36" v-if="option.save_trm === 36">
-                {{ option.intr_rate2 }}
+                <div
+                  v-if="selectMonth === 'default' || selectMonth === '36-month'"
+                >
+                  {{ option.intr_rate2 }}
+                </div>
               </div>
             </div>
           </div>
@@ -84,16 +125,32 @@
           <div v-for="option in store.saving_options" :key="option.id">
             <div v-if="option.fin_prdt_cd === product.id">
               <div class="title-6" v-if="option.save_trm === 6">
-                {{ option.intr_rate2 }}
+                <div
+                  v-if="selectMonth === 'default' || selectMonth === '6-month'"
+                >
+                  {{ option.intr_rate2 }}
+                </div>
               </div>
               <div class="title-12" v-if="option.save_trm === 12">
-                {{ option.intr_rate2 }}
+                <div
+                  v-if="selectMonth === 'default' || selectMonth === '12-month'"
+                >
+                  {{ option.intr_rate2 }}
+                </div>
               </div>
               <div class="title-24" v-if="option.save_trm === 24">
-                {{ option.intr_rate2 }}
+                <div
+                  v-if="selectMonth === 'default' || selectMonth === '24-month'"
+                >
+                  {{ option.intr_rate2 }}
+                </div>
               </div>
               <div class="title-36" v-if="option.save_trm === 36">
-                {{ option.intr_rate2 }}
+                <div
+                  v-if="selectMonth === 'default' || selectMonth === '36-month'"
+                >
+                  {{ option.intr_rate2 }}
+                </div>
               </div>
             </div>
           </div>
@@ -116,6 +173,7 @@ const router = useRouter();
 
 const isSelected = ref("default");
 const selectedBank = ref("default");
+const selectMonth = ref("default");
 
 const depositDetail = (product) => {
   router.push({

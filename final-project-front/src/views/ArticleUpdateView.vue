@@ -39,13 +39,13 @@ import { useArticleStore } from "@/stores/articles";
 import { useSignStore } from "@/stores/sign";
 import { useRoute, useRouter } from "vue-router";
 import axios from "axios";
-import { computed } from "@vue/reactivity";
 
 const route = useRoute();
 const router = useRouter();
 
 const articleId = route.params.id;
 const store = useArticleStore();
+const articleId = route.params.id;
 // const { articles } = storeToRefs(store);
 
 // console.log(articles);

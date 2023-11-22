@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>{{ user?.username }}님의 프로필</h1>
-    <button>프로필 수정하기</button>
+
     <p>이름 : {{ user?.username }}</p>
     <p>
       가입한 상품 : {{ user?.financial_products || "가입한 상품이 없습니다." }}
@@ -11,6 +11,7 @@
     <p>이메일 : {{ user?.email || "이메일을 입력해주세요." }}</p>
     <p>닉네임: {{ user?.nickname || "닉네임을 입력해주세요." }}</p>
     <p>연봉 : {{ user?.salary || "연봉을 입력해주세요." }}</p>
+    <button class="btn">프로필 수정하기</button>
 
     <hr />
     <h3>추천 상품</h3>
@@ -46,4 +47,25 @@ onMounted(() => {
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+* {
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-family: "Orbit", sans-serif;
+  font-weight: bolder;
+}
+h1 {
+  padding-bottom: 20px;
+  margin-bottom: 30px;
+  border-bottom: 5px rgba(13, 172, 220, 0.7) solid;
+}
+.btn {
+  border: 1px solid rgba(119, 185, 252, 0.1);
+  background-color: rgba(119, 185, 252, 0.6);
+  color: rgb(60, 60, 60);
+  font-size: 17px;
+  font-weight: bolder;
+  margin-top: 15px;
+  width: 450px;
+  height: 50px;
+}
+</style>

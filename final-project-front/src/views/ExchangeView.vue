@@ -18,25 +18,32 @@
       </select>
     </div>
 
-    <p v-if="rate == -1">현재 해당 정보가 제공되지 않습니다.</p>
+    <p v-if="rate === null">현재 해당 정보가 제공되지 않습니다.</p>
     <p v-else-if="rate">
-      현재 {{ select2 }} {{ payment1 }} {{ currencyName }}은(는)
-      {{ payment2 }}원입니다.
-    </p>
+      현재 {{ select2 }} <span>{{ payment1 }}</span> {{ currencyName }}은(는)
+      <span>{{ payment2 }}</span>원입니다.
+    
 
     <div>
       {{ country }} ({{ currencyCode }}) :
       <input
-        type="text"
+        type="number"
+        id="money-box"
+        class="form-control"
+        min="1"
         v-model.number="payment1"
         @input="updatePayment2(Math.round((payment1 * rate) / currencyUnit))"
       />
       {{ currencyName }}
     </div>
+  </p>
     <div>
       대한민국 (KRW) :
       <input
-        type="text"
+      id="money-box"
+        type="number"
+        class="form-control"
+        disabled
         v-model.number="payment2"
         @input="updatePayment1(Math.round((payment2 / rate) * currencyUnit))"
       />
@@ -66,6 +73,16 @@ h1 {
 }
 .header-box select {
   margin: 0px 20px 0px 0px;
+}
+#money-box{
+  width: 300px;
+}
+
+input:disabled {
+  background-color: white;
+}
+p span {
+  border-bottom: 2px solid rgba(13, 172, 220, 0.7);
 }
 </style>
 
