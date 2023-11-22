@@ -9,6 +9,7 @@
           name="username"
           id="username"
           v-model.trim="username"
+          disabled
         />
       </div>
       <p
@@ -36,44 +37,7 @@
       >
         (선택)
       </p>
-      <!-- <div class="info-list">
-        <label for="password1">비밀번호 : </label>
-        <input
-          type="password"
-          name="password1"
-          id="password1"
-          v-model.trim="password1"
-        />
-      </div>
-      <p
-        style="
-          font-size: smaller;
-          color: gray;
-          font-weight: lighter;
-          margin: 0px 0px;
-        "
-      >
-        (필수) 비밀번호는 최소 8자 이상 입력해주세요.
-      </p>
-      <div class="info-list">
-        <label for="password2">비밀번호 확인 : </label>
-        <input
-          type="password"
-          name="password2"
-          id="password2"
-          v-model.trim="password2"
-        />
-      </div>
-      <p
-        style="
-          font-size: smaller;
-          color: gray;
-          font-weight: lighter;
-          margin: 0px 0px;
-        "
-      >
-        (필수) 비밀번호를 한 번 더 입력해주세요.
-      </p> -->
+
       <div class="info-list">
         <label for="nickname">닉네임 : </label>
         <input
@@ -160,8 +124,7 @@ const token = store.token;
 
 const username = ref(null);
 const email = ref(null);
-// const password1 = ref(null);
-// const password2 = ref(null);
+
 const nickname = ref(null);
 const age = ref(null);
 const money = ref(null);
@@ -170,8 +133,6 @@ const salary = ref(null);
 const Update = () => {
   const data = {
     username: username.value,
-    // password1: password1.value,
-    // password2: password2.value,
   };
   if (email.value !== null && email.value !== "") {
     data.email = email.value;
@@ -207,6 +168,7 @@ const Update = () => {
       console.log(money.value);
       console.log(salary.value);
       console.log(store.token);
+      alert("회원 정보를 수정했습니다.");
       router.push({ name: "profile" });
     })
     .catch((error) => {

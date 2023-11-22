@@ -1,7 +1,6 @@
 <template>
   <div>
     <h1>{{ user?.username }}님의 프로필</h1>
-    <button @click="userupdate">프로필 수정하기</button>
     <p>이름 : {{ user?.username }}</p>
     <p>
       가입한 상품 : {{ user?.financial_products || "가입한 상품이 없습니다." }}
@@ -11,7 +10,8 @@
     <p>이메일 : {{ user?.email || "이메일을 입력해주세요." }}</p>
     <p>닉네임: {{ user?.nickname || "닉네임을 입력해주세요." }}</p>
     <p>연봉 : {{ user?.salary || "연봉을 입력해주세요." }}</p>
-    <button class="btn">프로필 수정하기</button>
+    <button class="btn" @click="userupdate">프로필 수정하기</button>
+    <button class="btn" @click="passwordchange">비밀번호 변경하기</button>
 
     <hr />
     <h3>추천 상품</h3>
@@ -34,6 +34,13 @@ const router = useRouter();
 const userupdate = function () {
   router.push(`/update`);
 };
+
+// 비밀번호 변경
+const passwordchange = function () {
+  router.push(`/password`);
+};
+
+// 회원 탈퇴하기
 
 onMounted(() => {
   axios({

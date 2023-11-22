@@ -40,7 +40,7 @@ class CustomRegisterSerializer(RegisterSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'username', 'nickname','age','money','salary','financial_products']
+        fields = ['id', 'email', 'username', 'nickname','age','money','salary','financial_products']
 
 class CustomUserDetailsSerializer(UserDetailsSerializer):
     nickname = serializers.CharField(
