@@ -6,7 +6,7 @@ import requests
 from . serializers import DepositProductsSerializer, DepositOptionsSerializer, SavingProductsSerializer, SavingOptionsSerializer
 from . models import DepositProducts, DepositOptions, SavingProducts, SavingOptions
 from accounts.models import User
-from accounts.serializers import CustomUserDetailsSerializer
+from accounts.serializers import CustomUserDetailsSerializer, UserSerializer
 
 # Create your views here.
 
@@ -121,3 +121,19 @@ def saving_options(request):
     return Response(serializer.data)
 
 
+
+@api_view(['POST'])
+def product_join(request, fin_prdt_cd, username):
+    
+    product = DepositProducts.objects.get(fin_prdt_cd = fin_prdt_cd) or SavingProducts.object.get(fin_prdt_cd = fin_prdt_cd)
+    user = User.objects.get(username=username)
+    print(product)
+    if product in user.financial_products.all():
+        user.financial_products.remove(product)
+        print(user.financial_products)
+    else:
+        user.financial_products.add(product)
+    user = UserSerializer(user)
+    return Response(user.data)
+        
+        

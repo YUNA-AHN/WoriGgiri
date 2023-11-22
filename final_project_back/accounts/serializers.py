@@ -3,9 +3,15 @@ from allauth.account import app_settings as allauth_settings
 from allauth.utils import get_username_max_length
 from allauth.account.adapter import get_adapter
 from .models import User
+from django.contrib.auth import get_user_model
 from dj_rest_auth.registration.serializers import RegisterSerializer
 from dj_rest_auth.serializers import UserDetailsSerializer
 
+
+class UserSerializer(serializers.ModelSerializer):
+    model = get_user_model()
+    fields = ('id', 'username', 'email', 'age', 'money', 'salary', 'financial_products',)
+    
 
 class CustomRegisterSerializer(RegisterSerializer):
 # 추가할 필드들을 정의합니다.
@@ -18,7 +24,7 @@ class CustomRegisterSerializer(RegisterSerializer):
     age = serializers.IntegerField(required=False)
     money = serializers.IntegerField(required=False)
     salary = serializers.IntegerField(required=False)
-    financial_products = serializers.ListField(child=serializers.CharField(), required=False)
+    financial_products = serializers.ListField(child=serializers.ListField(), required=False)
     def get_cleaned_data(self):
         return {
             'username': self.validated_data.get('username', ''),
@@ -27,7 +33,7 @@ class CustomRegisterSerializer(RegisterSerializer):
             'age': self.validated_data.get('age', ''),
             'money': self.validated_data.get('money', ''),
             'salary': self.validated_data.get('salary', ''),
-            'financial_products': self.validated_data.get('financial_products', ''),
+            'financial_products': self.validated_data.get('financial_products', []),
         }
     def save(self, request):
         adapter = get_adapter()
@@ -52,7 +58,7 @@ class CustomUserDetailsSerializer(UserDetailsSerializer):
     age = serializers.IntegerField(required=False)
     money = serializers.IntegerField(required=False)
     salary = serializers.IntegerField(required=False)
-    financial_products = serializers.ListField(child=serializers.CharField(), required=False)
+    financial_products = serializers.ListField(child=serializers.ListField(), required=False)
 
     class Meta(UserDetailsSerializer.Meta):
         # 기본 : pk, username, email, first_name, last_name
@@ -74,7 +80,7 @@ class CustomUserDetailsSerializer(UserDetailsSerializer):
         instance.age = validated_data.get('age', None)
         instance.money = validated_data.get('money', instance.money)
         instance.salary = validated_data.get('salary', instance.salary)
-        instance.financial_products = validated_data.get('financial_products', instance.financial_products)
+        instance.financial_products = validated_data.get('financial_products')
         instance.save()
         return instance
     
@@ -83,5 +89,6 @@ class CustomUserDetailsSerializer(UserDetailsSerializer):
         user.age = self.validated_data.get('age')
         user.money = self.validated_data.get('money')
         user.salary = self.validated_data.get('salary')
-        user.financial_products = self.validated_data.get('financial_products')
+        user.financial_products = self.validated_data.get('financial_products', [])
         return user
+    

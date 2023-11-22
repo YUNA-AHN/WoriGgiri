@@ -10,7 +10,7 @@ urlpatterns = [
     path('saving_products/', views.saving_products, name='saving_products' ),
     path('saving_options/', views.saving_options, name='saving_options' ),
 
-    
+    path("<str:fin_prdt_cd>/<str:username>/", views.product_join, name="product_join"),
 
     path("temp/", views.temp, name="temp"),
 
