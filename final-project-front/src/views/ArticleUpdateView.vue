@@ -45,7 +45,6 @@ const router = useRouter();
 
 const articleId = route.params.id;
 const store = useArticleStore();
-const articleId = route.params.id;
 // const { articles } = storeToRefs(store);
 
 // console.log(articles);
