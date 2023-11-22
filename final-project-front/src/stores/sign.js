@@ -72,6 +72,7 @@ export const useSignStore = defineStore(
           username.value = null;
           password.value = null;
           token.value = null;
+          router.push({ name: "main" });
         })
         .catch((error) => {
           console.log(error);
