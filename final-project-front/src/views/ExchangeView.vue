@@ -21,10 +21,10 @@
     <p v-if="rate === null">현재 해당 정보가 제공되지 않습니다.</p>
     <p v-else-if="rate">
       현재 {{ select2 }} <span>{{ payment1 }}</span> {{ currencyName }}은(는)
-      <span>{{ payment2 }}</span>원입니다.
+      <span>{{ payment2 }}</span> 원입니다.
     
 
-    <div>
+    <div class="exchange-info">
       {{ country }} ({{ currencyCode }}) :
       <input
         type="number"
@@ -37,7 +37,7 @@
       {{ currencyName }}
     </div>
   </p>
-    <div>
+    <div class="exchange-info">
       대한민국 (KRW) :
       <input
       id="money-box"
@@ -76,6 +76,9 @@ h1 {
 }
 #money-box{
   width: 300px;
+}
+.exchange-info {
+  display: flex;
 }
 
 input:disabled {

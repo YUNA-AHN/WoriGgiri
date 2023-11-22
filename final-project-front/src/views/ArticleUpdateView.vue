@@ -45,7 +45,6 @@ const router = useRouter();
 
 const articleId = route.params.id;
 const store = useArticleStore();
-
 const title = ref(null);
 const content = ref(null);
 

@@ -1,6 +1,6 @@
 <template>
   <h1>📋 예금 비교</h1>
-  <div class="select-category">
+  <!-- <div class="select-category">
     <select class="form-select selectbox" v-model="isSelected">
       <option value="default">전체 상품 조회</option>
       <option value="deposit">정기 예금 상품</option>
@@ -157,6 +157,15 @@
         </div>
       </div>
     </div>
+  </div> -->
+  <div>
+    <vue-good-table
+      :columns="columns"
+      :rows="rows"
+      :enable-row-expand="true"
+      expanded-row-classes="bg-red"
+      expanded-row-detail-classes="bg-yellow"
+    />
   </div>
 </template>
 
@@ -167,9 +176,28 @@ import { useLocationStore } from "@/stores/location";
 import { useRouter } from "vue-router";
 import { onMounted, ref } from "vue";
 import { RouterLink, RouterView } from "vue-router";
+import { computed } from "@vue/reactivity";
+
 const store = useProductsStore();
+
+const columns = computed(() => {
+  return store.columns;
+});
+const rows = computed(() => {
+  return store.rows;
+});
+
 const locationStore = useLocationStore();
 const router = useRouter();
+
+//  { id: 1,
+//   fin_co_subm_day: 20230324~~,
+//    kor_co_nm: '우리은행',
+//     fin_prdt_nm: 'won플러스 예금',
+//      save_trm_6: 4.02,
+//       save_trm_12: 4.0,
+//        save_trm_24: 4.5,
+//         save_trm_36: 4.8}
 
 const isSelected = ref("default");
 const selectedBank = ref("default");
