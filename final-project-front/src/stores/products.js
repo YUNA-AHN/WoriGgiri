@@ -65,7 +65,7 @@ export const useProductsStore = defineStore("products", () => {
     return list;
   });
 
-  const columns = ref([
+  const depositColumns = ref([
     {
       label: "공시 제출월",
       field: "fin_co_subm_day",
@@ -102,8 +102,70 @@ export const useProductsStore = defineStore("products", () => {
       type: "number",
     },
   ]);
-  const rows = computed(() => {
-    const row = [];
+
+  const savingCoulumns = ref([
+    {
+      label: "공시 제출월",
+      field: "fin_co_subm_day",
+      type: "date",
+      dateInputFormat: "yyyyMMdd",
+      dateOutputFormat: "yyyyMMdd",
+    },
+    {
+      label: "금융회사명",
+      field: "kor_co_nm",
+    },
+    {
+      label: "은행상품명",
+      field: "fin_prdt_nm",
+    },
+    {
+      label: "적립 유형",
+      field: "rsrv_type_nm",
+    },
+    {
+      label: "6개월 (우대)",
+      field: "intr_rate2_6",
+      type: "number",
+    },
+    {
+      label: "12개월 (우대)",
+      field: "intr_rate2_12",
+      type: "number",
+    },
+    {
+      label: "24개월 (우대)",
+      field: "intr_rate2_24",
+      type: "number",
+    },
+    {
+      label: "36개월 (우대)",
+      field: "intr_rate2_36",
+      type: "number",
+    },
+    {
+      label: "6개월 (기본)",
+      field: "intr_rate_6",
+      type: "number",
+    },
+    {
+      label: "12개월 (기본)",
+      field: "intr_rate_12",
+      type: "number",
+    },
+    {
+      label: "24개월 (기본)",
+      field: "intr_rate_24",
+      type: "number",
+    },
+    {
+      label: "36개월 (기본)",
+      field: "intr_rate_36",
+      type: "number",
+    },
+  ]);
+  const depositRows = computed(() => {
+    const depositRow = [];
     let product_id = 0;
 
     for (let idx in deposit_products.value) {
@@ -111,8 +173,8 @@ export const useProductsStore = defineStore("products", () => {
         (tmp) => tmp.fin_prdt_cd === deposit_products.value[idx].id
       );
 
-      const inner = {
-        id: ++product_id,
+      const depositInner = {
+        // id: ++product_id,
         fin_co_subm_day: deposit_products.value[idx].fin_co_subm_day.substring(
           0,
           8
@@ -126,18 +188,90 @@ export const useProductsStore = defineStore("products", () => {
       };
       for (let idx in inner_ops) {
         if (inner_ops[idx].save_trm === 6) {
-          inner.intr_rate2_6 = inner_ops[idx].intr_rate2;
+          depositInner.intr_rate2_6 = inner_ops[idx].intr_rate2;
         } else if (inner_ops[idx].save_trm === 12) {
-          inner.intr_rate2_12 = inner_ops[idx].intr_rate2;
+          depositInner.intr_rate2_12 = inner_ops[idx].intr_rate2;
         } else if (inner_ops[idx].save_trm === 24) {
-          inner.intr_rate2_24 = inner_ops[idx].intr_rate2;
+          depositInner.intr_rate2_24 = inner_ops[idx].intr_rate2;
         } else if (inner_ops[idx].save_trm === 36) {
-          inner.intr_rate2_36 = inner_ops[idx].intr_rate2;
+          depositInner.intr_rate2_36 = inner_ops[idx].intr_rate2;
         }
       }
-      row.push(inner);
+      depositRow.push(depositInner);
     }
-    return row;
+    return depositRow;
+  });
+
+  const savingRows = computed(() => {
+    const savingRow = [];
+    for (let idx in saving_products.value) {
+      const inner_ops = saving_options.value?.filter(
+        (tmp) => tmp.fin_prdt_cd === saving_products.value[idx].id
+      );
+
+      const savingInner = {
+        // id: ++product_id,
+        fin_co_subm_day: saving_products.value[idx].fin_co_subm_day.substring(
+          0,
+          8
+        ),
+        kor_co_nm: saving_products.value[idx].kor_co_nm,
+        fin_prdt_nm: saving_products.value[idx].fin_prdt_nm,
+        intr_rate2_6: "없음",
+        intr_rate2_12: "없음",
+        intr_rate2_24: "없음",
+        intr_rate2_36: "없음",
+        intr_rate_6: "없음",
+        intr_rate_12: "없음",
+        intr_rate_24: "없음",
+        intr_rate_36: "없음",
+      };
+      for (let idx in inner_ops) {
+        if (inner_ops[idx].rsrv_type_nm === "자유적립식") {
+          if (inner_ops[idx].save_trm === 6) {
+            savingInner.rsrv_type_nm = inner_ops[idx].rsrv_type_nm;
+            savingInner.intr_rate2_6 = inner_ops[idx].intr_rate2;
+            savingInner.intr_rate_6 = inner_ops[idx].intr_rate;
+          } else if (inner_ops[idx].save_trm === 12) {
+            savingInner.rsrv_type_nm = inner_ops[idx].rsrv_type_nm;
+            savingInner.intr_rate2_12 = inner_ops[idx].intr_rate2;
+            savingInner.intr_rate_12 = inner_ops[idx].intr_rate;
+          } else if (inner_ops[idx].save_trm === 24) {
+            savingInner.rsrv_type_nm = inner_ops[idx].rsrv_type_nm;
+            savingInner.intr_rate2_24 = inner_ops[idx].intr_rate2;
+            savingInner.intr_rate_24 = inner_ops[idx].intr_rate;
+          } else if (inner_ops[idx].save_trm === 36) {
+            savingInner.rsrv_type_nm = inner_ops[idx].rsrv_type_nm;
+            savingInner.intr_rate2_36 = inner_ops[idx].intr_rate2;
+            savingInner.intr_rate_36 = inner_ops[idx].intr_rate;
+          }
+        } else if (inner_ops[idx].rsrv_type_nm === "정액적립식") {
+          if (inner_ops[idx].save_trm === 6) {
+            savingInner.rsrv_type_nm = inner_ops[idx].rsrv_type_nm;
+            savingInner.intr_rate2_6 = inner_ops[idx].intr_rate2;
+            savingInner.intr_rate_6 = inner_ops[idx].intr_rate;
+          } else if (inner_ops[idx].save_trm === 12) {
+            savingInner.rsrv_type_nm = inner_ops[idx].rsrv_type_nm;
+            savingInner.intr_rate2_12 = inner_ops[idx].intr_rate2;
+            savingInner.intr_rate_12 = inner_ops[idx].intr_rate;
+          } else if (inner_ops[idx].save_trm === 24) {
+            savingInner.rsrv_type_nm = inner_ops[idx].rsrv_type_nm;
+            savingInner.intr_rate2_24 = inner_ops[idx].intr_rate2;
+            savingInner.intr_rate_24 = inner_ops[idx].intr_rate;
+          } else if (inner_ops[idx].save_trm === 36) {
+            savingInner.rsrv_type_nm = inner_ops[idx].rsrv_type_nm;
+            savingInner.intr_rate2_36 = inner_ops[idx].intr_rate2;
+            savingInner.intr_rate_36 = inner_ops[idx].intr_rate;
+          }
+        }
+      }
+      savingRow.push(savingInner);
+      // console.log(depositRow);
+      // console.log(savingRow);
+      // console.log(depositRow.concat(savingRow));
+    }
+
+    return savingRow;
   });
 
   return {
@@ -146,7 +280,9 @@ export const useProductsStore = defineStore("products", () => {
     saving_products,
     saving_options,
     bankList,
-    columns,
-    rows,
+    depositColumns,
+    savingCoulumns,
+    depositRows,
+    savingRows,
   };
 });

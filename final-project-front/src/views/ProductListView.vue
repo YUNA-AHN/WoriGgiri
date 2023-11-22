@@ -1,176 +1,36 @@
 <template>
   <h1>📋 예금 비교</h1>
-  <!-- <div class="select-category">
-    <select class="form-select selectbox" v-model="isSelected">
-      <option value="default">전체 상품 조회</option>
-      <option value="deposit">정기 예금 상품</option>
-      <option value="saving">적금 상품</option>
-    </select>
-    <select class="form-select selectbox" v-model="selectedBank">
-      <option value="default">전체 은행 조회</option>
-      <option v-for="bank in store.bankList" :value="bank">
-        {{ bank }}
-      </option>
-    </select>
-    <select class="form-select selectbox" v-model="selectMonth">
-      <option value="default">전체 기간 조회</option>
-      <option value="6-month">6개월</option>
-      <option value="12-month">12개월</option>
-      <option value="24-month">24개월</option>
-      <option value="36-month">36개월</option>
-    </select>
-  </div>
+
+  <select class="form-select selectbox" v-model="isSelected">
+    <option :value="true">정기 예금 상품</option>
+    <option :value="false">적금 상품</option>
+  </select>
 
   <div class="base">
-    <div class="titles">
-      <span class="title-month"> 공시 제출월 </span>
-      <span class="title-cn"> 금융회사명 </span>
-      <span class="title-fn"> 은행상품명 </span>
-      <span
-        class="title-6"
-        v-if="selectMonth === 'default' || selectMonth === '6-month'"
-      >
-        6개월
-      </span>
-      <span
-        class="title-12"
-        v-if="selectMonth === 'default' || selectMonth === '12-month'"
-      >
-        12개월
-      </span>
-      <span
-        class="title-24"
-        v-if="selectMonth === 'default' || selectMonth === '24-month'"
-        >24개월</span
-      >
-      <span
-        class="title-36"
-        v-if="selectMonth === 'default' || selectMonth === '36-month'"
-        >36개월</span
-      >
-    </div>
-    <hr style="width: 170%" />
-    <div
-      class="deposit-products"
-      v-if="isSelected === 'default' || isSelected === 'deposit'"
-    >
-      <div v-for="product in store.deposit_products" :key="product.id">
-        <div
-          class="product-container"
-          v-if="
-            selectedBank === 'default' || product.kor_co_nm === selectedBank
-          "
-        >
-          <p class="title-month">
-            {{ product.fin_co_subm_day.substring(0, 6) }}
-          </p>
-          <p class="title-cn">{{ product.kor_co_nm }}</p>
-          <p class="title-fn" @click="depositDetail(product)">
-            {{ product.fin_prdt_nm }}
-          </p>
-          <div v-for="option in store.deposit_options" :key="option.id">
-            <div v-if="option.fin_prdt_cd === product.id">
-              <div class="title-6" v-if="option.save_trm === 6">
-                <div
-                  v-if="selectMonth === 'default' || selectMonth === '6-month'"
-                >
-                  {{ option.intr_rate2 }}
-                </div>
-              </div>
-              <div class="title-12" v-if="option.save_trm === 12">
-                <div
-                  v-if="selectMonth === 'default' || selectMonth === '12-month'"
-                >
-                  {{ option.intr_rate2 }}
-                </div>
-              </div>
-              <div class="title-24" v-if="option.save_trm === 24">
-                <div
-                  v-if="selectMonth === 'default' || selectMonth === '24-month'"
-                >
-                  {{ option.intr_rate2 }}
-                </div>
-              </div>
-              <div class="title-36" v-if="option.save_trm === 36">
-                <div
-                  v-if="selectMonth === 'default' || selectMonth === '36-month'"
-                >
-                  {{ option.intr_rate2 }}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+    <div class="content">
+      <div v-if="isSelected === true">
+        <vue-good-table
+          :columns="depositColumns"
+          :rows="depositRows"
+          :line-numbers="true"
+          @row-click="depositDetail"
+          class="product-table"
+        />
+      </div>
+      <div v-else>
+        <vue-good-table
+          :columns="savingCoulumns"
+          :rows="savingRows"
+          :line-numbers="true"
+          @row-click="savingDetail"
+          class="product-table"
+        />
       </div>
     </div>
-
-    <div
-      class="saving-products"
-      v-if="isSelected === 'default' || isSelected === 'saving'"
-    >
-      <div v-for="product in store.saving_products" :key="product.id">
-        <div
-          class="product-container"
-          v-if="
-            selectedBank === 'default' || product.kor_co_nm === selectedBank
-          "
-        >
-          <p class="title-month">
-            {{ product.fin_co_subm_day.substring(0, 6) }}
-          </p>
-          <p class="title-cn">{{ product.kor_co_nm }}</p>
-          <p class="title-fn" @click="savingDetail(product)">
-            {{ product.fin_prdt_nm }}
-          </p>
-          <div v-for="option in store.saving_options" :key="option.id">
-            <div v-if="option.fin_prdt_cd === product.id">
-              <div class="title-6" v-if="option.save_trm === 6">
-                <div
-                  v-if="selectMonth === 'default' || selectMonth === '6-month'"
-                >
-                  {{ option.intr_rate2 }}
-                </div>
-              </div>
-              <div class="title-12" v-if="option.save_trm === 12">
-                <div
-                  v-if="selectMonth === 'default' || selectMonth === '12-month'"
-                >
-                  {{ option.intr_rate2 }}
-                </div>
-              </div>
-              <div class="title-24" v-if="option.save_trm === 24">
-                <div
-                  v-if="selectMonth === 'default' || selectMonth === '24-month'"
-                >
-                  {{ option.intr_rate2 }}
-                </div>
-              </div>
-              <div class="title-36" v-if="option.save_trm === 36">
-                <div
-                  v-if="selectMonth === 'default' || selectMonth === '36-month'"
-                >
-                  {{ option.intr_rate2 }}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div> -->
-  <div>
-    <vue-good-table
-      :columns="columns"
-      :rows="rows"
-      :enable-row-expand="true"
-      expanded-row-classes="bg-red"
-      expanded-row-detail-classes="bg-yellow"
-    />
   </div>
 </template>
 
 <script setup>
-// import axios from 'axios'
 import { useProductsStore } from "@/stores/products";
 import { useLocationStore } from "@/stores/location";
 import { useRouter } from "vue-router";
@@ -180,38 +40,60 @@ import { computed } from "@vue/reactivity";
 
 const store = useProductsStore();
 
-const columns = computed(() => {
-  return store.columns;
-});
-const rows = computed(() => {
-  return store.rows;
+const depositColumns = computed(() => {
+  return store.depositColumns;
 });
 
-const locationStore = useLocationStore();
+const savingCoulumns = computed(() => {
+  return store.savingCoulumns;
+});
+
+const depositRows = computed(() => {
+  return store.depositRows;
+});
+
+const savingRows = computed(() => {
+  return store.savingRows;
+});
+
 const router = useRouter();
 
-//  { id: 1,
-//   fin_co_subm_day: 20230324~~,
-//    kor_co_nm: '우리은행',
-//     fin_prdt_nm: 'won플러스 예금',
-//      save_trm_6: 4.02,
-//       save_trm_12: 4.0,
-//        save_trm_24: 4.5,
-//         save_trm_36: 4.8}
+const isSelected = ref(true);
 
-const isSelected = ref("default");
+const selected = computed(() => {
+  if (isSelected === true) {
+    return true;
+  } else if (isSelected === false) {
+    return false;
+  }
+});
 const selectedBank = ref("default");
 const selectMonth = ref("default");
 
 const depositDetail = (product) => {
   router.push({
     name: "deposit",
-    params: { fin_prdt_cd: product.fin_prdt_cd },
+    params: {
+      fin_prdt_cd: store.deposit_products.filter(
+        (tmp) => tmp.fin_prdt_nm === product.row.fin_prdt_nm
+      )[0].fin_prdt_cd,
+    },
   });
 };
 
 const savingDetail = (product) => {
-  router.push({ name: "saving", params: { fin_prdt_cd: product.fin_prdt_cd } });
+  router.push({
+    name: "saving",
+    params: {
+      fin_prdt_cd: store.saving_products.filter(
+        (tmp) => tmp.fin_prdt_nm === product.row.fin_prdt_nm
+      )[0].fin_prdt_cd,
+    },
+  });
+};
+
+const rowStyleClassFn = () => {
+  return "green";
 };
 </script>
 
@@ -233,6 +115,10 @@ h1 {
   height: 1200px;
 }
 
+.content {
+  width: 200%;
+}
+
 .select-category {
   display: flex;
 }
@@ -246,43 +132,35 @@ h1 {
   height: 50px;
   width: 100%;
 }
-
-/* .product-trm {
-  border: 1px black solid;
-  margin: 0px 3px;
+</style>
+<style>
+/* .vgt-table {
+  border: 1px solid red;
+  color: red;
+  border-radius: 20px;
 } */
-.deposit-products {
-  width: 170%;
-}
-.saving-products {
-  width: 170%;
-}
-.titles {
-  width: 170%;
-  display: flex;
+
+/* table {
+  color: red;
+} */
+
+.vgt-right-align span {
+  color: red;
 }
 
-.title-month {
-  width: 120px;
+#col-5 {
+  color: blue;
 }
-.title-cn {
-  width: 200px;
+#col-6 {
+  color: blue;
 }
-
-.title-fn {
-  width: 300px;
+#col-7 {
+  color: blue;
 }
-.title-6 {
-  width: 100px;
+#col-8 {
+  color: blue;
 }
-
-.title-12 {
-  width: 100px;
-}
-.title-24 {
-  width: 100px;
-}
-.title-36 {
-  width: 100px;
+.vgt-right-align span {
+  cursor: pointer;
 }
 </style>

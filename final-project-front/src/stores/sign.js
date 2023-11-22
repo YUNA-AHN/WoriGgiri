@@ -79,7 +79,15 @@ export const useSignStore = defineStore(
         });
     };
 
-    return { token, logIn, isLogin, logout, username, password, API_URL };
+    return {
+      token,
+      logIn,
+      isLogin,
+      logout,
+      username,
+      password,
+      API_URL,
+    };
   },
   { persist: true }
 );

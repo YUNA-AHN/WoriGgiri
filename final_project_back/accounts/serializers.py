@@ -18,7 +18,7 @@ class CustomRegisterSerializer(RegisterSerializer):
     age = serializers.IntegerField(required=False)
     money = serializers.IntegerField(required=False)
     salary = serializers.IntegerField(required=False)
-    financial_products = serializers.ListField(child=serializers.IntegerField(), required=False)
+    financial_products = serializers.ListField(child=serializers.CharField(), required=False)
     def get_cleaned_data(self):
         return {
             'username': self.validated_data.get('username', ''),
@@ -52,7 +52,7 @@ class CustomUserDetailsSerializer(UserDetailsSerializer):
     age = serializers.IntegerField(required=False)
     money = serializers.IntegerField(required=False)
     salary = serializers.IntegerField(required=False)
-    financial_products = serializers.ListField(child=serializers.IntegerField(), required=False)
+    financial_products = serializers.ListField(child=serializers.CharField(), required=False)
 
     class Meta(UserDetailsSerializer.Meta):
         # 기본 : pk, username, email, first_name, last_name

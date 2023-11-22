@@ -53,3 +53,12 @@ def password_change(request):
             return Response({'error': '새 비밀번호를 바르게 입력해주세요.'}, status=status.HTTP_400_BAD_REQUEST)
     else:
         return Response({'error': '비밀번호가 틀렸습니다.'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['PUT'])
+def product_join(request):
+    if request.method == 'PUT':
+        serializer = CustomUserDetailsSerializer(request.PUT, instance=request.user)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response(serializer.data)
