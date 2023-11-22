@@ -39,7 +39,6 @@ import { useArticleStore } from "@/stores/articles";
 import { useSignStore } from "@/stores/sign";
 import { useRoute, useRouter } from "vue-router";
 import axios from "axios";
-// import { computed } from "@vue/reactivity";
 
 const route = useRoute();
 const router = useRouter();
