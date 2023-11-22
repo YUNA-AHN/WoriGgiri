@@ -29,7 +29,10 @@ class ArticleSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 class LikeArticleSerializer(serializers.ModelSerializer):
-    articles = ArticleSerializer(many=True, allow_null=True)
+    article_set =  ArticleSerializer(many=True, read_only=True)
+    like_articles = ArticleSerializer(many=True, allow_null=True)
+    comments = CommentSerializer(many=True, read_only=True)
     class Meta:
-        model = get_user_model
-        field = ('username',)
+        model = get_user_model()
+        # fields = ('username',)
+        fields = "__all__"

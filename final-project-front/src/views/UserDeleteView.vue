@@ -1,8 +1,8 @@
 <template>
   <div>
     <h1>회원 탈퇴</h1>
-    <form @submit.prevent="Delete">
-      <div>
+    <form @submit.prevent="Delete" class="delete-form">
+      <div class="info-list">
         <label for="password2">비밀번호 : </label>
         <input
           type="password"
@@ -65,4 +65,52 @@ const Delete = function () {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+* {
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-family: "Orbit", sans-serif;
+  font-weight: bolder;
+}
+h1 {
+  padding-bottom: 20px;
+  margin-bottom: 30px;
+  border-bottom: 5px rgba(13, 172, 220, 0.7) solid;
+}
+.delete-form {
+  display: flex;
+  flex-direction: column;
+  font-weight: bolder;
+  font-size: 20px;
+}
+.delete-form div {
+  margin: 10px 0px;
+}
+
+.delete-form label {
+  width: 150px;
+}
+.delete-form input {
+  width: 300px;
+  border-top: 0px;
+  border-right: 0px;
+  border-left: 0px;
+  border-bottom: lightgray solid 1px;
+  font-size: 20px;
+  font-weight: bolder;
+}
+
+.info-list {
+  display: flex;
+}
+
+#btn {
+  border: 1px solid rgba(119, 185, 252, 0.1);
+  background-color: rgba(119, 185, 252, 0.6);
+  color: rgb(60, 60, 60);
+  font-size: 17px;
+  font-weight: bolder;
+  margin-top: 15px;
+  width: 450px;
+  height: 50px;
+}
+</style>

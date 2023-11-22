@@ -16,7 +16,7 @@
     <!-- 네비게이션 바 -->
     <nav>
       <nav class="container-fluid">
-        <a class="navbar-brand" href="#">🐘우리끼리😘</a>
+        <a @click="gomain()" class="navbar-brand" href="#">🐘우리끼리😘</a>
         <div class="navbar-list">
           <RouterLink :to="{ name: 'main' }" class="nav-link">Main</RouterLink>
           <span> | </span>
@@ -50,12 +50,18 @@
 
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
+import { useRouter } from "vue-router";
 import { useSignStore } from "@/stores/Sign";
 import { storeToRefs } from "pinia";
 
 const store = useSignStore();
 
 const { username, token } = storeToRefs(store);
+
+const router = useRouter();
+const gomain = () => {
+  router.push({ name: "main" });
+};
 
 const logout = () => {
   const payload = {};

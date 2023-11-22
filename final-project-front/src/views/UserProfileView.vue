@@ -15,7 +15,7 @@
     <button class="btn" @click="userdelete">회원 탈퇴</button>
 
     <hr />
-    <h3 @click="likesarticle">내가 좋아요한 게시글 보러가기</h3>
+    <h3 @click="likesarticle">내 활동 보러가기</h3>
     <hr />
     <h3>추천 상품</h3>
   </div>
@@ -48,7 +48,7 @@ const userdelete = function () {
   router.push(`/delete`);
 };
 
-// 내가 좋아요한 게시글 보러가기
+// 내 활동 보러가기
 const likesarticle = function () {
   router.push({ name: "likesarticle" });
 };

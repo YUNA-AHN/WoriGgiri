@@ -87,27 +87,31 @@ const article = ref(
   store.articles.filter((product) => product.id == articleId)[0]
 );
 
-// 게시물 삭제 : 권한 추가 필요
+// 게시물 삭제
 const deleteArticle = function () {
-  axios({
-    method: "delete",
-    url: `${store.API_URL}/articles/${articleId}/`,
-    headers: {
-      Authorization: `Token ${token}`,
-    },
-  })
-    .then(() => {
-      router.push({ name: "article" });
+  if (confirm("게시글을 삭제하시겠습니까?") == true) {
+    axios({
+      method: "delete",
+      url: `${store.API_URL}/articles/${articleId}/`,
+      headers: {
+        Authorization: `Token ${token}`,
+      },
     })
-    .catch((err) => console.log(err));
+      .then(() => {
+        router.push({ name: "article" });
+      })
+      .catch((err) => console.log(err));
+  } else {
+    return;
+  }
 };
 
-// 게시물 수정 : 권한 추가 필요
+// 게시물 수정
 const goupdate = function () {
   router.push(`/article/update/${articleId}`);
 };
 
-// 댓글 작성 -  새로고침 이슈? / 글 작성자가 작성시 작성자임을 표시 추가했으면..!
+// 댓글 작성
 const content = ref(null);
 const token = useSignStore().token;
 
@@ -136,23 +140,27 @@ const createComment = function () {
 
 // 댓글 삭제
 const deleteComment = function (args) {
-  axios({
-    method: "delete",
-    url: `${store.API_URL}/articles/comments/${args}/`,
-    headers: {
-      Authorization: `Token ${token}`,
-    },
-  })
-    .then(() => {
-      router.push(`/article/detail/${articleId}`);
-      console.log("댓글이 삭제되었습니다.");
-      article.value.comment_set = article.value.comment_set.filter(
-        (comment) => comment.id != args
-      );
-      article.value.comment_count -= 1;
-      // console.log(article.value.comment_set);
+  if (confirm("댓글을 삭제하시겠습니까?") == true) {
+    axios({
+      method: "delete",
+      url: `${store.API_URL}/articles/comments/${args}/`,
+      headers: {
+        Authorization: `Token ${token}`,
+      },
     })
-    .catch((err) => console.log(err));
+      .then(() => {
+        router.push(`/article/detail/${articleId}`);
+        console.log("댓글이 삭제되었습니다.");
+        article.value.comment_set = article.value.comment_set.filter(
+          (comment) => comment.id != args
+        );
+        article.value.comment_count -= 1;
+        // console.log(article.value.comment_set);
+      })
+      .catch((err) => console.log(err));
+  } else {
+    return;
+  }
 };
 
 // 좋아요 기능 추가
