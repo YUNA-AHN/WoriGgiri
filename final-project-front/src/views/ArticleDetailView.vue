@@ -62,7 +62,7 @@
       v-for="comment in article?.comment_set"
       :key="comment.id"
       :comment="comment"
-      @comment-id="getId"
+      @comment-id="deleteComment"
     />
   </div>
 </template>
@@ -135,7 +135,7 @@ const createComment = function () {
 };
 
 // 댓글 삭제
-const getId = function (args) {
+const deleteComment = function (args) {
   axios({
     method: "delete",
     url: `${store.API_URL}/articles/comments/${args}/`,

@@ -49,8 +49,8 @@ console.log(token);
 const router = useRouter();
 
 const createArticle = function () {
-  console.log(title.value);
-  console.log(content.value);
+  // console.log(title.value);
+  // console.log(content.value);
   axios({
     method: "post",
     url: `${store.API_URL}/articles/`,
