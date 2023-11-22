@@ -6,8 +6,8 @@ export const useArticleStore = defineStore("article", () => {
   const articles = ref([]);
   const API_URL = "http://127.0.0.1:8000";
 
-  // const getArticles = function () {
-  onMounted(() => {
+  const getArticles = function () {
+    // onMounted(() => {
     axios({
       method: "get",
       url: `${API_URL}/articles/`,
@@ -18,8 +18,8 @@ export const useArticleStore = defineStore("article", () => {
         articles.value = res.data;
       })
       .catch((err) => console.log(err));
-  });
-  // };
+    // });
+  };
 
-  return { articles, API_URL };
+  return { articles, API_URL, getArticles };
 });

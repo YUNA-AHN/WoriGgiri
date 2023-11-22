@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>{{ user?.username }}님의 프로필</h1>
-
+    <button @click="userupdate">프로필 수정하기</button>
     <p>이름 : {{ user?.username }}</p>
     <p>
       가입한 상품 : {{ user?.financial_products || "가입한 상품이 없습니다." }}
@@ -22,17 +22,23 @@
 import { ref, onMounted } from "vue";
 import { useArticleStore } from "@/stores/articles";
 import { useSignStore } from "@/stores/sign.js";
-// import { useRoute, useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import axios from "axios";
 
 const store = useArticleStore();
 const token = useSignStore().token;
 const user = ref(null);
+const router = useRouter();
+
+// 사용자 정보 수정
+const userupdate = function () {
+  router.push(`/update`);
+};
 
 onMounted(() => {
   axios({
     method: "get",
-    url: `${store.API_URL}/dj-rest-auth/user/`,
+    url: `${store.API_URL}/accounts/`,
     headers: {
       Authorization: `Token ${token}`,
     },
