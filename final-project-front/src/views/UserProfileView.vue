@@ -63,7 +63,15 @@ onMounted(() => {
   })
     .then((res) => {
       console.log(res.data);
-      user.value = signStore.user;
+      user.value = res.data;
+      username.value = user.value.username;
+      email.value = user.value.email;
+      nickname.value = user.value.nickname;
+      age.value = user.value.age;
+      money.value = user.value.money;
+      salary.value = user.value.salary;
+      financial_products.value = user.value.financial_products;
+      console.log(salary);
     })
     .catch((err) => {
       console.log(err);
