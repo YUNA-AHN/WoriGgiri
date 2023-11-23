@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
 from .models import Article, Comment
-from .serializers import ArticleSerializer, ArticleSerializer, CommentSerializer
+from .serializers import ArticleSerializer, ArticleSerializer, CommentSerializer, LikeArticleSerializer
 
 from django.conf import settings
 
@@ -93,3 +93,10 @@ def likes(request, pk):
             article.like_users.add(user)
         serializer = ArticleSerializer(article)
         return Response(serializer.data)
+    
+
+@api_view(['GET'])
+def likes_articles(request):
+    user = request.user
+    serializer = LikeArticleSerializer(user)
+    return Response(serializer.data)

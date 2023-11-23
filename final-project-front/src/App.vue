@@ -1,6 +1,6 @@
 <template>
   <nav class="nav-auth">
-    <div v-if="store.username !== null && store.token !== null" class="logined">
+    <div v-if="username !== null && token !== null" class="logined">
       <div class="greeting">{{ store.username }} 님 환영합니다.</div>
       <div class="btn" @click="store.logout">로그아웃</div>
     </div>
@@ -16,7 +16,7 @@
     <!-- 네비게이션 바 -->
     <nav>
       <nav class="container-fluid">
-        <a class="navbar-brand" href="#">🐘우리끼리😘</a>
+        <a @click="gomain()" class="navbar-brand" href="#">🐘우리끼리😘</a>
         <div class="navbar-list">
           <RouterLink :to="{ name: 'main' }" class="nav-link">Main</RouterLink>
           <span> | </span>
@@ -50,13 +50,24 @@
 
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
+import { useRouter } from "vue-router";
 import { useSignStore } from "@/stores/Sign";
+import { storeToRefs } from "pinia";
 
 const store = useSignStore();
+
+const { username, token } = storeToRefs(store);
+
+const router = useRouter();
+const gomain = () => {
+  router.push({ name: "main" });
+};
 
 const logout = () => {
   const payload = {};
 };
+
+console.log(username.value);
 </script>
 
 <style scoped>

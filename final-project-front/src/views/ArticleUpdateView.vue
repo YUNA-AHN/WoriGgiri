@@ -63,6 +63,7 @@ const updateArticle = function () {
     },
   })
     .then((res) => {
+      window.alert("게시물을 수정하였습니다.");
       router.push(`/article/detail/${articleId}`);
       console.log(res.data);
     })
