@@ -12,6 +12,8 @@ from django.contrib.auth import get_user_model
 from django.db.models import Count, Max
 
 
+from django.db.models import Q
+
 # Create your views here.
 
 @api_view(['GET'])
@@ -140,39 +142,38 @@ def saving_views(request, pk):
     return Response(product.views_count)
 
 # 추천 알고리즘 : 이었던 것
-@api_view(['POST'])
+@api_view(['GET'])
 def deposit_recommend(request):
     user = get_user_model().objects.get(username=request.user)
-    products = request.data.get('financial_products', '')
-    age = request.data.get('age', '')
-    money = request.data.get('money', '')
-    salary = request.data.get('salary', '')
+    products = request.data.get('financial_products', '').split(',')
 
-    # 부가 정보가 있는지 확인
-    # 부가 정보가 하나도 없다면 => 금리 높은 순 추천!
-    # 부가 정보가 하나라도 존재한다면 => 필터 걸고 for문 돌면서 products를 개수 세기
+    # 상품별 우대금리가 가장 높은 옵션을 기준!
+    # 예금 추천
+    DepositOptions.objects.values("fin_prdt_cd").annotate(max_intr=Max("intr_rate2"))
+    # 적금 추천
+    SavingOptions.objects.values("fin_prdt_cd").annotate(max_intr=Max("intr_rate2"))
 
-    # filter 걸어서 product에 존재하지 않는 친구들만 남기기
-    if not products and not age and not money and not salary:
-        pass
-        # 상품별 우대금리가 가장 높은 옵션을 기준!
-        # 예금 추천
-        DepositOptions.objects.values("fin_prdt_cd").annotate(max_intr=Max("intr_rate2"))
-        # 적금 추천
-        SavingOptions.objects.values("fin_prdt_cd").annotate(max_intr=Max("intr_rate2"))
 
-    else:
-        pass
-    # return Response({'data':products.split(',')})
-
-    # return Response({'data' : DepositOptions.objects
+    # # 우대 금리순 : pk로 출력
+    # return Response({'data_deposit' : DepositOptions.objects
     #                  .values("fin_prdt_cd")
-    #                  .filter()
+    #                 #  .filter(~Q(fin_prdt_cd__in=products))
     #                  .annotate(max_intr=Max("intr_rate2"))
-    #                  .order_by('-max_intr')[:3]})
+    #                  .order_by('-max_intr'),
+    #                  'data_saving' : SavingOptions.objects
+    #                  .values("fin_prdt_cd")
+    #                 #  .filter(~Q(fin_prdt_cd__in=products))
+    #                  .annotate(max_intr=Max("intr_rate2"))
+    #                  .order_by('-max_intr')
+    #                  })
 
-    return Response({'data' : DepositProducts.objects
-                     .values("fin_prdt_cd")
-                    #  .filter()
-                    #  .annotate(max_intr=Max("intr_rate2"))
-                     .order_by('-views_count')[:3]})
+    # 조회수 순 : 상품 번호로 출력
+    return Response({'depositdata' : DepositProducts.objects
+                     .values("fin_prdt_cd","fin_prdt_nm")
+                     .filter(~Q(fin_prdt_cd__in=products))
+                     .order_by('-views_count')[:3],
+                     'savingdata' : SavingProducts.objects
+                     .values("fin_prdt_cd","fin_prdt_nm")
+                     .filter(~Q(fin_prdt_cd__in=products))
+                     .order_by('-views_count')[:3]
+                     })

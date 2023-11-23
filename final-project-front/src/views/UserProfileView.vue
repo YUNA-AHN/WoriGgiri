@@ -2,8 +2,8 @@
   <div>
     <h1>{{ user?.username }}님의 프로필</h1>
     <p class="my-0">
-      <div style="width: 350px; display: flex; justify-content: space-between;">
-      <span style="display: flex; align-items: center;">
+      <div style=" display: flex;; align-items: center;">
+      <span style="margin-right: 30px;">
       이름 : {{ user?.username }}</span>
       <button id="btn-update" class="btn" @click="userupdate">
         프로필 수정하기
@@ -12,7 +12,7 @@
     </p>
 
     <p>
-      가입한 상품 : {{ user?.financial_products.substring(0, user?.financial_products.length - 1) || "가입한 상품이 없습니다." }}
+      가입한 상품 : {{ user?.financial_products?.substring(0, user?.financial_products?.length - 1) || "가입한 상품이 없습니다." }}
     </p>
     <p>나이 : {{ user?.age || "나이를 입력해주세요." }}</p>
     <p>
@@ -33,25 +33,52 @@
       <h2 @click="likesarticle">내 활동</h2>
     </div>
     <LikesArticleView />
-    <hr />
     <div class="act-box">
-      <h2>추천 상품</h2>
+      <h2 @click="deposit_recommend">금융 상품 추천 받기</h2>
+      <div v-if="is_recommend">
+        <h3>예금 상품 추천</h3>
+        <div v-for="deposit in deposit_item">
+          <p
+          @click="godeposit(deposit.fin_prdt_cd)"  
+
+          style="
+          font-size: 17px;
+          font-weight: lighter;
+          height: 25px;
+          margin: 10px;
+        ">
+        - {{ deposit.fin_prdt_nm }}</p> 
+        </div>
+        <h3>적금 상품 추천</h3>
+        <div v-for="saving in saving_item">
+          <p
+          @click="gosaving(saving.fin_prdt_cd)"   
+
+          style="
+          font-size: 17px;
+          font-weight: lighter;
+          height: 25px;
+          margin: 10px;
+        ">
+        - {{ saving.fin_prdt_nm }}</p> 
+        </div>
+      </div>
     </div>
-    <ProductChart />
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, onUpdated } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { useArticleStore } from "@/stores/articles";
 import { useSignStore } from "@/stores/sign.js";
+import { useProductsStore } from "@/stores/products.js";
 import { useRoute, useRouter } from "vue-router";
 import axios from "axios";
-import ProductChart from "@/components/ProductChart.vue";
 import LikesArticleView from "@/views/LikesArticleView.vue";
 
 const store = useArticleStore();
 const signStore = useSignStore();
+const productsStore = useProductsStore()
 const user = ref(null);
 const router = useRouter();
 
@@ -70,6 +97,51 @@ const likesarticle = function () {
   router.push({ name: "likesarticle" });
 };
 
+// 추천 알고리즘
+// const financial_products = computed(() => {
+// return signStore.user.financial_products.split(',')
+// })
+const is_recommend = ref(false)
+const financial_products = ref(null)
+
+const deposit_item = ref(null)
+const saving_item = ref(null)
+const deposit_recommend = function() {
+  const depositproducts = productsStore.deposit_products
+  axios({
+    method: "get",
+    url: `http://127.0.0.1:8000/products/recommendation/`,
+    headers: {
+      Authorization: `Token ${signStore.token}`,
+    },
+  })
+    .then((res) => {
+      console.log(res.data)
+      // 필터, 조회수 필요
+      deposit_item.value = res.data.depositdata
+      saving_item.value = res.data.savingdata
+      console.log(deposit_item.value)
+      console.log(saving_item.value)
+
+      is_recommend.value = !is_recommend.value
+      
+      // // 내가 가입한 상품 제외한 최고 금리 순 출력
+      // const pds = financial_products.value.split(',')
+      // console.log(pds)
+      // console.log(depositproducts.filter((product) => !pds.includes(product.fin_prdt_cd)))
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
+const godeposit = function (fin_prdt_cd) {
+  router.push(`/deposit/${fin_prdt_cd}`)
+}
+const gosaving = function (fin_prdt_cd) {
+  router.push(`/saving/${fin_prdt_cd}`)
+}
+
 onMounted(() => {
   axios({
     method: "get",
@@ -81,14 +153,13 @@ onMounted(() => {
     .then((res) => {
       console.log(res.data);
       user.value = res.data;
-      username.value = user.value.username;
-      email.value = user.value.email;
-      nickname.value = user.value.nickname;
-      age.value = user.value.age;
-      money.value = user.value.money;
-      salary.value = user.value.salary;
+      // username.value = user.value.username;
+      // email.value = user.value.email;
+      // nickname.value = user.value.nickname;
+      // age.value = user.value.age;
+      // money.value = user.value.money;
+      // salary.value = user.value.salary;
       financial_products.value = user.value.financial_products;
-      console.log(salary);
     })
     .catch((err) => {
       console.log(err);
