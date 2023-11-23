@@ -62,59 +62,69 @@ const product = computed(() => {
   )[0];
 });
 
-const user = ref();
+const user = computed(() => {
+  return signStore.user;
+});
 
-const username = ref(null);
-const email = ref(null);
+console.log(typeof user.value.financial_products);
 
-const nickname = ref(null);
-const age = ref(null);
-const money = ref(null);
-const salary = ref(null);
-const financial_products = ref([]);
+// const username = ref(null);
+// const email = ref(null);
 
+// const nickname = ref(null);
+// const age = ref(null);
+// const money = ref(null);
+// const salary = ref(null);
+
+// const financial_products = ref([]);
+
+// const financial_products = computed(() => {
+//   return userInfo;
+// });
+// console.log(financial_products);
 const join = () => {
-  console.log(username.value);
-
   const data = {
-    username: username.value,
-    // financial_products: [productCd],
+    // username: user.value.username,
+    email: user.value?.email,
+    financial_products: user.value?.financial_products,
+    age: user.value?.age,
+    money: user.value?.money,
+    salary: user.value?.salary,
+    nickname: user.value?.nickname,
   };
-  if (email.value !== null && email.value !== "") {
-    data.email = email.value;
-  }
-  if (age.value !== null && age.value !== "") {
-    data.age = age.value;
-  }
-  if (nickname.value !== null && nickname.value !== "") {
-    data.nickname = nickname.value;
-  }
-  if (money.value !== null && money.value !== "") {
-    data.money = money.value;
-  }
-  if (salary.value !== null && salary.value !== "") {
-    data.salary = salary.value;
-  }
-  if (financial_products.value !== null && financial_products.value !== "") {
-    // if (financial_products.value.includes(productCd)) {
-    //   alert("이미 가입한 상품입니다.");
-    //   return;
-    // } else {
-    console.log(financial_products);
-    if (financial_products.value.length >= 1) {
-      financial_products.value.push(productCd);
-      console.log(financial_products.value);
-      financial_products.value = financial_products.value.join(",");
-    } else {
-      financial_products.value.push(productCd);
-      console.log(financial_products.value);
-    }
-    data.financial_products = [financial_products.value.join(",")];
-    // }
+  if (
+    user.value.financial_products !== null &&
+    user.value.financial_products.length > 0
+  ) {
+    data.financial_products =
+      user.value.financial_products +
+      store.deposit_products?.filter(
+        (product) => product.fin_prdt_cd === productCd
+      )[0].fin_prdt_nm +
+      ", ";
   } else {
-    financial_products.value.push(productCd);
-    data.financial_products = [financial_products.value.join(",")];
+    data.financial_products =
+      store.deposit_products?.filter(
+        (product) => product.fin_prdt_cd === productCd
+      )[0].fin_prdt_nm + ", ";
   }
+
+  if (user.value.email !== null && user.value.email !== "") {
+    data.email = user.value.email;
+  }
+  if (user.value.age !== null && user.value.age !== "") {
+    data.age = user.value.age;
+  }
+  if (user.value.nickname !== null && user.value.nickname !== "") {
+    data.nickname = user.value.nickname;
+  }
+  if (user.value.money !== null && user.value.money !== "") {
+    data.money = user.value.money;
+  }
+  if (user.value.salary !== null && user.value.salary !== "") {
+    data.salary = user.value.salary;
+  }
+
   axios({
     method: "put",
     url: "http://127.0.0.1:8000/accounts/update/",
@@ -124,6 +134,7 @@ const join = () => {
     },
   })
     .then((response) => {
+      console.log(data);
       alert("가입 완료 되었습니다.");
     })
     .catch((error) => {
@@ -134,43 +145,43 @@ const join = () => {
     });
 };
 
-onMounted(() => {
-  axios({
-    method: "get",
-    url: `http://127.0.0.1:8000/accounts/`,
-    headers: {
-      Authorization: `Token ${signStore.token}`,
-    },
-  })
-    .then((res) => {
-      console.log(res.data);
-      user.value = res.data;
-      username.value = user.value.username;
-      email.value = user.value.email;
-      nickname.value = user.value.nickname;
-      age.value = user.value.age;
-      money.value = user.value.money;
-      salary.value = user.value.salary;
-      console.log(financial_products.value);
-      if (
-        financial_products.value !== null &&
-        financial_products.value !== `${[]}` &&
-        user.value.financial_products !== null
-      ) {
-        console.log(user.value.financial_products);
-        financial_products.value = user.value.financial_products.split(",");
-      }
+// onMounted(() => {
+//   axios({
+//     method: "get",
+//     url: `http://127.0.0.1:8000/accounts/`,
+//     headers: {
+//       Authorization: `Token ${signStore.token}`,
+//     },
+//   })
+//     .then((res) => {
+//       console.log(res.data);
+//       user.value = res.data;
+//       username.value = user.value.username;
+//       email.value = user.value.email;
+//       nickname.value = user.value.nickname;
+//       age.value = user.value.age;
+//       money.value = user.value.money;
+//       salary.value = user.value.salary;
+//       console.log(financial_products.value);
+//       if (
+//         financial_products.value !== null &&
+//         financial_products.value !== `${[]}` &&
+//         user.value.financial_products !== null
+//       ) {
+//         console.log(user.value.financial_products);
+//         financial_products.value = user.value.financial_products.split(",");
+//       }
 
-      // financial_products.append(financial_product);
-      // if (financial_products.value.length >= 1) {
-      //   financial_products.value = financial_products.value.join(",");
-      // }
-      console.log(financial_products.value);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});
+//       // financial_products.append(financial_product);
+//       // if (financial_products.value.length >= 1) {
+//       //   financial_products.value = financial_products.value.join(",");
+//       // }
+//       console.log(financial_products.value);
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// });
 </script>
 
 <style scoped>

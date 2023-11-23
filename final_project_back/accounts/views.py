@@ -19,9 +19,9 @@ def user_info(request):
         return Response(serializer.data)
     
 # 회원 정보 수정
+
 class CustomUserDetailsView(UserDetailsView):
     serializer_class = CustomUserDetailsSerializer
-
     def update(self, request, *args, **kwargs):
         partial = kwargs.pop('partial', False)
         instance = self.get_object()

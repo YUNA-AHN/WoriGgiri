@@ -26,7 +26,7 @@ import { useRoute, useRouter } from "vue-router";
 import axios from "axios";
 
 const store = useArticleStore();
-const token = useSignStore().token;
+const signStore = useSignStore();
 const user = ref(null);
 const router = useRouter();
 
@@ -47,12 +47,12 @@ onMounted(() => {
     method: "get",
     url: `${store.API_URL}/accounts/`,
     headers: {
-      Authorization: `Token ${token}`,
+      Authorization: `Token ${signStore.token}`,
     },
   })
     .then((res) => {
       console.log(res.data);
-      user.value = res.data;
+      user.value = signStore.user;
     })
     .catch((err) => {
       console.log(err);
