@@ -24,6 +24,7 @@
     <h3 @click="likesarticle">내 활동</h3>
     <hr />
     <h3>추천 상품</h3>
+    <ProductChart />
   </div>
 </template>
 
@@ -33,6 +34,7 @@ import { useArticleStore } from "@/stores/articles";
 import { useSignStore } from "@/stores/sign.js";
 import { useRoute, useRouter } from "vue-router";
 import axios from "axios";
+import ProductChart from "@/components/ProductChart.vue";
 
 const store = useArticleStore();
 const signStore = useSignStore();
