@@ -14,6 +14,8 @@ class DepositProducts(models.Model):
     spcl_cnd = models.TextField()
     fin_co_subm_day = models.TextField()
     mtrt_int = models.TextField()
+    views_count = models.IntegerField(null=True, default=0)
+    
 
 # 정기 예금 상품 옵션
 class DepositOptions(models.Model):
@@ -38,6 +40,7 @@ class SavingProducts(models.Model):
     spcl_cnd = models.TextField()
     fin_co_subm_day = models.TextField()
     mtrt_int = models.TextField()
+    views_count = models.IntegerField(null=True, default=0)
 
 
 # 적금 상품 옵션

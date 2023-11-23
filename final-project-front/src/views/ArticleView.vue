@@ -2,7 +2,7 @@
   <div>
     <h1>📝 게시판</h1>
     <div class="article-list-header">
-      <h2>Article List</h2>
+      <h2>글 목록</h2>
       <RouterLink class="btn" :to="{ name: 'articlecreate' }"
         >게시물 생성</RouterLink
       >
