@@ -29,7 +29,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onUpdated } from "vue";
 import { useArticleStore } from "@/stores/articles";
 import { useSignStore } from "@/stores/sign.js";
 import { useRoute, useRouter } from "vue-router";
