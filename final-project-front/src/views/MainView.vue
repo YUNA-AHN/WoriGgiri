@@ -11,7 +11,10 @@
         id="carouselExampleInterval"
         class="carousel slide"
         data-bs-carousel="carousel"
-        style="width: 100%"
+        style="
+          width: 100%;
+          box-shadow: 1px 3px 30px 10px rgba(150, 180, 240, 0.6);
+        "
       >
         <div class="carousel-indicators">
           <button
@@ -46,7 +49,7 @@
               style="width: 100%; height: 700px"
             >
               <img
-                src="@/assets/we_ele.jpg"
+                src="@/assets/home_banner_1.jpg"
                 alt="..."
                 style="width: 100%; height: 100%"
               />
@@ -57,7 +60,7 @@
               style="width: 100%; height: 700px"
             >
               <img
-                src="@/assets/nyambok.jpg"
+                src="@/assets/home_banner_2.jpg"
                 style="width: 100%; height: 100%"
                 alt="..."
               />
@@ -68,7 +71,7 @@
               style="width: 100%; height: 700px"
             >
               <img
-                src="@/assets/family.jpg"
+                src="@/assets/home_banner_3.jpg"
                 style="width: 100%; height: 100%"
                 alt="..."
               />
@@ -97,9 +100,6 @@
         </button>
       </div>
     </div>
-  </div>
-  <div style="height: 2000px; width: 100%">
-    우리끼리만 이용하고싶은 커뮤니티 금융 상품 검색 특화 커뮤니티
   </div>
 </template>
 

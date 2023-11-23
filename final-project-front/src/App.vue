@@ -8,6 +8,14 @@
         님 환영합니다.
       </div>
       <div style="display: flex; align-items: center">
+        <button class="back btn" @click="back">
+          <img
+            src="@/assets/back.png"
+            style="width: 20px; height: 20px"
+            alt=""
+          />
+          뒤로가기
+        </button>
         <RouterLink
           style="padding: 6px 12px; font-weight: bolder"
           :to="{ name: 'profile' }"
@@ -20,6 +28,10 @@
       </div>
     </div>
     <div v-show="username === null || token === null" class="sign">
+      <button class="back btn" @click="back">
+        <img src="@/assets/back.png" style="width: 20px; height: 20px" alt="" />
+        뒤로가기
+      </button>
       <RouterLink
         :to="{ name: 'signup' }"
         class="nav-link"
@@ -33,7 +45,6 @@
         >로그인</RouterLink
       >
     </div>
-    <!-- <RouterLink :to="{ name: 'update' }">회원정보수정</RouterLink> -->
   </nav>
   <div>
     <!-- 네비게이션 바 -->
@@ -79,12 +90,15 @@
 import { RouterLink, RouterView } from "vue-router";
 import { useSignStore } from "@/stores/Sign";
 import { storeToRefs } from "pinia";
+import { useRouter } from "vue-router";
 
 const store = useSignStore();
+const router = useRouter();
 
 const { username, token } = storeToRefs(store);
-const logout = () => {
-  const payload = {};
+
+const back = () => {
+  router.go(-1);
 };
 </script>
 
@@ -156,5 +170,11 @@ const logout = () => {
 
   /* display: flex; */
   /* align-items: center; */
+}
+.back {
+  font-family: "IBM Plex Sans KR", sans-serif;
+  padding: 4px 0px 0px 0px;
+  margin-right: 5px;
+  font-weight: bolder;
 }
 </style>

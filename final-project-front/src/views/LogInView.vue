@@ -65,6 +65,7 @@ h1 {
   width: 500px;
   height: 350px;
   font-size: 18px;
+
   font-weight: bolder;
 }
 form {
@@ -78,5 +79,8 @@ form {
   color: rgb(60, 60, 60);
   font-size: 17px;
   font-weight: bolder;
+}
+.form-control {
+  border-color: rgb(119, 185, 252);
 }
 </style>

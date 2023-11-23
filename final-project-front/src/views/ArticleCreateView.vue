@@ -89,6 +89,7 @@ h1 {
   border-left: white;
   border-right: white;
   border-bottom: 1px solid rgb(119, 185, 252);
+
   border-radius: 0px;
   margin: 0px 0px 10px 0px;
 }

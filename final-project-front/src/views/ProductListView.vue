@@ -1,10 +1,14 @@
 <template>
   <h1>📋 예금 비교</h1>
-
-  <select class="form-select selectbox" v-model="isSelected">
-    <option :value="true">정기 예금 상품</option>
-    <option :value="false">적금 상품</option>
-  </select>
+  <div
+    style="display: flex; justify-content: space-between; align-items: center"
+  >
+    <select class="form-select selectbox" v-model="isSelected">
+      <option :value="true">정기 예금 상품</option>
+      <option :value="false">적금 상품</option>
+    </select>
+    <p class="text-primary">상품명 클릭 시 상세 페이지로 이동합니다.</p>
+  </div>
 
   <div class="base">
     <div class="content">
@@ -32,7 +36,6 @@
 
 <script setup>
 import { useProductsStore } from "@/stores/products";
-import { useLocationStore } from "@/stores/location";
 import { useRouter } from "vue-router";
 import { onMounted, ref } from "vue";
 import { RouterLink, RouterView } from "vue-router";
@@ -142,6 +145,7 @@ h1 {
 .selectbox {
   width: 200px;
   margin: 0px 30px 20px 0px;
+  border-color: rgb(119, 185, 252);
 }
 
 .product-container {
@@ -151,20 +155,8 @@ h1 {
 }
 </style>
 <style>
-/* .vgt-table {
-  border: 1px solid red;
-  color: red;
-  border-radius: 20px;
-} */
-
-/* table {
-  color: red;
-} */
-
-.vgt-right-align span {
-  cursor: pointer;
-}
 .vgt-left-align:nth-child(even) {
+  cursor: pointer;
   width: 250px;
 }
 .vgt-left-align:nth-child(odd) {
@@ -172,9 +164,11 @@ h1 {
 }
 .vgt-left-align:nth-child(odd) {
   background-color: rgba(135, 207, 235, 0.2);
+  cursor: pointer;
 }
 .vgt-right-align {
   background-color: rgba(135, 207, 235, 0.4);
+
   width: 100px;
 }
 </style>

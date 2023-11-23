@@ -27,14 +27,6 @@ export const useSignStore = defineStore(
         .then((res) => {
           console.log(res.data);
           user.value = res.data;
-          // username.value = user.value.username;
-          // email.value = user.value.email;
-          // nickname.value = user.value.nickname;
-          // age.value = user.value.age;
-          // money.value = user.value.money;
-          // salary.value = user.value.salary;
-          // financial_products.value = user.value.financial_products;
-          // console.log(salary);
         })
         .catch((err) => {
           console.log(err);
@@ -42,17 +34,12 @@ export const useSignStore = defineStore(
     };
 
     const logIn = (payload) => {
-      // const data = {
-      //   username: payload.username,
-      //   password: payload.password,
-      // };
       username.value = payload.username;
       password.value = payload.password;
-      // console.log(username);
-      // console.log(password);
+
       axios({
         method: "post",
-        url: `http://localhost:8000/dj-rest-auth/login/`,
+        url: `${API_URL}/dj-rest-auth/login/`,
         data: {
           username: username.value,
           password: password.value,
@@ -62,23 +49,8 @@ export const useSignStore = defineStore(
           token.value = response.data.key;
           console.log(response.data);
           saveInfo();
-          // axios({
-          //   method: "get",
-          //   url: `http://127.0.0.1:8000/accounts/`,
-          //   headers: {
-          //     Authorization: `Token ${token.value}`,
-          //   },
-          // })
-          //   .then((response) => {
-          //     user.value = response.data;
-          //     console.log(response.data);
-          //     console.log(user.value);
-          //   })
-          //   .catch((error) => {
-          //     console.log(error);
-          //   });
 
-          window.alert("로그인 성공");
+          window.alert(`환영합니다. ${username.value} 님!`);
           router.push({ name: "main" });
         })
         .catch((error) => {
@@ -98,11 +70,9 @@ export const useSignStore = defineStore(
     });
 
     const logout = () => {
-      // username.value = payload.username;
-      // password.value = payload.password;
       axios({
         method: "post",
-        url: `http://127.0.0.1:8000/dj-rest-auth/logout/`,
+        url: `${API_URL}/dj-rest-auth/logout/`,
         data: {
           username: username.value,
           password: password.value,
@@ -113,9 +83,9 @@ export const useSignStore = defineStore(
       })
         .then((response) => {
           alert("로그아웃 되었습니다!");
-          username.value = null;
-          password.value = null;
-          token.value = null;
+          localStorage.removeItem("sign");
+          // 로그아웃 시 로컬스토리지를 비우고 새로고침하여 사용자 인증상태 갱신
+          router.go(0);
           router.push({ name: "main" });
         })
         .catch((error) => {
