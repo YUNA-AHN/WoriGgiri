@@ -50,7 +50,7 @@
 
 ### 💠데이터베이스 모델링(ERD)
 
-![Alt text](image.png)
+![Alt text](image-1.png)
 
 ### 🧾개발일지
 
