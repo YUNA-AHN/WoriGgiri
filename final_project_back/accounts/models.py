@@ -1,14 +1,14 @@
 from django.db import models
+from django.contrib.postgres.fields import ArrayField
 from django.contrib.auth.models import AbstractUser
 from allauth.account.adapter import DefaultAccountAdapter
-from products.models import DepositProducts
 
 # Create your models here.
 
 
 class User(AbstractUser):
     username = models.CharField(max_length=30, unique=True)
-    financial_products = models.ManyToManyField(DepositProducts, blank=True, null=True)
+    financial_products = models.TextField(blank=True, null=True)
     age = models.IntegerField(blank=True, null=True)
     money = models.IntegerField(blank=True, null=True)
     # password = models.TextField(blank=True)
