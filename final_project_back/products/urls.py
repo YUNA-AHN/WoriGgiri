@@ -13,4 +13,6 @@ urlpatterns = [
     path("temp/", views.temp, name="temp"),
 
     path('save/', views.save_data, name='save_data'),
+
+    path('recommendation/', views.deposit_recommend)
 ]

@@ -6,6 +6,10 @@ import requests
 from . serializers import DepositProductsSerializer, DepositOptionsSerializer, SavingProductsSerializer, SavingOptionsSerializer
 from . models import DepositProducts, DepositOptions, SavingProducts, SavingOptions
 
+from django.contrib.auth import get_user_model
+from django.db.models import Count, Max
+
+
 # Create your views here.
 
 @api_view(['GET'])
@@ -147,3 +151,32 @@ def saving_options(request):
     # options = DepositOptions.objects.filter(fin_prdt_cd)
     serializer = SavingOptionsSerializer(options, many=True)
     return Response(serializer.data)
+
+@api_view(['POST'])
+def deposit_recommend(request):
+    user = get_user_model().objects.get(username=request.user)
+    products = request.data.get('financial_products', '')
+    age = request.data.get('age', '')
+    money = request.data.get('money', '')
+    salary = request.data.get('salary', '')
+
+    # 부가 정보가 있는지 확인
+    # 부가 정보가 하나도 없다면 => 금리 높은 순 추천!
+    # 부가 정보가 하나라도 존재한다면 => 필터 걸고 for문 돌면서 products를 개수 세기
+    if not products and not age and not money and not salary:
+        pass
+        # 상품별 우대금리가 가장 높은 옵션을 기준!
+        # 예금 추천
+        DepositOptions.objects.values("fin_prdt_cd").annotate(max_intr=Max("intr_rate2"))
+        # 적금 추천
+        SavingOptions.objects.values("fin_prdt_cd").annotate(max_intr=Max("intr_rate2"))
+
+    else:
+        pass
+    return Response({'data':products.split(',')})
+
+    # return Response({'data' : DepositOptions.objects
+    #                  .values("fin_prdt_cd")
+    #                  .filter()
+    #                  .annotate(max_intr=Max("intr_rate2"))
+    #                  .order_by('-max_intr')[:3]})
