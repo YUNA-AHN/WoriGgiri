@@ -16,28 +16,30 @@
     <!-- 네비게이션 바 -->
     <nav>
       <nav class="container-fluid">
-        <a @click="gomain()" class="navbar-brand" href="#">🐘우리끼리😘</a>
+        <RouterLink :to="{ name: 'main' }" class="navbar-brand"
+          >🐘우리끼리😘</RouterLink
+        >
         <div class="navbar-list">
-          <RouterLink :to="{ name: 'main' }" class="nav-link">Main</RouterLink>
-          <span> | </span>
-          <RouterLink :to="{ name: 'map' }" class="nav-link">Map</RouterLink>
+          <RouterLink :to="{ name: 'map' }" class="nav-link"
+            >영업점 찾기</RouterLink
+          >
           <span> | </span>
           <RouterLink :to="{ name: 'exchange' }" class="nav-link"
-            >Exchange</RouterLink
+            >환율 계산기</RouterLink
           >
           <span> | </span>
           <RouterLink :to="{ name: 'product' }" class="nav-link"
-            >Product</RouterLink
+            >예적금 상품</RouterLink
           >
           <span> | </span>
 
           <RouterLink :to="{ name: 'article' }" class="nav-link"
-            >Article</RouterLink
+            >게시판</RouterLink
           >
 
           <span> | </span>
           <RouterLink :to="{ name: 'profile' }" class="nav-link"
-            >Profile</RouterLink
+            >마이페이지</RouterLink
           >
         </div>
       </nav>
@@ -50,19 +52,12 @@
 
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
-import { useRouter } from "vue-router";
 import { useSignStore } from "@/stores/Sign";
 import { storeToRefs } from "pinia";
 
 const store = useSignStore();
 
 const { username, token } = storeToRefs(store);
-
-const router = useRouter();
-const gomain = () => {
-  router.push({ name: "main" });
-};
-
 const logout = () => {
   const payload = {};
 };
