@@ -1,23 +1,53 @@
 <template>
   <nav class="nav-auth">
-    <div v-if="username !== null && token !== null" class="logined">
-      <div class="greeting">{{ store.username }} 님 환영합니다.</div>
-      <div class="btn" @click="store.logout">로그아웃</div>
+    <div v-show="username !== null && token !== null" class="logined">
+      <div class="greeting">
+        <span style="-webkit-text-stroke: 1px cornflowerblue"
+          >{{ store.username }}
+        </span>
+        님 환영합니다.
+      </div>
+      <div style="display: flex; align-items: center">
+        <RouterLink
+          style="padding: 6px 12px; font-weight: bolder"
+          :to="{ name: 'profile' }"
+          class="nav-link"
+          >마이페이지</RouterLink
+        >
+        <div class="btn" @click="store.logout" style="font-weight: bolder">
+          로그아웃
+        </div>
+      </div>
     </div>
-    <div v-else class="sign">
-      <RouterLink :to="{ name: 'signup' }" class="nav-link"
+    <div v-show="username === null || token === null" class="sign">
+      <RouterLink
+        :to="{ name: 'signup' }"
+        class="nav-link"
+        style="font-weight: bolder"
         >회원가입</RouterLink
       >
-      <RouterLink :to="{ name: 'login' }" class="nav-link">로그인</RouterLink>
+      <RouterLink
+        :to="{ name: 'login' }"
+        class="nav-link"
+        style="font-weight: bolder"
+        >로그인</RouterLink
+      >
     </div>
     <!-- <RouterLink :to="{ name: 'update' }">회원정보수정</RouterLink> -->
   </nav>
   <div>
     <!-- 네비게이션 바 -->
-    <nav>
-      <nav class="container-fluid">
-        <RouterLink :to="{ name: 'main' }" class="navbar-brand"
-          >🐘우리끼리😘</RouterLink
+    <nav class="container-fluid">
+      <nav class="nav-container">
+        <RouterLink
+          :to="{ name: 'main' }"
+          class="navbar-brand"
+          style="font-size: 40px"
+          ><img
+            src="@/assets/icon.png"
+            style="width: 100%; height: 100%; margin-right: 10px"
+            alt=""
+          /><span style="padding-bottom: 10px">우리끼리</span></RouterLink
         >
         <div class="navbar-list">
           <RouterLink :to="{ name: 'map' }" class="nav-link"
@@ -35,11 +65,6 @@
 
           <RouterLink :to="{ name: 'article' }" class="nav-link"
             >게시판</RouterLink
-          >
-
-          <span> | </span>
-          <RouterLink :to="{ name: 'profile' }" class="nav-link"
-            >마이페이지</RouterLink
           >
         </div>
       </nav>
@@ -61,16 +86,10 @@ const { username, token } = storeToRefs(store);
 const logout = () => {
   const payload = {};
 };
-
-console.log(username.value);
 </script>
 
 <style scoped>
 .container-fluid {
-  display: flex;
-  justify-content: space-between;
-  height: 80px;
-  padding: 0px;
   background-color: rgb(119, 185, 252);
   color: rgba(255, 255, 255);
   font-weight: bold;
@@ -80,6 +99,7 @@ console.log(username.value);
   height: 40px;
   font-family: "IBM Plex Sans KR", sans-serif;
   font-family: "Orbit", sans-serif;
+  margin: 0px 14%;
 }
 .logined {
   display: flex;
@@ -103,6 +123,14 @@ console.log(username.value);
   margin: 8px;
   font-size: 15px;
 }
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  margin: 0px 14%;
+  height: 80px;
+  padding: 0px;
+}
+
 .navbar-brand {
   display: flex;
   margin: 10px 30px;
@@ -124,7 +152,7 @@ console.log(username.value);
 }
 
 .router-view {
-  margin: 80px 100px;
+  margin: 50px 15% 80px;
 
   /* display: flex; */
   /* align-items: center; */

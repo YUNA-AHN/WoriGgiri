@@ -3,8 +3,9 @@
     <h1>비밀번호 변경</h1>
     <form @submit.prevent="passwordUpdate" class="update-form">
       <div>
-        <label for="password2">현재 비밀번호 : </label>
+        <label for="password2">현재 비밀번호</label>
         <input
+          class="form-control"
           type="password"
           name="password"
           id="password"
@@ -12,17 +13,34 @@
         />
       </div>
       <div>
-        <label for="password2">새 비밀번호 : </label>
+        <label for="password2">새 비밀번호</label>
         <input
+          class="form-control"
           type="password"
           name="newpassword1"
           id="newpassword1"
           v-model.trim="newpassword1"
         />
       </div>
+
+      <p
+        v-show="
+          (newpassword1 !== null || newpassword2 !== null) &&
+          newpassword1 !== newpassword2
+        "
+        style="
+          font-size: smaller;
+          color: rgba(255, 0, 0, 0.7);
+          font-weight: lighter;
+          margin: 0px 0px;
+        "
+      >
+        비밀번호가 일치하지 않습니다.
+      </p>
       <div>
-        <label for="password2">새 비밀번호 확인 : </label>
+        <label for="password2">새 비밀번호 확인</label>
         <input
+          class="form-control"
           type="password"
           name="newpassword2"
           id="newpassword2"
@@ -111,6 +129,8 @@ h1 {
   border-top: 0px;
   border-right: 0px;
   border-left: 0px;
+  border-bottom-left-radius: 0%;
+  border-bottom-right-radius: 0%;
   border-bottom: lightgray solid 1px;
   font-size: 20px;
   font-weight: bolder;

@@ -43,20 +43,18 @@
 import { useProductsStore } from "@/stores/products";
 import { useSignStore } from "@/stores/sign";
 import { computed } from "@vue/reactivity";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { onMounted, ref } from "vue";
 import axios from "axios";
 
 const store = useProductsStore();
 const signStore = useSignStore();
 const route = useRoute();
+const router = useRouter();
 
 const productCd = route.params.fin_prdt_cd;
 
-// const filtered = ref(null)
 const product = computed(() => {
-  // filtered.value = store.deposit_products.filter((product) =>
-  // product.fin_prdt_cd === productCd)
   return store.deposit_products?.filter(
     (product) => product.fin_prdt_cd === productCd
   )[0];
@@ -68,20 +66,6 @@ const user = computed(() => {
 
 console.log(typeof user.value.financial_products);
 
-// const username = ref(null);
-// const email = ref(null);
-
-// const nickname = ref(null);
-// const age = ref(null);
-// const money = ref(null);
-// const salary = ref(null);
-
-// const financial_products = ref([]);
-
-// const financial_products = computed(() => {
-//   return userInfo;
-// });
-// console.log(financial_products);
 const join = () => {
   const data = {
     // username: user.value.username,
@@ -94,14 +78,30 @@ const join = () => {
   };
   if (
     user.value.financial_products !== null &&
-    user.value.financial_products.length > 0
+    user.value.financial_products.length !== ""
   ) {
-    data.financial_products =
-      user.value.financial_products +
-      store.deposit_products?.filter(
-        (product) => product.fin_prdt_cd === productCd
-      )[0].fin_prdt_nm +
-      ", ";
+    console.log(user.value.financial_products);
+    console.log([user.value.financial_products].join(","));
+    if (
+      [user.value.financial_products]
+        .join(",")
+        .includes(
+          store.deposit_products?.filter(
+            (product) => product.fin_prdt_cd === productCd
+          )[0].fin_prdt_nm
+        )
+    ) {
+      alert("이미 존재하는 상품입니다.");
+      return;
+    } else {
+      console.log("머임");
+      data.financial_products =
+        user.value.financial_products +
+        store.deposit_products?.filter(
+          (product) => product.fin_prdt_cd === productCd
+        )[0].fin_prdt_nm +
+        ", ";
+    }
   } else {
     data.financial_products =
       store.deposit_products?.filter(
@@ -124,7 +124,6 @@ const join = () => {
   if (user.value.salary !== null && user.value.salary !== "") {
     data.salary = user.value.salary;
   }
-
   axios({
     method: "put",
     url: "http://127.0.0.1:8000/accounts/update/",
@@ -136,6 +135,8 @@ const join = () => {
     .then((response) => {
       console.log(data);
       alert("가입 완료 되었습니다.");
+      signStore.saveInfo();
+      // router.push({ name: "profile" });
     })
     .catch((error) => {
       console.log(data);

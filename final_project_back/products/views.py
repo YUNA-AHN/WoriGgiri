@@ -32,7 +32,6 @@ def temp(request):
     if serializer.is_valid(raise_exception=True):
         return JsonResponse(saving_response)
 
-
 @api_view(['GET'])
 def save_data(request):
     api_key = "f6d469a35ac51357c3e810f371a30641"
@@ -83,7 +82,7 @@ def save_data(request):
         if saving_option_serializer.is_valid(raise_exception=True):
             saving_product = SavingProducts.objects.get(fin_prdt_cd=saving_option['fin_prdt_cd'])
             saving_option_serializer.save(fin_prdt_cd=saving_product)
-    return Response(saving_option_serializer.data)
+    return Response(data={'message': '데이터 로드 완료'})
 
 
 
