@@ -115,7 +115,7 @@
 import axios from "axios";
 import { useSignStore } from "@/stores/Sign";
 import { useRoute, useRouter } from "vue-router";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onUpdated } from "vue";
 const store = useSignStore();
 const router = useRouter();
 
@@ -129,6 +129,7 @@ const nickname = ref(null);
 const age = ref(null);
 const money = ref(null);
 const salary = ref(null);
+const financial_products = ref(null);
 
 const Update = () => {
   const data = {
@@ -159,6 +160,15 @@ const Update = () => {
     },
   })
     .then((response) => {
+      store.user = {
+        username: username.value,
+        email: email.value,
+        nickname: nickname.value,
+        age: age.value,
+        salary: salary.value,
+        financial_products: financial_products.value,
+        money: money.value,
+      };
       console.log(username.value);
       // console.log(password1.value);
       // console.log(password2.value);
@@ -193,6 +203,7 @@ onMounted(() => {
       age.value = user.value.age;
       money.value = user.value.money;
       salary.value = user.value.salary;
+      financial_products.value = user.value.financial_products;
       console.log(salary);
     })
     .catch((err) => {

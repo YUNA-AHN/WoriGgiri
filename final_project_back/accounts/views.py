@@ -20,9 +20,9 @@ def user_info(request):
         return Response(serializer.data)
     
 # 회원 정보 수정
+
 class CustomUserDetailsView(UserDetailsView):
     serializer_class = CustomUserDetailsSerializer
-
     def update(self, request, *args, **kwargs):
         partial = kwargs.pop('partial', False)
         instance = self.get_object()
@@ -54,6 +54,15 @@ def password_change(request):
             return Response({'error': '새 비밀번호를 바르게 입력해주세요.'}, status=status.HTTP_400_BAD_REQUEST)
     else:
         return Response({'error': '비밀번호가 틀렸습니다.'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['PUT'])
+def product_join(request):
+    if request.method == 'PUT':
+        serializer = CustomUserDetailsSerializer(request.PUT, instance=request.user)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response(serializer.data)
 
 # 회원 탈퇴
 @api_view(['POST'])

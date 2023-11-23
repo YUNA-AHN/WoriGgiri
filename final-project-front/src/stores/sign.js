@@ -1,4 +1,4 @@
-import { ref, computed } from "vue";
+import { ref, computed, onUpdated } from "vue";
 import { defineStore } from "pinia";
 import { useRouter } from "vue-router";
 import axios from "axios";
@@ -13,6 +13,8 @@ export const useSignStore = defineStore(
     const token = ref(null);
     const username = ref(null);
     const password = ref(null);
+
+    const user = ref(null);
 
     const logIn = (payload) => {
       // const data = {
@@ -34,6 +36,22 @@ export const useSignStore = defineStore(
         .then((response) => {
           token.value = response.data.key;
           console.log(response.data);
+          axios({
+            method: "get",
+            url: `http://127.0.0.1:8000/accounts/`,
+            headers: {
+              Authorization: `Token ${token.value}`,
+            },
+          })
+            .then((response) => {
+              user.value = response.data;
+              console.log(response.data);
+              console.log(user.value);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+
           window.alert("로그인 성공");
           router.push({ name: "main" });
         })
@@ -79,7 +97,16 @@ export const useSignStore = defineStore(
         });
     };
 
-    return { token, logIn, isLogin, logout, username, password, API_URL };
+    return {
+      token,
+      logIn,
+      isLogin,
+      logout,
+      username,
+      password,
+      API_URL,
+      user,
+    };
   },
   { persist: true }
 );
