@@ -6,16 +6,22 @@
       가입한 상품 : {{ user?.financial_products || "가입한 상품이 없습니다." }}
     </p>
     <p>나이 : {{ user?.age || "나이를 입력해주세요." }}</p>
-    <p>잔고 : {{ user?.money || "잔고를 입력해주세요." }}</p>
+    <p>
+      잔고 :
+      {{ Number(user?.money).toLocaleString() || "잔고를 입력해주세요." }} 원
+    </p>
     <p>이메일 : {{ user?.email || "이메일을 입력해주세요." }}</p>
     <p>닉네임: {{ user?.nickname || "닉네임을 입력해주세요." }}</p>
-    <p>연봉 : {{ user?.salary || "연봉을 입력해주세요." }}</p>
+    <p>
+      연봉 :
+      {{ Number(user?.salary).toLocaleString() || "연봉을 입력해주세요." }} 원
+    </p>
     <button class="btn" @click="userupdate">프로필 수정하기</button>
     <button class="btn" @click="passwordchange">비밀번호 변경하기</button>
     <button class="btn" @click="userdelete">회원 탈퇴</button>
 
     <hr />
-    <h3 @click="likesarticle">내 활동 보러가기</h3>
+    <h3 @click="likesarticle">내 활동</h3>
     <hr />
     <h3>추천 상품</h3>
   </div>
