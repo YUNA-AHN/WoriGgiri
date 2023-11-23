@@ -124,6 +124,23 @@ def saving_options(request):
     serializer = SavingOptionsSerializer(options, many=True)
     return Response(serializer.data)
 
+
+# 조회수를 위한!
+@api_view(['POST'])
+def deposite_views(request, pk):
+    product = DepositProducts.objects.get(pk=pk)
+    product.views_count += 1
+    product.save()
+    return Response(product.views_count)
+
+@api_view(['POST'])
+def saving_views(request, pk):
+    product = SavingProducts.objects.get(pk=pk)
+    product.views_count += 1
+    product.save()
+    return Response(product.views_count)
+
+# 추천 알고리즘 : 이었던 것
 @api_view(['POST'])
 def deposit_recommend(request):
     user = get_user_model().objects.get(username=request.user)
@@ -135,6 +152,8 @@ def deposit_recommend(request):
     # 부가 정보가 있는지 확인
     # 부가 정보가 하나도 없다면 => 금리 높은 순 추천!
     # 부가 정보가 하나라도 존재한다면 => 필터 걸고 for문 돌면서 products를 개수 세기
+
+    # filter 걸어서 product에 존재하지 않는 친구들만 남기기
     if not products and not age and not money and not salary:
         pass
         # 상품별 우대금리가 가장 높은 옵션을 기준!
@@ -145,10 +164,16 @@ def deposit_recommend(request):
 
     else:
         pass
-    return Response({'data':products.split(',')})
+    # return Response({'data':products.split(',')})
 
     # return Response({'data' : DepositOptions.objects
     #                  .values("fin_prdt_cd")
     #                  .filter()
     #                  .annotate(max_intr=Max("intr_rate2"))
     #                  .order_by('-max_intr')[:3]})
+
+    return Response({'data' : DepositProducts.objects
+                     .values("fin_prdt_cd")
+                    #  .filter()
+                    #  .annotate(max_intr=Max("intr_rate2"))
+                     .order_by('-views_count')[:3]})

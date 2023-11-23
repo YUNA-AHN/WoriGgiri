@@ -43,7 +43,6 @@
       id="money-box"
         type="number"
         class="form-control"
-        disabled
         v-model.number="payment2"
         @input="updatePayment1(Math.round((payment2 / rate) * currencyUnit))"
       />
@@ -100,7 +99,7 @@ const payments = ref(
 // prettier-ignore
 const countries = { 미국:"USD", 유럽: "EUR", 일본: "JPY", 영국: "GBP", 스위스: "CHF", 캐나다:"CAD", 호주:"AUD", 중국:"CNY", 홍콩:"HKD", 스웨덴:"SEK", 뉴질랜드:"NZD", 싱가포르:"SGD", 노르웨이:"NOK", 멕시코:"MXN", 인도:"INR", 러시아:"RUB", 남아공:"ZAR", 터키:"TRY", 브라질:"BRL", 아랍에미리트:"AED", 바레인:"BHD", 브루나이:"BND",체코:"CZK",덴마크:"DKK", 인도네시아:"IDR", 이스라엘:"ILS", 말레이시아:"MYR", 카타르:"QAR",사우디:"SAR", 태국:"THB", 대만:"TWD", 이집트:"EGP", 헝가리:"HUF", 쿠웨이트:"KWD", 필리핀:"PHP", 폴란드:"PLN", 파키스탄:"PKR", 방글라데시:"BDT", 요르단:"JOD", 카자흐스탄:"KZT", 몽골:"MNT", 베트남:"VND" };
 
-const criterion = ref(["현찰 살때", "현찰 팔때"]);
+const criterion = ref(["매매기준율","현찰 살때", "현찰 팔때"]);
 
 // console.log(countries.유럽);
 
