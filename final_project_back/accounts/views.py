@@ -8,6 +8,7 @@ from rest_framework import status
 
 from dj_rest_auth.views import UserDetailsView
 
+from .models import User
 from .serializers import UserSerializer, CustomUserDetailsSerializer
 
 # 회원 정보 가져오기
@@ -62,3 +63,15 @@ def product_join(request):
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data)
+
+# 회원 탈퇴
+@api_view(['POST'])
+def user_delete(request):
+    user = request.user
+    password =  request.data.get('password','')
+
+    if password and check_password(password, user.password):
+        user.delete()
+        return Response({'delete': '우리끼리 회원탈퇴가 완료되었습니다.'}, status=status.HTTP_204_NO_CONTENT)
+    else:
+        return Response({'error': '비밀번호가 틀렸습니다.'}, status=status.HTTP_400_BAD_REQUEST)
