@@ -2,8 +2,8 @@
   <div>
     <h1>{{ user?.username }}님의 프로필</h1>
     <p class="my-0">
-      <div style="width: 350px; display: flex; justify-content: space-between;">
-      <span style="display: flex; align-items: center;">
+      <div style=" display: flex;; align-items: center;">
+      <span style="margin-right: 30px;">
       이름 : {{ user?.username }}</span>
       <button id="btn-update" class="btn" @click="userupdate">
         프로필 수정하기
@@ -12,7 +12,7 @@
     </p>
 
     <p>
-      가입한 상품 : {{ user?.financial_products.substring(0, user?.financial_products.length - 1) || "가입한 상품이 없습니다." }}
+      가입한 상품 : {{ user?.financial_products?.substring(0, user?.financial_products?.length - 1) || "가입한 상품이 없습니다." }}
     </p>
     <p>나이 : {{ user?.age || "나이를 입력해주세요." }}</p>
     <p>
@@ -33,7 +33,6 @@
       <h2 @click="likesarticle">내 활동</h2>
     </div>
     <LikesArticleView />
-    <hr />
     <div class="act-box">
       <h2>추천 상품</h2>
     </div>

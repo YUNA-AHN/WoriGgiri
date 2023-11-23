@@ -261,12 +261,14 @@ h1 {
   width: 100%;
   height: 300px;
   border: 1px solid lightgray;
+  border-color: rgb(119, 185, 252);
   padding: 10px;
 }
 form {
   display: flex;
   align-items: center;
   margin: 0px 0px 10px 0px;
+  border-color: rgb(119, 185, 252);
 }
 
 #btn {

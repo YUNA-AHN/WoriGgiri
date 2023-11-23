@@ -2,22 +2,26 @@
   <div>
     <h1>회원 탈퇴</h1>
     <form @submit.prevent="Delete" class="delete-form">
-      <div class="info-list">
+      <div
+        class="info-list"
+        style="
+          display: flex;
+          align-items: center;
+          width: 450px;
+          justify-content: space-between;
+        "
+      >
         <label for="password2">비밀번호 : </label>
         <input
+          class="form-control"
           type="password"
           name="password"
           id="password"
           v-model.trim="password"
         />
-        <div class="info-list">
-          <input
-            id="btn"
-            class="btn btn-info"
-            type="submit"
-            value="회원 탈퇴"
-          />
-        </div>
+      </div>
+      <div class="info-list">
+        <input id="btn" class="btn btn-info" type="submit" value="회원 탈퇴" />
       </div>
     </form>
   </div>
@@ -94,13 +98,12 @@ h1 {
   border-top: 0px;
   border-right: 0px;
   border-left: 0px;
+  border-bottom-left-radius: 0%;
+  border-bottom-right-radius: 0%;
   border-bottom: lightgray solid 1px;
+  border-color: rgb(119, 185, 252);
   font-size: 20px;
   font-weight: bolder;
-}
-
-.info-list {
-  display: flex;
 }
 
 #btn {

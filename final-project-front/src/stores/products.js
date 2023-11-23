@@ -3,9 +3,10 @@ import { defineStore } from "pinia";
 import axios from "axios";
 
 export const useProductsStore = defineStore("products", () => {
+  const API_URL = "http://127.0.0.1:8000";
   axios({
     method: "get",
-    url: `http://127.0.0.1:8000/products/save/`,
+    url: `${API_URL}/products/save/`,
   })
     .then((response) => {
       console.log("데이터 로드 완료");
@@ -17,7 +18,7 @@ export const useProductsStore = defineStore("products", () => {
   const deposit_products = ref(null);
   axios({
     method: "get",
-    url: "http://127.0.0.1:8000/products/deposit_products/",
+    url: `${API_URL}/products/deposit_products/`,
   })
     .then((response) => {
       deposit_products.value = response.data;
@@ -29,7 +30,7 @@ export const useProductsStore = defineStore("products", () => {
   const deposit_options = ref(null);
   axios({
     method: "get",
-    url: "http://127.0.0.1:8000/products/deposit_options/",
+    url: `${API_URL}/products/deposit_options/`,
   })
     .then((response) => {
       deposit_options.value = response.data;
@@ -41,7 +42,7 @@ export const useProductsStore = defineStore("products", () => {
   const saving_products = ref(null);
   axios({
     method: "get",
-    url: "http://127.0.0.1:8000/products/saving_products/",
+    url: `${API_URL}/products/saving_products/`,
   })
     .then((response) => {
       saving_products.value = response.data;
@@ -53,7 +54,7 @@ export const useProductsStore = defineStore("products", () => {
   const saving_options = ref(null);
   axios({
     method: "get",
-    url: "http://127.0.0.1:8000/products/saving_options/",
+    url: `${API_URL}/products/saving_options/`,
   })
     .then((response) => {
       saving_options.value = response.data;
@@ -177,7 +178,6 @@ export const useProductsStore = defineStore("products", () => {
   ]);
   const depositRows = computed(() => {
     const depositRow = [];
-    let product_id = 0;
 
     for (let idx in deposit_products.value) {
       const inner_ops = deposit_options.value?.filter(
@@ -185,7 +185,6 @@ export const useProductsStore = defineStore("products", () => {
       );
 
       const depositInner = {
-        // id: ++product_id,
         fin_co_subm_day: deposit_products.value[idx].fin_co_subm_day.substring(
           0,
           8
@@ -221,7 +220,6 @@ export const useProductsStore = defineStore("products", () => {
       );
 
       const savingInner = {
-        // id: ++product_id,
         fin_co_subm_day: saving_products.value[idx].fin_co_subm_day.substring(
           0,
           8
@@ -292,5 +290,6 @@ export const useProductsStore = defineStore("products", () => {
     savingCoulumns,
     depositRows,
     savingRows,
+    API_URL,
   };
 });

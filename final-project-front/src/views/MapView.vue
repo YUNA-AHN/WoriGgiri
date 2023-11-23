@@ -67,6 +67,7 @@ h1 {
 
 .search-form * {
   margin: 0px 0px 30px 0px;
+  border-color: rgb(119, 185, 252);
 }
 
 .select-box {

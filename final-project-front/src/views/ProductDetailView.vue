@@ -28,10 +28,9 @@
       <span class="sub-title"> 우대 조건 </span>
       <span class="sub-detail">{{ product?.mtrt_int }}</span>
     </div>
-    <p></p>
-    <p></p>
-    <p></p>
-    <div @click="join(product)" class="btn">가입하기</div>
+    <div style="display: flex; justify-content: center">
+      <button @click="join(product)" class="btn">가입하기</button>
+    </div>
   </div>
 
   <!-- 
@@ -80,8 +79,8 @@ const join = () => {
     user.value.financial_products !== null &&
     user.value.financial_products.length !== ""
   ) {
-    console.log(user.value.financial_products);
-    console.log([user.value.financial_products].join(","));
+    // console.log(user.value.financial_products);
+    // console.log([user.value.financial_products].join(","));
     if (
       [user.value.financial_products]
         .join(",")
@@ -94,7 +93,6 @@ const join = () => {
       alert("이미 존재하는 상품입니다.");
       return;
     } else {
-      console.log("머임");
       data.financial_products =
         user.value.financial_products +
         store.deposit_products?.filter(
@@ -136,53 +134,12 @@ const join = () => {
       console.log(data);
       alert("가입 완료 되었습니다.");
       signStore.saveInfo();
-      // router.push({ name: "profile" });
     })
     .catch((error) => {
-      console.log(data);
-      console.log(signStore.token);
       console.log(error);
       alert("이미 가입한 상품입니다.");
     });
 };
-
-// onMounted(() => {
-//   axios({
-//     method: "get",
-//     url: `http://127.0.0.1:8000/accounts/`,
-//     headers: {
-//       Authorization: `Token ${signStore.token}`,
-//     },
-//   })
-//     .then((res) => {
-//       console.log(res.data);
-//       user.value = res.data;
-//       username.value = user.value.username;
-//       email.value = user.value.email;
-//       nickname.value = user.value.nickname;
-//       age.value = user.value.age;
-//       money.value = user.value.money;
-//       salary.value = user.value.salary;
-//       console.log(financial_products.value);
-//       if (
-//         financial_products.value !== null &&
-//         financial_products.value !== `${[]}` &&
-//         user.value.financial_products !== null
-//       ) {
-//         console.log(user.value.financial_products);
-//         financial_products.value = user.value.financial_products.split(",");
-//       }
-
-//       // financial_products.append(financial_product);
-//       // if (financial_products.value.length >= 1) {
-//       //   financial_products.value = financial_products.value.join(",");
-//       // }
-//       console.log(financial_products.value);
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//     });
-// });
 </script>
 
 <style scoped>
@@ -213,5 +170,16 @@ h1 {
 .sub-detail {
   margin: 0px 0px 0px 50px;
   width: 100%;
+}
+
+.btn {
+  border: 1px solid rgba(119, 185, 252, 0.1);
+  background-color: rgba(119, 185, 252, 0.6);
+  color: rgb(60, 60, 60);
+  font-size: 17px;
+  font-weight: bolder;
+  margin-top: 40px;
+  width: 300px;
+  height: 50px;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="main">
     <h1>💰 환율 계산기</h1>
 
     <div class="header-box">
@@ -17,11 +17,11 @@
         </option>
       </select>
     </div>
-
+    <div class="info-box">
     <p v-if="rate === null">현재 해당 정보가 제공되지 않습니다.</p>
     <p v-else-if="rate">
-      현재 {{ select2 }} <span>{{ payment1 }}</span> {{ currencyName }}은(는)
-      <span>{{ payment2 }}</span> 원입니다.
+      현재 {{ select2 }} <span>{{ payment1 }}</span> {{ currencyName }} 은(는)
+      <span>{{ payment2 }}</span> 원 입니다.
     
 
     <div class="exchange-info">
@@ -37,18 +37,23 @@
       {{ currencyName }}
     </div>
   </p>
-    <div class="exchange-info">
+</div>
+    <div class="exchange-info" style="font-size: 30px;">
       대한민국 (KRW) :
       <input
       id="money-box"
         type="number"
         class="form-control"
         v-model.number="payment2"
+        placeholder="값을 입력하세요"
+          onfocus="this.placeholder=''"
+          onblur="this.placeholder='값을 입력하세요'"
         @input="updatePayment1(Math.round((payment2 / rate) * currencyUnit))"
       />
       원
     </div>
   </div>
+  
 </template>
 
 <style scoped>
@@ -62,9 +67,21 @@ h1 {
   margin-bottom: 30px;
   border-bottom: 5px rgba(13, 172, 220, 0.7) solid;
 }
+.main {
+  width: 100%;
+  height: 700px;
+  background-image: url('@/assets/pink-ele-bg.png');
+  background-repeat: no-repeat;
+  background-position: bottom;
+  background-position: right;
+}
 
 .form-select {
-  width: 200px;
+  width: 300px;
+  height: 50px;
+  font-size: 20px;
+  border-color: rgba(13, 172, 220, 0.5);
+
 }
 
 .header-box {
@@ -75,16 +92,34 @@ h1 {
 }
 #money-box{
   width: 300px;
+  border-top: 0px;
+  border-right: 0px;
+  border-left: 0px;
+  border-bottom-left-radius: 0%;
+  border-bottom-right-radius: 0%;
+  border-bottom: lightgray solid 1px;
+  border-color: rgba(13, 172, 220, 0.5);
+  font-size: 20px;
+  font-weight: bolder;
+  margin: 20px;
 }
 .exchange-info {
   display: flex;
+  align-items: center;
 }
 
 input:disabled {
   background-color: white;
 }
 p span {
-  border-bottom: 2px solid rgba(13, 172, 220, 0.7);
+  border-bottom: 4px solid rgba(13, 172, 220, 0.7);
+}
+.info-box {
+  margin: 20px 0px;
+  font-size: 30px;
+}
+.info-box *{
+  margin: 20px 0px;
 }
 </style>
 

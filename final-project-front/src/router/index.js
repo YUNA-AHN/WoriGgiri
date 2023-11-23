@@ -23,6 +23,7 @@ import SavingProductDetailView from "@/views/SavingProductDetailView.vue";
 
 import { useSignStore } from "@/stores/Sign";
 
+import tmp from "@/views/tmp.vue";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -111,6 +112,11 @@ const router = createRouter({
       name: "saving",
       component: SavingProductDetailView,
     },
+    {
+      path: "/tmp",
+      name: "tmp",
+      component: tmp,
+    },
   ],
 });
 
@@ -125,33 +131,5 @@ router.beforeEach((to, from) => {
     return { name: "login" };
   }
 });
-
-// import { useCounterStore } from "@/stores/counter";
-// import Swal from "sweetalert2";
-
-// router.beforeEach((to, from) => {
-//   const store = useCounterStore();
-//   if (to.name === "ArticleView" && !store.isLogin) {
-//     Swal.fire({
-//       title: "로그인이 필요합니다",
-//       icon: "error",
-//       showConfirmButton: false,
-//       showDenyButton: true,
-//       denyButtonText: "확인",
-//       denyButtonColor: "#F27474",
-//     });
-//     return { name: "LogInView" };
-//   }
-//   if ((to.name === "SignUpView" || to.name === "LogInView") && store.isLogin) {
-//     Swal.fire({
-//       title: "이미 로그인된 사용자입니다",
-//       icon: "success",
-//       showConfirmButton: true,
-//       confirmButtonText: "확인",
-//       confirmButtonColor: "#a5dc86",
-//     });
-//     return { name: "ArticleView" };
-//   }
-// });
 
 export default router;

@@ -243,6 +243,7 @@ h1 {
   border-bottom-left-radius: 0%;
   border-bottom-right-radius: 0%;
   border-bottom: lightgray solid 1px;
+  border-color: rgb(119, 185, 252);
   font-size: 20px;
   font-weight: bolder;
 }
