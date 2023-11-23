@@ -1,8 +1,19 @@
-import { ref, computed, onMounted } from "vue";
+import { ref, computed, onMounted, watch } from "vue";
 import { defineStore } from "pinia";
 import axios from "axios";
 
 export const useProductsStore = defineStore("products", () => {
+  axios({
+    method: "get",
+    url: `http://127.0.0.1:8000/products/save/`,
+  })
+    .then((response) => {
+      console.log("데이터 로드 완료");
+    })
+    .catch((error) => {
+      console.log("데이터가 이미 존재합니다.");
+    });
+
   const deposit_products = ref(null);
   axios({
     method: "get",
@@ -266,9 +277,6 @@ export const useProductsStore = defineStore("products", () => {
         }
       }
       savingRow.push(savingInner);
-      // console.log(depositRow);
-      // console.log(savingRow);
-      // console.log(depositRow.concat(savingRow));
     }
 
     return savingRow;

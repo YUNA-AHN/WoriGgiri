@@ -62,6 +62,20 @@
         />
       </div>
       <p
+        v-if="
+          (password1 !== null || password2 !== null) && password1 !== password2
+        "
+        style="
+          font-size: smaller;
+          color: rgba(255, 0, 0, 0.7);
+          font-weight: lighter;
+          margin: 0px 0px;
+        "
+      >
+        비밀번호가 일치하지 않습니다.
+      </p>
+      <p
+        v-else
         style="
           font-size: smaller;
           color: gray;
@@ -216,6 +230,18 @@ h1 {
   border-top: 0px;
   border-right: 0px;
   border-left: 0px;
+  border-bottom: lightgray solid 1px;
+  font-size: 20px;
+  font-weight: bolder;
+}
+
+.signup-form input {
+  width: 300px;
+  border-top: 0px;
+  border-right: 0px;
+  border-left: 0px;
+  border-bottom-left-radius: 0%;
+  border-bottom-right-radius: 0%;
   border-bottom: lightgray solid 1px;
   font-size: 20px;
   font-weight: bolder;

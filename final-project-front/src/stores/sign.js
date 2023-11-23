@@ -1,4 +1,4 @@
-import { ref, computed, onUpdated } from "vue";
+import { ref, computed, onUpdated, onMounted } from "vue";
 import { defineStore } from "pinia";
 import { useRouter } from "vue-router";
 import axios from "axios";
@@ -15,6 +15,31 @@ export const useSignStore = defineStore(
     const password = ref(null);
 
     const user = ref(null);
+
+    const saveInfo = () => {
+      axios({
+        method: "get",
+        url: `${API_URL}/accounts/`,
+        headers: {
+          Authorization: `Token ${token.value}`,
+        },
+      })
+        .then((res) => {
+          console.log(res.data);
+          user.value = res.data;
+          // username.value = user.value.username;
+          // email.value = user.value.email;
+          // nickname.value = user.value.nickname;
+          // age.value = user.value.age;
+          // money.value = user.value.money;
+          // salary.value = user.value.salary;
+          // financial_products.value = user.value.financial_products;
+          // console.log(salary);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
 
     const logIn = (payload) => {
       // const data = {
@@ -36,21 +61,22 @@ export const useSignStore = defineStore(
         .then((response) => {
           token.value = response.data.key;
           console.log(response.data);
-          axios({
-            method: "get",
-            url: `http://127.0.0.1:8000/accounts/`,
-            headers: {
-              Authorization: `Token ${token.value}`,
-            },
-          })
-            .then((response) => {
-              user.value = response.data;
-              console.log(response.data);
-              console.log(user.value);
-            })
-            .catch((error) => {
-              console.log(error);
-            });
+          saveInfo();
+          // axios({
+          //   method: "get",
+          //   url: `http://127.0.0.1:8000/accounts/`,
+          //   headers: {
+          //     Authorization: `Token ${token.value}`,
+          //   },
+          // })
+          //   .then((response) => {
+          //     user.value = response.data;
+          //     console.log(response.data);
+          //     console.log(user.value);
+          //   })
+          //   .catch((error) => {
+          //     console.log(error);
+          //   });
 
           window.alert("로그인 성공");
           router.push({ name: "main" });
@@ -106,6 +132,7 @@ export const useSignStore = defineStore(
       password,
       API_URL,
       user,
+      saveInfo,
     };
   },
   { persist: true }

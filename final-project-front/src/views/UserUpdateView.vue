@@ -5,6 +5,7 @@
       <div class="info-list">
         <label for="username">이름 : </label>
         <input
+          class="form-control"
           type="text"
           name="username"
           id="username"
@@ -17,34 +18,22 @@
           font-size: smaller;
           color: gray;
           font-weight: lighter;
-          margin: 0px 0px;
+          height: 25px;
+          margin: 0px;
         "
-      >
-        (필수)
-      </p>
+      ></p>
 
       <div class="info-list">
         <label for="email">e-mail : </label>
-        <input type="text" name="email" id="email" v-model.trim="email" />
-      </div>
-      <p
-        style="
-          font-size: smaller;
-          color: gray;
-          font-weight: lighter;
-          margin: 0px 0px;
-        "
-      >
-        (선택)
-      </p>
-
-      <div class="info-list">
-        <label for="nickname">닉네임 : </label>
         <input
           type="text"
-          name="nickname"
-          id="nickname"
-          v-model.trim="nickname"
+          name="email"
+          id="email"
+          v-model.trim="email"
+          class="form-control"
+          placeholder="(선택)"
+          onfocus="this.placeholder=''"
+          onblur="this.placeholder='(선택)'"
         />
       </div>
       <p
@@ -52,53 +41,98 @@
           font-size: smaller;
           color: gray;
           font-weight: lighter;
-          margin: 0px 0px;
+          height: 25px;
+          margin: 0px;
         "
-      >
-        (선택)
-      </p>
+      ></p>
+      <div class="info-list">
+        <label for="nickname">닉네임 : </label>
+        <input
+          type="text"
+          name="nickname"
+          id="nickname"
+          v-model.trim="nickname"
+          class="form-control"
+          placeholder="(선택)"
+          onfocus="this.placeholder=''"
+          onblur="this.placeholder='(선택)'"
+        />
+      </div>
+      <p
+        style="
+          font-size: smaller;
+          color: gray;
+          font-weight: lighter;
+          height: 25px;
+          margin: 0px;
+        "
+      ></p>
       <div class="info-list">
         <label for="age">나이 : </label>
-        <input type="text" name="age" id="age" v-model.trim="age" />
+        <input
+          type="text"
+          name="age"
+          id="age"
+          v-model.trim="age"
+          class="form-control"
+          placeholder="(선택)"
+          onfocus="this.placeholder=''"
+          onblur="this.placeholder='(선택)'"
+        />
       </div>
       <p
         style="
           font-size: smaller;
           color: gray;
           font-weight: lighter;
-          margin: 0px 0px;
+          height: 25px;
+          margin: 0px;
         "
-      >
-        (선택)
-      </p>
+      ></p>
       <div class="info-list">
         <label for="money">잔고 : </label>
-        <input type="text" name="money" id="money" v-model.trim="money" />
+        <input
+          type="text"
+          name="money"
+          id="money"
+          v-model.trim="money"
+          class="form-control"
+          placeholder="(선택)"
+          onfocus="this.placeholder=''"
+          onblur="this.placeholder='(선택)'"
+        />
       </div>
       <p
         style="
           font-size: smaller;
           color: gray;
           font-weight: lighter;
-          margin: 0px 0px;
+          height: 25px;
+          margin: 0px;
         "
-      >
-        (선택)
-      </p>
+      ></p>
       <div class="info-list">
         <label for="salary">연봉 : </label>
-        <input type="text" name="salary" id="salary" v-model.trim="salary" />
+        <input
+          type="text"
+          name="salary"
+          id="salary"
+          v-model.trim="salary"
+          class="form-control"
+          placeholder="(선택)"
+          onfocus="this.placeholder=''"
+          onblur="this.placeholder='(선택)'"
+        />
       </div>
       <p
         style="
           font-size: smaller;
           color: gray;
           font-weight: lighter;
-          margin: 0px 0px;
+          height: 25px;
+          margin: 0px;
         "
-      >
-        (선택)
-      </p>
+      ></p>
       <div class="info-list">
         <input
           id="btn"
@@ -108,6 +142,11 @@
         />
       </div>
     </form>
+    <div class="info-list">
+      <button @click="passwordchange" id="btn" class="btn btn-info">
+        비밀 번호 변경
+      </button>
+    </div>
   </div>
 </template>
 
@@ -130,6 +169,10 @@ const age = ref(null);
 const money = ref(null);
 const salary = ref(null);
 const financial_products = ref(null);
+
+const passwordchange = function () {
+  router.push(`/password`);
+};
 
 const Update = () => {
   const data = {
@@ -243,6 +286,8 @@ h1 {
   border-right: 0px;
   border-left: 0px;
   border-bottom: lightgray solid 1px;
+  border-bottom-left-radius: 0%;
+  border-bottom-right-radius: 0%;
   font-size: 20px;
   font-weight: bolder;
 }
@@ -253,10 +298,12 @@ h1 {
 
 #btn {
   border: 1px solid rgba(119, 185, 252, 0.1);
+
   background-color: rgba(119, 185, 252, 0.6);
   color: rgb(60, 60, 60);
   font-size: 17px;
   font-weight: bolder;
+
   margin-top: 15px;
   width: 450px;
   height: 50px;

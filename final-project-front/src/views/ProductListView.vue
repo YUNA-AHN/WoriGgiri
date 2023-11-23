@@ -68,8 +68,6 @@ const selected = computed(() => {
     return false;
   }
 });
-const selectedBank = ref("default");
-const selectMonth = ref("default");
 
 const depositDetail = (product) => {
   axios({
@@ -114,10 +112,6 @@ const savingDetail = (product) => {
     })
     .catch((err) => console.log(err));
 };
-
-const rowStyleClassFn = () => {
-  return "green";
-};
 </script>
 
 <style scoped>
@@ -139,7 +133,7 @@ h1 {
 }
 
 .content {
-  width: 200%;
+  width: 120%;
 }
 
 .select-category {
@@ -168,22 +162,19 @@ h1 {
 } */
 
 .vgt-right-align span {
-  color: red;
-}
-
-#col-5 {
-  color: blue;
-}
-#col-6 {
-  color: blue;
-}
-#col-7 {
-  color: blue;
-}
-#col-8 {
-  color: blue;
-}
-.vgt-right-align span {
   cursor: pointer;
+}
+.vgt-left-align:nth-child(even) {
+  width: 250px;
+}
+.vgt-left-align:nth-child(odd) {
+  width: 120px;
+}
+.vgt-left-align:nth-child(odd) {
+  background-color: rgba(135, 207, 235, 0.2);
+}
+.vgt-right-align {
+  background-color: rgba(135, 207, 235, 0.4);
+  width: 100px;
 }
 </style>

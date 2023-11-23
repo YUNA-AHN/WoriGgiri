@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>작성한 게시글</h2>
+    <h4>작성한 게시글</h4>
     <div style="margin-bottom: 40px">
       <div v-if="myarticles?.length > 0">
         <div v-for="myarticle in myarticles">
@@ -13,7 +13,7 @@
       </div>
     </div>
 
-    <h2>작성한 댓글</h2>
+    <h4>작성한 댓글</h4>
     <div style="margin-bottom: 40px">
       <div v-if="mycomments?.length > 0">
         <div v-for="comment in mycomments">
@@ -26,7 +26,7 @@
       </div>
     </div>
 
-    <h2>좋아요한 게시글</h2>
+    <h4>좋아요한 게시글</h4>
     <div v-if="like_articles?.length > 0">
       <div v-for="article in like_articles">
         <p @click="godetail(article.id)">{{ article?.title }}</p>
@@ -85,9 +85,9 @@ onMounted(() => {
   font-weight: bolder;
 }
 
-h2 {
+h4 {
   padding-bottom: 20px;
-  margin-bottom: 30px;
-  border-bottom: 5px rgba(13, 172, 220, 0.7) solid;
+  margin-bottom: 20px;
+  /* border-bottom: 5px rgba(13, 172, 220, 0.7) solid; */
 }
 </style>
