@@ -63,7 +63,7 @@ const user = computed(() => {
   return signStore.user;
 });
 
-console.log(typeof user.value.financial_products);
+// console.log(typeof user.value.financial_products);
 
 const join = () => {
   const data = {
@@ -90,6 +90,12 @@ const join = () => {
           )[0].fin_prdt_nm
         )
     ) {
+      // console.log(
+      //   store.deposit_products?.filter(
+      //     (product) => product.fin_prdt_cd === productCd
+      //   )[0].fin_prdt_nm
+      // );
+      // console.log([user.value.financial_products].join(","));
       alert("이미 존재하는 상품입니다.");
       return;
     } else {
@@ -109,18 +115,28 @@ const join = () => {
 
   if (user.value.email !== null && user.value.email !== "") {
     data.email = user.value.email;
+  } else {
+    data.email = "example@email.com";
   }
   if (user.value.age !== null && user.value.age !== "") {
     data.age = user.value.age;
+  } else {
+    data.age = "";
   }
   if (user.value.nickname !== null && user.value.nickname !== "") {
     data.nickname = user.value.nickname;
+  } else {
+    data.nickname = "";
   }
   if (user.value.money !== null && user.value.money !== "") {
     data.money = user.value.money;
+  } else {
+    data.money = "";
   }
   if (user.value.salary !== null && user.value.salary !== "") {
     data.salary = user.value.salary;
+  } else {
+    data.salary = "";
   }
   axios({
     method: "put",
@@ -136,6 +152,7 @@ const join = () => {
       signStore.saveInfo();
     })
     .catch((error) => {
+      console.log(data);
       console.log(error);
       alert("이미 가입한 상품입니다.");
     });

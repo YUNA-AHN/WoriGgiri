@@ -40,12 +40,16 @@
       <!-- <ProductChart :my-products="financial_products"/> -->
       <Bar id="my-chart-id" :options="chartOptions" :data="chartData" />
     </div>
+
+    <div>{{  productStore.depositRows }}</div>
+    <div>{{ lst }}</div>
   </template>
   
   <script setup>
   import { ref, onMounted, onUpdated, computed } from "vue";
   import { useArticleStore } from "@/stores/articles";
   import { useSignStore } from "@/stores/sign.js";
+  import {useProductsStore} from "@/stores/products"
   import { useRoute, useRouter } from "vue-router";
   import axios from "axios";
   // import ProductChart from "@/components/ProductChart.vue";
@@ -73,9 +77,14 @@
   
   const store = useArticleStore();
   const signStore = useSignStore();
+  const productStore = useProductsStore()
   const user = ref(null);
   const router = useRouter();
   
+
+
+
+
   // 사용자 정보 수정
   const userupdate = function () {
     router.push(`/update`);
@@ -94,8 +103,28 @@
   const financial_products = computed(() => {
     return [signStore.user.financial_products]
   })
-  
+  const joinedList = computed(() => {
+    return financial_products.value[0].split(',')
+  }) 
+
+  console.log(joinedList.value)
     
+
+  const lst = computed(() => {
+    const ans = ref([])
+    for (let idx in joinedList.value) {
+      console.log(joinedList.value[idx])
+      // ans.value.push(joinedList.value[idx])
+      console.log(productStore.depositRows.filter((data) => data.fin_prdt_nm === joinedList.value[idx].trim()))
+      ans.value.push([productStore.depositRows.filter((data) => data.fin_prdt_nm === joinedList.value[idx].trim()).fin_prdt_nm,
+      productStore.depositRows.filter((data) => data.fin_prdt_nm === joinedList.value[idx].trim()).intr_rate2_6,
+      productStore.depositRows.filter((data) => data.fin_prdt_nm === joinedList.value[idx].trim()).intr_rate2_12
+    ])
+    }
+  return ans.value    
+  })
+
+
   const havingProducts = computed(() => {
     const pdts = ref(null)
     axios({
