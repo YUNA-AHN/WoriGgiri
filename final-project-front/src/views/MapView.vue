@@ -93,7 +93,7 @@ h1 {
 <script>
 import { ref, onMounted } from "vue";
 
-const API_KEY = "8084269e80aa7bddaac7aae0b01aca02";
+// const API_KEY = "";
 
 export default {
   mounted() {
