@@ -18,7 +18,7 @@ from django.db.models import Q
 
 @api_view(['GET'])
 def temp(request):
-    api_key = "f6d469a35ac51357c3e810f371a30641"
+    # api_key = ""
     url = f'http://finlife.fss.or.kr/finlifeapi/'
     
     params = {
@@ -36,7 +36,7 @@ def temp(request):
 
 @api_view(['GET'])
 def save_data(request):
-    api_key = "f6d469a35ac51357c3e810f371a30641"
+    # api_key = ""
     url = f'http://finlife.fss.or.kr/finlifeapi/'
     
     params = {
